@@ -1,0 +1,60 @@
+open             http://localhost/github/egon/demo_sites/backbone/
+assertTitle      Backbone.js • TodoMVC
+
+## lets start with an easy one: the header should say todos
+assertText       h1                               todos
+
+## This comment is to test replacements: {arg1} {arg2} {arg3}
+
+## make sure we start with an empty list
+assertEmpty      #todo-list
+
+
+## enter three items. <enter> simulates enter key
+type             #new-todo                        My first item<enter>My second item<enter>My third item<enter>
+assertLength     #todo-list > li                  3
+assertText       #todo-count                      3 items left
+assertHidden     #clear-completed
+
+
+## toggle the first
+click            #todo-list > li:first-child .toggle
+assertHasClass   #todo-list > li:first-child      .completed
+assertText       #todo-count                      2 items left
+assertText       #clear-completed                 Clear completed (1)
+
+
+## check the contents of the "active" tab
+click            a[href="#/active"]
+assertLength     #todo-list > li                  2
+
+
+## check the contents of the "completed" tab
+click            a[href="#/completed"]
+assertLength     #todo-list > li                  1
+
+
+## completed list should be empty after clicking "clear completed"
+click            #clear-completed
+assertLength     #todo-list > li                  0
+
+
+## the "all" list should still have 2 items left
+click            a[href="#/"]
+assertLength     #todo-list > li                  2
+
+
+## there are 2 items left, "toggle all" should complete them both
+click            #toggle-all
+assertLength     #todo-list > li.completed        2
+assertText       #clear-completed                 Clear completed (2)
+
+
+## ...click "toggle all" again to put them back in progress
+click            #toggle-all
+assertLength     #todo-list > li.completed        0
+
+
+## check double click to edit function
+dblclick         #todo-list > li:nth-child(1) label
+assertVisible    #todo-list > li:nth-child(1) .edit

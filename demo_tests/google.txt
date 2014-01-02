@@ -1,0 +1,9 @@
+## Google search retrieves 10 or more results
+open               http://www.google.fr/
+assertTitle        Google
+assertExists       form[action="/search"]
+type               input[name="q"]              casperjs
+submit             form[action="/search"]
+assertTitle        casperjs - Recherche Google
+assertUrl          q=casperjs
+assertMinLength    h3.r                         10

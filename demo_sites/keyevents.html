@@ -1,0 +1,12 @@
+
+<script src="//code.jquery.com/jquery-2.0.3.js"></script>
+<input>
+<div id="result" style="background:yellow;"></div>
+<script>
+	var $result = $('#result');
+
+
+	$('input').on('keyup keypress keydown', function(e) {
+		$result.append('<div>' + e.type + ' ' + e.which + ' ' + e.keyCode + '</div>');
+	});
+</script>

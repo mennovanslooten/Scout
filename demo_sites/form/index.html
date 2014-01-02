@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>DUMMY TEST FORM</title>
+
+        <meta name="author" content="@mennovanslooten">
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+
+        <style type="text/css">
+            label {
+                padding: 5px 0;
+                display: block;
+            }
+
+            input[type="text"],
+            input[type="password"],
+            textarea {
+                 width: 400px;
+            }
+
+            textarea {
+                height: 100px;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <form method="get" action="result.html">
+
+            <fieldset>
+                <legend>inputs</legend>
+                <p>
+                    <label>
+                        <input type="text" name="text">
+                        Text
+                    </label>
+
+                    <label>
+                        <input type="password" name="password">
+                        Password
+                    </label>
+
+                    <label>
+                        <select name="select">
+                            <option value="option zero">0</option>
+                            <option value="option one">1</option>
+                            <option value="option two">2</option>
+                            <option value="option three">3</option>
+                            <option>option four</option>
+                        </select>
+                        Select
+                    </label>
+
+                    <label>
+                        <select multiple name="select_multiple">
+                            <option value="option zero">0</option>
+                            <option value="option one">1</option>
+                            <option value="option two">2</option>
+                            <option value="option three">3</option>
+                            <option>option four</option>
+                        </select>
+                        Select multiple
+                    </label>
+
+                    <label>
+                        <textarea name="textarea"></textarea>
+                        Textarea
+                    </label>
+                </p>
+            </fieldset>
+
+            <fieldset>
+                <legend>checkboxes</legend>
+                <p>
+                    <label>
+                        <input type="checkbox" name="check" value="zero">
+                        Zero
+                    </label>
+                    <label>
+                        <input type="checkbox" name="check" value="one">
+                        One
+                    </label>
+                    <label>
+                        <input type="checkbox" name="check" value="two">
+                        Two
+                    </label>
+                    <label>
+                        <input type="checkbox" name="check" value="three">
+                        Three
+                    </label>
+                </p>
+            </fieldset>
+
+            <fieldset>
+                <legend>radio</legend>
+                <p>
+                    <label>
+                        <input type="radio" name="radio" value="zero">
+                        Zero
+                    </label>
+                    <label>
+                        <input type="radio" name="radio" value="one">
+                        One
+                    </label>
+                    <label>
+                        <input type="radio" name="radio" value="two">
+                        Two
+                    </label>
+                    <label>
+                        <input type="radio" name="radio" value="three">
+                        Three
+                    </label>
+                </p>
+            </fieldset>
+
+            <p><input type="submit" value="GO!"></p>
+        </form>
+    </body>
+</html>
+
+
+
+
+
+

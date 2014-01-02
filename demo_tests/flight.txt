@@ -1,0 +1,70 @@
+open             http://localhost/github/egon/demo_sites/flight/
+## Inbox should be selected by default and have 5 items
+assertHasClass   #inbox                     .selected
+assertLength     .mail-item                 5
+
+
+## Later should be selected after click and have 2 items
+click            #later
+assertHasClass   #later                     .selected
+assertLength     .mail-item                 2
+
+
+## Sent should be selected after click and have 1 item
+click            #sent
+assertHasClass   #sent                      .selected
+assertLength     .mail-item                 1
+
+
+## Trash should be selected after click and have 2 items
+click            #trash
+assertHasClass   #trash                     .selected
+assertLength     .mail-item                 2
+
+
+## Clicking New should show dialog
+click            #new_mail
+assertVisible    #compose_box
+assertDisabled   #send_composed
+# choose           #recipient_select          Mary Jones
+# type             #compose_subject           Hello, world.
+# type             #compose_message           Lorem ipsum.
+# 
+## Check if sending hides dialog and adds message to "Sent" view
+# click            #send_composed
+# assertHidden     #compose_box
+# click            #sent
+# assertText       .mail-item .mailContact    Mary Jones
+# assertText       .mail-item .mailSubject    Hello, world.
+
+click            #cancel_composed
+
+## Go back to Inbox and click the first item
+click            #inbox
+click            .mail-item
+assertHasClass   .mail-item                .selected
+
+
+## Click delete and check if mail has been moved to trash
+click            #delete_mail
+assertLength     .mail-item                 4
+click            #trash
+assertLength     .mail-item                 3
+
+
+## Go back to Inbox and click the first item
+click            #inbox
+click            .mail-item
+
+
+## Click Forward and check if compose window is visible with correct subject
+click            #forward
+assertText       #compose_subject           Fw: Neque porro quisquam velit!!
+click            #cancel_composed
+
+
+## Click Reply and check if compose window is visible with correct subject
+click            #reply
+assertText       #compose_subject           Re: Neque porro quisquam velit!!
+click            #cancel_composed
+

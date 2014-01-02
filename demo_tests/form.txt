@@ -1,0 +1,41 @@
+open          http://localhost/github/egon/demo_sites/form/
+
+## Fill in the form data
+type          input[type="text"]        Hello, world.
+type          input[type="password"]    hunter2
+choose        select                    option two
+choose        select[multiple]          option two    option four
+type          textarea                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+click         input[type="checkbox"][value="one"]
+click         input[type="checkbox"][value="three"]
+click         input[type="radio"][value="two"]
+
+## Submit the form
+click         input[type="submit"]
+
+## Check if it submits to the correct page
+assertPage    result.html
+
+## Check if the page has the correct title
+assertTitle   DUMMY TEST FORM RESULTS
+
+## Check if the submitted data is displayed correctly
+assertText    #text + dd               Hello, world.
+assertText    #password + dd           hunter2
+assertText    #select + dd             option two
+
+# TODO: Multiple selects
+# assertText    #select_multiple + dd    option two
+
+assertText    #select_multiple ~ dd    option four
+assertText    #textarea + dd           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+assertText    #check + dd              one
+assertText    #check ~ dd              three
+assertText    #radio + dd              two
+
+## Click the "BACK!" link
+click         a[href]
+
+## Check if it leads to the correct page
+assertPage    index.html
