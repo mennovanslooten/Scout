@@ -1,4 +1,4 @@
-open             http://localhost/github/egon/demo_sites/backbone/
+open             ./demo_sites/backbone/index.html
 assertTitle      Backbone.js • TodoMVC
 
 ## lets start with an easy one: the header should say todos

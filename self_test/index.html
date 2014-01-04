@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>DUMMY SELF TEST</title>
+
+        <meta name="author" content="@mennovanslooten">
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+
+        <style type="text/css">
+			.assertHidden-1 {
+				display: none;
+			}
+			.assertHidden-2 {
+				visibility: hidden;
+			}
+			.assertHidden-3 {
+				opacity: 0;
+			}
+        </style>
+    </head>
+
+    <body>
+
+		<p class="assertText">Lorem ipsum dolor sit amet</p>
+
+
+		<p class="assertExists">This element exists</p>
+
+
+		<p class="assertVisible">This element is visible</p>
+
+
+		<p class="assertHidden-1">This element is hidden through CSS class display</p>
+		<p class="assertHidden-2">This element is hidden through CSS class visibility</p>
+		<p class="assertHidden-3">This element is hidden through CSS class opacity</p>
+
+
+		<p class="assertEmpty"><!-- This element is empty --></p>
+
+
+		<p class="assertNotEmpty-1">This element is not empty</p>
+		<p class="assertNotEmpty-2"><span>This element is not empty</span></p>
+
+
+		<p class="assertLength-0"><!-- No children --></p>
+		<p class="assertLength-1">
+			<span>1</span>
+		</p>
+		<p class="assertLength-2">
+			<span>1</span>
+			<span>2</span>
+		</p>
+		<p class="assertLength-3">
+			<span>1</span>
+			<span>2</span>
+			<span>3</span>
+		</p>
+
+
+		<p class="assertMinLength assertMaxLength">
+			<span>1</span>
+			<span>2</span>
+			<span>3</span>
+		</p>
+
+		<form action="step-2.html">
+			<p>
+				<select class="choose">
+					<option value="">Choose a value</option>
+					<option value="1">Value 1</option>
+					<option value="2">Value 2</option>
+					<option value="3">Value 3</option>
+				</select>
+			</p>
+
+
+			<p>
+				<input class="type-1" type="text">
+				<input class="type-2" type="password">
+				<textarea class="type-3"></textarea>
+			</p>
+
+
+			<p>
+				<input class="assertDisabled-1" disabled type="text">
+				<textarea class="assertDisabled-2" disabled></textarea>
+			</p>
+
+			<input type="submit" class="click-1">
+		</form>
+
+		<p class="assertHasClass-1 assertHasClass-2"></p>
+
+    </body>
+</html>
+
+
+
+
+
+

@@ -1,3 +1,5 @@
+phantom.clearCookies();
+
 var _start_time        = new Date();
 var _test_files        = require('./lib/testreader').readTestFiles();
 var screendump         = require('./lib/screendump');
@@ -6,7 +8,7 @@ var _action_handlers   = require('./lib/action_handlers').action_handlers;
 var _current_test_file = null;
 var _total_actions     = 0;
 var _skipped           = [];
-var _waitfor_pause     = 50;
+var _waitfor_pause     = 550;
 
 
 page.is_loaded = false;
@@ -18,15 +20,68 @@ page.viewportSize = {
 	height: 1280
 };
 
+
+function setupPage() {
+	if (page.is_loaded) {
+		//console.log('page already setup');
+		return;
+	}
+
+	page.evaluate(function() {
+		window.localStorage.clear();
+	});
+
+	var has_jquery = page.evaluate(function() {
+		return 'jQuery' in window;
+	});
+
+	//console.log('setupPage', page.url, has_jquery);
+
+	if (!has_jquery) {
+		page.injectJs('./lib/jquery-2.0.3.js');
+		page.evaluate(function() {
+			jQuery.noConflict();
+		});
+	}
+
+	page.is_loaded = true;
+	page.is_loading = false;
+}
+
+
+function hasJQuery() {
+	var has_jquery = page.evaluate(function() {
+		return 'jQuery' in window;
+	});
+
+	//console.log('hasJQuery', page.url, has_jquery);
+
+	if (!has_jquery) {
+		page.injectJs('./lib/jquery-2.0.3.js');
+		page.evaluate(function() {
+			jQuery.noConflict();
+		});
+	}
+
+	return true;
+}
+
+
+page.onUrlChanged = function(targetUrl) {
+	//console.log('New URL: ' + targetUrl);
+};
+
+/*
 page.onInitialized = function() {
+	console.log('onInitialized', page.url);
 	page.evaluate(function() {
 		window.localStorage.clear();
 	});
 };
 
-page.onLoadFinished = function() {
-	//console.log('onLoadFinished', page.url);
 
+page.onLoadFinished = function() {
+	console.log('onLoadFinished', page.url);
 	var has_jquery = page.evaluate(function() {
 		return 'jQuery' in window;
 	});
@@ -41,53 +96,21 @@ page.onLoadFinished = function() {
 	page.is_loaded = true;
 	page.is_loading = false;
 };
+*/
+
+
+page.onInitialized = setupPage;
+page.onLoadFinished = setupPage;
+
 
 page.onLoadStarted = function() {
-	//console.log('onLoadStarted');
+	//console.log('onLoadStarted', page.url);
 	page.is_loaded = false;
 	page.is_loading = true;
 };
 
+
 page.onError = function() { };
-
-/*
-page.onInitialized  = function() {
-	console.log('onInitialized');
-	_is_loaded = false;
-
-	page.evaluate(function() {
-		window.localStorage.clear();
-	});
-
-};
-*/
-
-
-/*
-page.onLoadStarted = function() {
-	_is_loaded = false;
-};
-
-
-page.onLoadFinished = function() {
-	console.log('onLoadFinished', page.url);
-	_is_loaded = true;
-
-	var has_jquery = page.evaluate(function() {
-		return 'jQuery' in window;
-	});
-
-	if (has_jquery) {
-		nextAction();
-	} else {
-		page.injectJs('./phantom_lib/jquery-2.0.3.js');
-		page.evaluate(function() {
-			jQuery.noConflict();
-		});
-		nextAction();
-	}
-};
-*/
 
 
 function nextTestFile() {
@@ -104,18 +127,18 @@ function nextTestFile() {
 		return;
 	}
 
-	console.log('\n\nStarting ' + _current_test_file.path + ' (' + _current_test_file.actions.length + ' actions)');
-	_current_test_file.actions.forEach(function(item) {
-		//console.log(' - ' + item.type + ' : ' + item.args.join('   '));
-	});
+	console.log('\n################################################################');
+	console.log('# Starting ' + _current_test_file.path + ' (' + _current_test_file.actions.length + ' actions)');
+	console.log('################################################################');
+
 	page.is_loaded = false;
 	page.is_loading = false;
+
 	nextAction();
 }
 
 
 function waitFor(conditionCallback, passCallback, failCallback, timeout) {
-	//console.log('waitFor', page.is_loaded, page.is_loading);
 	if (timeout > 0) {
 		var is_passed = !page.is_loading && conditionCallback();
 		if (is_passed) {
@@ -154,10 +177,7 @@ function nextAction() {
 				if (action.type !== 'log') {
 					//screendump.dump('pass-' + action.type);
 					var args = [action.type].concat(action.args);
-
-					//console.log('  ✓ ' + action.type + ' ' + action.args.join('    '));
 					pass(tabularize(args));
-					//_total_actions++;
 				}
 				nextAction();
 			},
@@ -167,8 +187,7 @@ function nextAction() {
 				screendump.dump('fail-' + action.type);
 				var args = [action.type].concat(action.args);
 				fail(tabularize(args));
-
-				//fail(action.type + ' ' + action.args.join('    '));
+				nextTestFile();
 			},
 
 			5000);
@@ -185,40 +204,42 @@ function pass(message) {
 }
 
 
+function fail(message) {
+	_skipped.push(message);
+	console.log('  ✗ ' + message);
+}
+
+
+function done() {
+	var exit_code = 0;
+	var result = 'PASS';
+	var total_time = Math.round((new Date().valueOf() - _start_time) / 1000);
+	var message = 'Executed ' + _total_actions + ' actions';
+
+	if (_skipped.length) {
+		exit_code = 1;
+		result = 'FAIL';
+		message += ', Failed ' + _skipped.length + ' actions';
+	}
+
+	message += ' in ' + total_time + 's.';
+
+	console.log(result + ': ' + message);
+	phantom.exit(exit_code);
+}
+
+
 function tabularize(args) {
 	var result = '';
 	args.forEach(function(item) {
 		result += item;
-		if (item.length < 20) {
-			result += new Array(20 - item.length).join(' ');
+		if (item.length < 25) {
+			result += new Array(25 - item.length).join(' ');
 		} else {
 			result += '    ';
 		}
 	});
 	return result;
-}
-
-
-function fail(message) {
-	_skipped.push(message);
-	//console.log('SKIPPED:', message);
-	console.log('  ✗ ' + message);
-	nextTestFile();
-}
-
-
-
-function done() {
-	var total_time = new Date().valueOf() - _start_time;
-	var message = 'Executed ' + _total_actions + ' actions';
-
-	if (_skipped.length) {
-		message += ', Failed ' + _skipped.length + ' actions';
-	}
-
-	message += ' in ' + total_time + 'ms.';
-	console.log(message);
-	phantom.exit();
 }
 
 

@@ -1,0 +1,56 @@
+open             ./self_test/index.html
+assertTitle      DUMMY SELF TEST
+assertUrl        self_test/index.html
+assertPage       self_test/index.html
+
+assertText       .assertText             Lorem ipsum dolor sit amet
+assertText       .assertText             Lorem ipsum
+assertText       .assertText             dolor sit amet
+
+assertExists     .assertExists
+
+assertVisible    .assertVisible
+
+assertHidden     .assertHidden-1
+assertHidden     .assertHidden-2
+assertHidden     .assertHidden-3
+
+assertEmpty      .assertEmpty
+
+assertNotEmpty      .assertNotEmpty-1
+assertNotEmpty      .assertNotEmpty-2
+
+assertLength        .assertLength-0 > *    0
+assertLength        .assertLength-1 > *    1
+assertLength        .assertLength-2 > *    2
+assertLength        .assertLength-3 > *    3
+
+assertMinLength     .assertMinLength > *   0
+assertMinLength     .assertMinLength > *   1
+assertMinLength     .assertMinLength > *   2
+assertMinLength     .assertMinLength > *   3
+
+assertMaxLength     .assertMaxLength > *   3
+assertMaxLength     .assertMaxLength > *   4
+assertMaxLength     .assertMaxLength > *   5
+
+choose              .choose                Value 3
+assertValue         .choose                3
+
+type                .type-1                Lorem ipsum
+type                .type-2                Lorem ipsum
+type                .type-3                Lorem ipsum
+assertValue         .type-1                Lorem ipsum
+assertValue         .type-2                Lorem ipsum
+assertValue         .type-3                Lorem ipsum
+
+assertDisabled      .assertDisabled-1
+assertDisabled      .assertDisabled-2
+
+click               .click-1
+assertUrl           self_test/step-2.html
+click               .click-2
+assertUrl           self_test/index.html
+
+assertHasClass      .assertHasClass-1      .assertHasClass-2
+assertHasClass      .assertHasClass-2      .assertHasClass-1

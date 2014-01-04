@@ -1,4 +1,5 @@
-open             http://localhost/github/egon/demo_sites/flight/
+open             ./demo_sites/flight/index.html
+
 ## Inbox should be selected by default and have 5 items
 assertHasClass   #inbox                     .selected
 assertLength     .mail-item                 5

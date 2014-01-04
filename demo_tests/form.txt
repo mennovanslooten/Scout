@@ -1,4 +1,4 @@
-open          http://localhost/github/egon/demo_sites/form/
+open          ./demo_sites/form/index.html
 
 ## Fill in the form data
 type          input[type="text"]        Hello, world.
