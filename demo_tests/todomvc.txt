@@ -1,4 +1,4 @@
-open             ./demo_sites/backbone/index.html
+open             ./demo_tests/backbone/index.html
 assertTitle      Backbone.js • TodoMVC
 
 ## lets start with an easy one: the header should say todos

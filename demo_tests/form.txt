@@ -1,4 +1,4 @@
-open          ./demo_sites/form/index.html
+open          ./demo_tests/form/index.html
 
 ## Fill in the form data
 type          input[type="text"]        Hello, world.
