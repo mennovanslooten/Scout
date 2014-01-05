@@ -1,0 +1,6 @@
+## a twitter bootstrap dropdown can be opened
+open           http://getbootstrap.com/2.3.2/javascript.html#dropdowns
+assertExists   #navbar-example
+click          #dropdowns .nav-pills .dropdown:last-of-type a.dropdown-toggle
+assertVisible  #dropdowns .nav-pills .open
+## Dropdown is open
