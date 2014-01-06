@@ -1,0 +1,7 @@
+open           ./self_test/mouse.html
+click          .mouse_target_1
+click          .mouse_target_2
+click          .mouse_target_3
+click          .mouse_target_4
+click          .mouse_target_5
+click          .mouse_target_6

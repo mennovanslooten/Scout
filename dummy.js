@@ -1,3 +1,11 @@
+/*
+	TODO:
+	[ ] CLI arguments:
+		[ ] Continue on fail
+		[ ] Screenshots after passing action
+	[ ] Viewport size config action
+*/
+
 phantom.clearCookies();
 
 var _start_time        = new Date();
@@ -5,10 +13,11 @@ var _test_files        = require('./lib/testreader').readTestFiles();
 var screendump         = require('./lib/screendump');
 var page               = require('webpage').create();
 var _action_handlers   = require('./lib/action_handlers').action_handlers;
+var _logger            = require('./lib/logger');
 var _current_test_file = null;
 var _total_actions     = 0;
 var _skipped           = [];
-var _waitfor_pause     = 550;
+var _waitfor_pause     = 10;
 
 
 page.is_loaded = false;
@@ -49,68 +58,13 @@ function setupPage() {
 }
 
 
-function hasJQuery() {
-	var has_jquery = page.evaluate(function() {
-		return 'jQuery' in window;
-	});
-
-	//console.log('hasJQuery', page.url, has_jquery);
-
-	if (!has_jquery) {
-		page.injectJs('./lib/jquery-2.0.3.js');
-		page.evaluate(function() {
-			jQuery.noConflict();
-		});
-	}
-
-	return true;
-}
-
-
-page.onUrlChanged = function(targetUrl) {
-	//console.log('New URL: ' + targetUrl);
-};
-
-/*
-page.onInitialized = function() {
-	console.log('onInitialized', page.url);
-	page.evaluate(function() {
-		window.localStorage.clear();
-	});
-};
-
-
-page.onLoadFinished = function() {
-	console.log('onLoadFinished', page.url);
-	var has_jquery = page.evaluate(function() {
-		return 'jQuery' in window;
-	});
-
-	if (!has_jquery) {
-		page.injectJs('./lib/jquery-2.0.3.js');
-		page.evaluate(function() {
-			jQuery.noConflict();
-		});
-	}
-
-	page.is_loaded = true;
-	page.is_loading = false;
-};
-*/
-
-
+page.onError = function() { };
 page.onInitialized = setupPage;
 page.onLoadFinished = setupPage;
-
-
 page.onLoadStarted = function() {
-	//console.log('onLoadStarted', page.url);
 	page.is_loaded = false;
 	page.is_loading = true;
 };
-
-
-page.onError = function() { };
 
 
 function nextTestFile() {
@@ -127,9 +81,9 @@ function nextTestFile() {
 		return;
 	}
 
-	console.log('\n################################################################');
-	console.log('# Starting ' + _current_test_file.path + ' (' + _current_test_file.actions.length + ' actions)');
-	console.log('################################################################');
+	_logger.comment('\n################################################################');
+	_logger.comment('# Starting ' + _current_test_file.path + ' (' + _current_test_file.actions.length + ' actions)');
+	_logger.comment('################################################################');
 
 	page.is_loaded = false;
 	page.is_loading = false;
@@ -154,7 +108,6 @@ function waitFor(conditionCallback, passCallback, failCallback, timeout) {
 }
 
 
-
 function nextAction() {
 	var action = _current_test_file.actions.shift();
 
@@ -164,6 +117,8 @@ function nextAction() {
 	}
 
 	var handler = _action_handlers[action.type];
+	var args = [action.type].concat(action.args);
+
 	if (handler) {
 		waitFor(
 
@@ -176,7 +131,6 @@ function nextAction() {
 			function() {
 				if (action.type !== 'log') {
 					//screendump.dump('pass-' + action.type);
-					var args = [action.type].concat(action.args);
 					pass(tabularize(args));
 				}
 				nextAction();
@@ -184,8 +138,7 @@ function nextAction() {
 
 			// Or run this after timeout is reached
 			function() {
-				screendump.dump('fail-' + action.type);
-				var args = [action.type].concat(action.args);
+				// screendump.dump('fail-' + action.type);
 				fail(tabularize(args));
 				nextTestFile();
 			},
@@ -199,14 +152,14 @@ function nextAction() {
 
 
 function pass(message) {
-	console.log('  ✓ ' + message);
+	_logger.log('  ✓ ' + message);
 	_total_actions++;
 }
 
 
 function fail(message) {
-	_skipped.push(message);
-	console.log('  ✗ ' + message);
+	_logger.error('  ✗ ' + message);
+	_skipped.push(_current_test_file.path);
 }
 
 
@@ -219,12 +172,16 @@ function done() {
 	if (_skipped.length) {
 		exit_code = 1;
 		result = 'FAIL';
-		message += ', Failed ' + _skipped.length + ' actions';
+		message += ', Failed ' + _skipped.length + ' test files:';
+		message += ' in ' + _skipped.join(', ');
+	} else {
+		message += ' in ' + total_time + 's.';
 	}
 
-	message += ' in ' + total_time + 's.';
 
-	console.log(result + ': ' + message);
+	var codes = [30, 41];
+	message = result + ': ' + message;
+	_logger[result.toLowerCase()](message);
 	phantom.exit(exit_code);
 }
 
