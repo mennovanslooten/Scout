@@ -138,7 +138,7 @@ function nextAction() {
 
 			// Or run this after timeout is reached
 			function() {
-				// screendump.dump('fail-' + action.type);
+				screendump.dump('fail-' + action.type);
 				fail(tabularize(args));
 				nextTestFile();
 			},
