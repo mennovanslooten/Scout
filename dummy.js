@@ -15,9 +15,11 @@ var page               = require('webpage').create();
 var _action_handlers   = require('./lib/action_handlers').action_handlers;
 var _logger            = require('./lib/logger');
 var _current_test_file = null;
+var _current_action    = null;
 var _total_actions     = 0;
 var _skipped           = [];
 var _waitfor_pause     = 10;
+var _waitfor_timeout   = 2000;
 
 
 page.is_loaded = false;
@@ -64,6 +66,7 @@ function nextTestFile() {
 		});
 	}
 
+	_current_action = null;
 	_current_test_file = _test_files.shift();
 	if (!_current_test_file) {
 		done();
@@ -98,63 +101,57 @@ function waitFor(conditionCallback, passCallback, failCallback, timeout) {
 
 
 function nextAction() {
-	var action = _current_test_file.actions.shift();
+	_current_action = _current_test_file.actions.shift();
 
-	if (!action) {
+	if (!_current_action) {
 		nextTestFile();
 		return;
 	}
 
-	var handler = _action_handlers[action.type];
-	var args = [action.type].concat(action.args);
+	var handler = _action_handlers[_current_action.type];
+	var args = [_current_action.type].concat(_current_action.args);
 
 	if (handler) {
 		waitFor(
 
 			// Keep executing until it returns true
 			function() {
-				return handler.apply(_action_handlers, action.args);
+				return handler.apply(_action_handlers, _current_action.args);
 			},
 
 			// Run after true is returned
-			function() {
-				if (action.type !== 'log') {
-					//screendump.dump('pass-' + action.type);
-					//pass(tabularize(args));
-					pass(action);
-				}
-				nextAction();
-			},
+			passCurrentAction,
 
 			// Or run this after timeout is reached
-			function() {
-				screendump.dump('fail-' + action.type);
-				//fail(tabularize(args));
-				fail(action);
-				nextTestFile();
-			},
+			failCurrentAction,
 
-			5000);
+			_waitfor_timeout);
 	} else {
-		utils.dump(action);
-		fail('Action not found: ' + action.type);
+		utils.dump(_current_action);
+		failCurrentAction();
 	}
 }
 
 
-function pass(action) {
-	var args = [action.type].concat(action.args);
-	message = tabularize(args);
-	_logger.log('  ✓ ' + message);
+function passCurrentAction() {
+	if (_current_action.type !== 'log') {
+		//screendump.dump('pass-' + _current_action.type);
+		var args = [_current_action.type].concat(_current_action.args);
+		message = tabularize(args);
+		_logger.log('  ✓ ' + message);
+	}
 	_total_actions++;
+	nextAction();
 }
 
 
-function fail(action) {
-	var args = [action.type].concat(action.args);
+function failCurrentAction() {
+	screendump.dump('fail-' + _current_action.type);
+	var args = [_current_action.type].concat(_current_action.args);
 	message = tabularize(args);
 	_logger.error('  ✗ ' + message);
 	_skipped.push(_current_test_file.path);
+	nextTestFile();
 }
 
 
