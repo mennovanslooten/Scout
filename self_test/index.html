@@ -9,13 +9,13 @@
         <meta name="description" content="">
 
         <style type="text/css">
-			.assertHidden-1 {
+			.hide-display {
 				display: none;
 			}
-			.assertHidden-2 {
+			.hide-visibility {
 				visibility: hidden;
 			}
-			.assertHidden-3 {
+			.hide-opacity {
 				opacity: 0;
 			}
         </style>
@@ -32,12 +32,15 @@
 		<p class="assertVisible">This element is visible</p>
 
 
-		<p class="assertHidden-1">This element is hidden through CSS class display</p>
-		<p class="assertHidden-2">This element is hidden through CSS class visibility</p>
-		<p class="assertHidden-3">This element is hidden through CSS class opacity</p>
+		<p class="assertHidden-1 hide-display">This element is hidden through CSS display</p>
+		<p class="assertHidden-2 hide-visibility">This element is hidden through CSS visibility</p>
+		<p class="assertHidden-3 hide-opacity">This element is hidden through CSS opacity</p>
 
 
-		<p class="assertEmpty"><!-- This element is empty --></p>
+		<p class="assertEmpty-1"><!-- This element is empty --></p>
+		<p class="assertEmpty-2"><span class="hide-display">This element is hidden throught CSS display</span></p>
+		<p class="assertEmpty-3"><span class="hide-visibility">This element is hidden throught CSS visibility</span></p>
+		<p class="assertEmpty-4"><span class="hide-opacity">This element is hidden throught CSS opacity</span></p>
 
 
 		<p class="assertNotEmpty-1">This element is not empty</p>

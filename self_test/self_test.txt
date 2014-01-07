@@ -15,7 +15,10 @@ assertHidden     .assertHidden-1
 assertHidden     .assertHidden-2
 assertHidden     .assertHidden-3
 
-assertEmpty      .assertEmpty
+assertEmpty      .assertEmpty-1
+assertEmpty      .assertEmpty-2
+assertEmpty      .assertEmpty-3
+assertEmpty      .assertEmpty-4
 
 assertNotEmpty      .assertNotEmpty-1
 assertNotEmpty      .assertNotEmpty-2

@@ -31,36 +31,25 @@ page.viewportSize = {
 
 
 function setupPage() {
-	if (page.is_loaded) {
-		//console.log('page already setup');
-		return;
-	}
+	if (page.is_loaded) return;
 
 	page.evaluate(function() {
 		window.localStorage.clear();
 	});
-
-	var has_jquery = page.evaluate(function() {
-		return 'jQuery' in window;
-	});
-
-	//console.log('setupPage', page.url, has_jquery);
-
-	if (!has_jquery) {
-		page.injectJs('./lib/jquery-2.0.3.js');
-		page.evaluate(function() {
-			jQuery.noConflict();
-		});
-	}
 
 	page.is_loaded = true;
 	page.is_loading = false;
 }
 
 
-page.onError = function() { };
+//page.onError = function() { };
 page.onInitialized = setupPage;
 page.onLoadFinished = setupPage;
+
+page.onNavigationRequested = function() {
+	//console.log('navigating to', arguments[0]);
+};
+
 page.onLoadStarted = function() {
 	page.is_loaded = false;
 	page.is_loading = true;
@@ -131,7 +120,8 @@ function nextAction() {
 			function() {
 				if (action.type !== 'log') {
 					//screendump.dump('pass-' + action.type);
-					pass(tabularize(args));
+					//pass(tabularize(args));
+					pass(action);
 				}
 				nextAction();
 			},
@@ -139,7 +129,8 @@ function nextAction() {
 			// Or run this after timeout is reached
 			function() {
 				screendump.dump('fail-' + action.type);
-				fail(tabularize(args));
+				//fail(tabularize(args));
+				fail(action);
 				nextTestFile();
 			},
 
@@ -151,13 +142,17 @@ function nextAction() {
 }
 
 
-function pass(message) {
+function pass(action) {
+	var args = [action.type].concat(action.args);
+	message = tabularize(args);
 	_logger.log('  ✓ ' + message);
 	_total_actions++;
 }
 
 
-function fail(message) {
+function fail(action) {
+	var args = [action.type].concat(action.args);
+	message = tabularize(args);
 	_logger.error('  ✗ ' + message);
 	_skipped.push(_current_test_file.path);
 }
