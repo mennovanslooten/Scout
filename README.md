@@ -3,7 +3,7 @@ DummyJS
 
 DummyJS is a Functional Testing extension for PhantomJS
 
-Full docs and license comming soon. In the meantime, install PhantomJS and run:
+Full docs and license coming soon. In the meantime, install PhantomJS and run:
 
     $ phantomjs dummy.js
 
