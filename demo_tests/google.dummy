@@ -2,8 +2,8 @@
 open               http://www.google.fr/
 assertTitle        Google
 assertExists       form[action="/search"]
-type               input[name="q"]              casperjs
+type               input[name="q"]              dummy
 submit             form[action="/search"]
-assertTitle        casperjs - Recherche Google
-assertUrl          q=casperjs
+assertTitle        dummy - Recherche Google
+assertUrl          q=dummy
 assertMinLength    h3.r                         10
