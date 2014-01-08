@@ -2,15 +2,17 @@
 	TODO:
 	[ ] CLI arguments:
 		[ ] Continue on fail
-		[ ] Screenshots after passing action
+		[ ] Screendumps
 	[ ] Viewport size config action
+	[ ] Detect colorized output support
+	[ ] Dynamically erase/create screendump dir
 */
 
 phantom.clearCookies();
 
 var _start_time        = new Date();
 var _test_files        = require('./lib/testreader').readTestFiles();
-var screendump         = require('./lib/screendump');
+//var screendump         = require('./lib/screendump');
 var page               = require('webpage').create();
 var _action_handlers   = require('./lib/action_handlers').action_handlers;
 var _logger            = require('./lib/logger');
@@ -19,7 +21,7 @@ var _current_action    = null;
 var _total_actions     = 0;
 var _skipped           = [];
 var _waitfor_pause     = 10;
-var _waitfor_timeout   = 2000;
+var _waitfor_timeout   = 5000;
 
 
 page.is_loaded = false;
@@ -122,12 +124,13 @@ function nextAction() {
 			// Run after true is returned
 			passCurrentAction,
 
-			// Or run this after timeout is reached
+			// Or run this after timeout is reached...
 			failCurrentAction,
 
+			// ...which is this long:
 			_waitfor_timeout);
 	} else {
-		utils.dump(_current_action);
+		// utils.dump(_current_action);
 		failCurrentAction();
 	}
 }
@@ -139,14 +142,14 @@ function passCurrentAction() {
 		var args = [_current_action.type].concat(_current_action.args);
 		message = tabularize(args);
 		_logger.log('  ✓ ' + message);
+		_total_actions++;
 	}
-	_total_actions++;
 	nextAction();
 }
 
 
 function failCurrentAction() {
-	screendump.dump('fail-' + _current_action.type);
+	//screendump.dump('fail-' + _current_action.type);
 	var args = [_current_action.type].concat(_current_action.args);
 	message = tabularize(args);
 	_logger.error('  ✗ ' + message);
