@@ -57,3 +57,7 @@ assertUrl           self_test/index.html
 
 assertHasClass      .assertHasClass-1      .assertHasClass-2
 assertHasClass      .assertHasClass-2      .assertHasClass-1
+
+assertHasClass      "Lorem ipsum"          .textSelector-1
+assertHasClass      "dolor sit amet"       .textSelector-2
+

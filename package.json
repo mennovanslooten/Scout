@@ -1,0 +1,33 @@
+{
+	"name": "DummyJS",
+	"version": "0.0.1",
+	"description": "DummyJS is a Functional Testing extension for PhantomJS",
+	"main": "dummy.js",
+	"scripts": {
+		"test": "phantomjs ./dummy.js ./self_test"
+	},
+	"bin": {
+		"dummyjs": "./bin/dummyjs"
+	},
+	"dependencies": {
+		"phantomjs": ">=1.8.2"
+	},
+	"keywords": [
+		"functional",
+		"testing",
+		"phantomjs"
+	],
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://www.opensource.org/licenses/mit-license.php"
+		}
+	],
+	"author": "Menno van Slooten",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/mennovanslooten/DummyJS.git"
+	},
+	"homepage": "https://github.com/mennovanslooten/DummyJS"
+}
