@@ -62,7 +62,7 @@ page.onLoadStarted = function() {
 
 function nextTestFile() {
 	// Clean up after ourselves
-	if (_current_test_file) {
+	if (_current_test_file && _current_action) {
 		page.evaluate(function() {
 			window.localStorage.clear();
 		});

@@ -32,19 +32,18 @@ Running this test in a terminal would produce something like this:
 $ dummyjs demo_tests/google.dummy
 
 ################################################################
-# Starting ./demo_tests/google.dummy (9 actions)
+# Starting ./demo_tests/google.dummy (8 actions)
 ################################################################
 
 # Google search retrieves 10 or more results
-  ✓ open                    http://www.google.fr/
+  ✓ open                    http://www.google.nl/
   ✓ assertTitle             Google
   ✓ assertExists            form[action="/search"]
-  ✓ type                    input[name="q"]         dummy
-  ✓ submit                  form[action="/search"]
-  ✓ assertTitle             dummy - Recherche Google
+  ✓ type                    input[name="q"]         dummy<enter>
+  ✓ assertTitle             dummy - Google zoeken
   ✓ assertUrl               q=dummy
   ✓ assertMinLength         h3.r                    10
-PASS: Executed 8 actions in 1s.
+PASS: Executed 7 actions in 1s.
 ```
 
 ## Installation
@@ -66,6 +65,17 @@ already. It's possible this command needs to be run with admin priviliges:
 
     $ sudo npm install . -g
 
+Test your installation by running an empty test
+
+```
+$ touch test.dummy && dummyjs test.dummy
+
+################################################################
+# Starting ./test.dummy (0 actions)
+################################################################
+PASS: Executed 0 actions in 0s.
+```
+
 
 ## Writing Tests
 
@@ -75,8 +85,9 @@ a _command_. There are 4 kinds of commands: Comments, Logs, Asserts and User act
 ### Comments & Logs
 
 ```apache
-# This is a comment. Comments and empty lines are ignored
-## This is a log statement. It will be written to the terminal
+# Lines starting with "#" are comments. Comments and empty lines are ignored
+
+## Lines starting with "##" are log statements. They are written to the terminal
 ```
 
 ### Asserts
@@ -136,3 +147,25 @@ As real users can only `click` and `type` on elements that are visible,
 DummyJS will silently do an `assertVisible` first for these actions. If the
 elements are visible but outside of the page's viewport, they will be scrolled
 into view before the actions are performed.
+
+## Running tests
+
+If you have installed DummyJS with npm and saved your DummyJS test file with a 
+`.dummy` extension, you can run it from the command line:
+
+    $ dummyjs test.dummy
+
+This will run this single test file. If you want to run more than one test, you
+can add them as arguments:
+
+    $ dummyjs test.dummy anothertest.dummy yetanother.dummy
+
+You can combine test files in a directory and run all of them by passing the
+directory name as an argument. Note: this will run *all* `.dummy` files in the
+directory, even if they are in deeper directories.
+
+    $ dummyjs /path/to/my/tests
+
+
+
+
