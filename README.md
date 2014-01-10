@@ -1,25 +1,26 @@
 # DummyJS
 **Making headless testing a brainless activity**
 
-DummyJS is a super simple Functional Testing extension for PhantomJS.
+DummyJS is a super simple Functional Testing extension for PhantomJS. It's
+heavily inspired by the functional testing of [CasperJS](http://casperjs.org/)
+but less flexible and way easier. You could say it's a CasperJS for dummies.
 
 ## Example
 
-Here's an example of a test, functionally identical to the
+Here's an example of a test, more or less identical to the
 [Google example for CasperJS](http://docs.casperjs.org/en/latest/quickstart.html).
-It opens the French Google homepage, types "DummyJS" into the search box and
-submits. Finally, it checks some properties of the results page.
+It opens the Dutch Google homepage, types "DummyJS" into the search box and
+presses the enter key. Finally, it checks some properties of the results page.
 
 ```apache
 ## Google search retrieves 10 or more results
-open               http://www.google.fr/
+open               http://www.google.nl/
 assertTitle        Google
 assertExists       form[action="/search"]
-type               input[name="q"]               DummyJS
-submit             form[action="/search"]
-assertTitle        DummyJS - Recherche Google
-assertUrl          q=DummyJS
-assertMinLength    h3.r                          10
+type               input[name="q"]              dummy<enter>
+assertTitle        dummy - Google zoeken
+assertUrl          q=dummy
+assertMinLength    h3.r                         10
 ```
 
 Note the lack of callbacks or `waitFor` statements. **DummyJS waits between 
@@ -94,6 +95,14 @@ assertVisible   .some-css-selector
 
 # assertHidden tests if all elements that match the selector are invisible
 assertHidden    .some-css-selector
+
+# assertHasClass tests if there is an element that matches the selector and
+# also has the provided class name
+assertHasClass  .some-css-selector    .extra-class
+
+# assertText tests if there is at least one visible element on the page that
+# matches the selector and contains the provided text
+assertText      .some-css-selector    Lorem ipsum dolor
 ```
 
 As you may have noticed, the parameters of each line are separated by spaces. 
@@ -101,7 +110,8 @@ It does not matter by how many spaces, as long as there are more than two.
 
 Selector matching is done by jQuery, so
 [all jQuery selector extensions](http://api.jquery.com/category/selectors/jquery-selector-extensions/)
-are supported.
+are supported. If jQuery is not already included in the page that is tested, it
+is *injected* into the page.
 
 ### User actions
 
@@ -114,7 +124,7 @@ there are three actions:
 open        http://google.com
 
 # "click" simulates a user moving the mouse to the first element that matches
-# the selector and then clicking
+# the selector and then performing a left mouse click. 
 click       .some-css-selector
 
 # "type" performs a "click" and then simulates the keystrokes needed to type
