@@ -3,7 +3,7 @@
 
 DummyJS is a super simple Functional Testing extension for PhantomJS. It's
 heavily inspired by the functional testing of [CasperJS](http://casperjs.org/)
-but less flexible and way easier. You could say it's a CasperJS for dummies.
+but not nearly as flexible and way easier. You could say it's a CasperJS for dummies.
 
 ## Example
 
