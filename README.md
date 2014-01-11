@@ -17,9 +17,9 @@ presses the enter key. Finally, it checks some properties of the results page.
 open               http://www.google.nl/
 assertTitle        Google
 assertExists       form[action="/search"]
-type               input[name="q"]              dummy<enter>
-assertTitle        dummy - Google zoeken
-assertUrl          q=dummy
+type               input              DummyJS<enter>
+assertTitle        DummyJS - Google Search
+assertUrl          q=DummyJS
 assertMinLength    h3.r                         10
 ```
 
