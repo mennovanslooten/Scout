@@ -12,7 +12,7 @@ phantom.clearCookies();
 
 var _start_time        = new Date();
 var _test_files        = require('./lib/testreader').readTestFiles();
-//var screendump         = require('./lib/screendump');
+var screendump         = require('./lib/screendump');
 var page               = require('webpage').create();
 var _action_handlers   = require('./lib/action_handlers').action_handlers;
 var _logger            = require('./lib/logger');

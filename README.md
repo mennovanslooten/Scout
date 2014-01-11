@@ -14,12 +14,12 @@ presses the enter key. Finally, it checks some properties of the results page.
 
 ```apache
 ## Google search retrieves 10 or more results
-open               http://www.google.nl/
+open               http://www.google.com/
 assertTitle        Google
 assertExists       form[action="/search"]
-type               input              DummyJS<enter>
-assertTitle        DummyJS - Google Search
-assertUrl          q=DummyJS
+type               input[name="q"]              dummy<enter>
+assertTitle        dummy - Google zoeken
+assertUrl          q=dummy
 assertMinLength    h3.r                         10
 ```
 

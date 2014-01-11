@@ -1,8 +1,8 @@
 ## Google search retrieves 10 or more results
-open               http://www.google.nl/
+open               http://www.google.com/
 assertTitle        Google
 assertExists       form[action="/search"]
-type               input              DummyJS<enter>
-assertTitle        DummyJS - Google Search
+type               input[name="q"]              DummyJS<enter>
+assertTitle        DummyJS - Google zoeken
 assertUrl          q=DummyJS
 assertMinLength    h3.r                         10
