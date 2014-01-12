@@ -60,6 +60,10 @@ page.onLoadStarted = function() {
 };
 
 
+page.onConsoleMessage = function(message) {
+	//console.log('CONSOLE:', message);
+};
+
 function nextTestFile() {
 	// Clean up after ourselves
 	if (_current_test_file && _current_action) {
@@ -99,6 +103,16 @@ function waitFor(conditionCallback, passCallback, failCallback, timeout) {
 	} else {
 		failCallback();
 	}
+}
+
+
+function parseSelector(selector) {
+	var inside_quotes = /^"(.+)"$/;
+	if (inside_quotes.test(selector)) {
+		//var text = selector.match(inside_quotes)[1];
+		return ':contains(' + selector + ')';
+	}
+	return selector;
 }
 
 
