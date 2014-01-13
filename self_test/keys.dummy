@@ -1,0 +1,25 @@
+open         ./self_test/keys.html
+
+type         input    <Enter>
+assertText   #result  enter
+
+type         input    <Up>
+assertText   #result  up
+
+type         input    <Down>
+assertText   #result  down
+
+type         input    <Left>
+assertText   #result  left
+
+type         input    <Right>
+assertText   #result  right
+
+type         input    <Tab>
+assertText   #result  tab
+
+# type         input    <Backspace>
+# assertText   #result  backspace
+
+# type         input    <Escape>
+# assertText   #result  escape

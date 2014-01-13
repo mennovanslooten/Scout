@@ -6,6 +6,9 @@
 	[ ] Viewport size config action
 	[ ] Detect colorized output support
 	[ ] Dynamically erase/create screendump dir
+	[ ] Log files
+	[ ] Failure messages
+	[ ] Generic <special> key handlers
 */
 
 phantom.clearCookies();

@@ -10,8 +10,8 @@ assertText       h1                               todos
 assertEmpty      #todo-list
 
 
-## enter three items. <enter> simulates enter key
-type             #new-todo                        My first item<enter>My second item<enter>My third item<enter>
+## enter three items. <Enter> simulates enter key
+type             #new-todo                        My first item<Enter>My second item<Enter>My third item<Enter>
 assertLength     #todo-list > li                  3
 assertText       #todo-count                      3 items left
 assertHidden     #clear-completed
