@@ -19,13 +19,22 @@ var screendump         = require('./lib/screendump');
 var page               = require('webpage').create();
 var _action_handlers   = require('./lib/action_handlers').action_handlers;
 var _logger            = require('./lib/logger');
+var system = require('system');
 var _current_test_file = null;
 var _current_action    = null;
 var _total_actions     = 0;
 var _skipped           = [];
 var _waitfor_pause     = 10;
 var _waitfor_timeout   = 5000;
+var _options           = {
+	debug: false
+};
 
+/*
+for (var key in page.event.key) {
+	console.log(key, page.event.key[key]);
+}
+//*/
 
 page.is_loaded = false;
 page.is_loading = false;
@@ -35,6 +44,16 @@ page.viewportSize = {
 	width: 1280,
 	height: 1280
 };
+
+// Translate --optionName args to _option.optionName = true;
+var args = system.args.slice(1);
+args.forEach(function(arg) {
+	var option = /^--(\w+)$/;
+	var matches = arg.match(option);
+	if (matches && matches.length) {
+		_options[matches[1]] = true;
+	}
+});
 
 
 function setupPage() {
@@ -49,23 +68,32 @@ function setupPage() {
 }
 
 
-//page.onError = function() { };
 page.onInitialized = setupPage;
 page.onLoadFinished = setupPage;
 
 page.onNavigationRequested = function() {
 	//console.log('navigating to', arguments[0]);
+	page.is_loaded = false;
+	page.is_loading = true;
 };
 
 page.onLoadStarted = function() {
+	//console.log('page load started');
 	page.is_loaded = false;
 	page.is_loading = true;
 };
 
 
-page.onConsoleMessage = function(message) {
-	//console.log('CONSOLE:', message);
+page.onError = function() {
 };
+
+
+page.onConsoleMessage = function(message) {
+	if (_options.debug) {
+		_logger.comment('    // ', message);
+	}
+};
+
 
 function nextTestFile() {
 	// Clean up after ourselves
@@ -161,7 +189,12 @@ function passCurrentAction() {
 		_logger.log('  ✓ ' + message);
 		_total_actions++;
 	}
-	nextAction();
+
+	// If the previous action resulted in a page (re)load we need to give it
+	// some time to trigger the onNavigationRequested event. Until the next
+	// page is loaded, the next action should fail
+	setTimeout(nextAction, 5);
+	//nextAction();
 }
 
 

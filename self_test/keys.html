@@ -1,36 +1,49 @@
 
 <script src="assets/jquery.min.js"></script>
-<input>
+
+<form>
+	<input type="text" id="text">
+	<input type="reset">
+</form>
 
 <div id="result" style="background:yellow;"></div>
 
 <script>
+	$('form').on('submit', function() {
+		return false;
+	});
+
+
 	var $result = $('#result');
 
 
-	/*
-	$('input').on('keyup keypress keydown', function(e) {
-		$result.append('<div>' + e.type + ' ' + e.which + ' ' + e.keyCode + '</div>');
-		console.log('<div>' + e.type + ' ' + e.which + ' ' + e.keyCode + '</div>');
+	var keys = {
+		8: 'backspace',
+		46: 'delete',
+		37: 'left',
+		38: 'up',
+		39: 'right',
+		40: 'down',
+		9:  'tab',
+		13: 'enter',
+		32: 'space',
+		27: 'escape'
+	};
 
+	$(':text').on('click', function(e) {
+		console.log('input clicked');
 	});
-	*/
 
-    var keys = {
-        8: 'backspace',
-        46: 'delete',
-        37: 'left',
-        38: 'up',
-        39: 'right',
-        40: 'down',
-        9:  'tab',
-        13: 'enter',
-        32: 'space',
-        27: 'escape'
-    };
+	$(':text').on('focus', function(e) {
+		console.log('input focused');
+	});
 
-	$('input').on('keydown', function(e) {
-		var key = keys[e.which];
+	$(':text').on('keydown', function(e) {
+		//console.log('input', e.which);
+		var key = e.which;
+		if (e.which in keys) {
+			key = keys[e.which];
+		}
 		$result.append('<div>' + key + '</div>');
 	});
 </script>

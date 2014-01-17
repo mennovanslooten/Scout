@@ -1,25 +1,46 @@
 open         ./self_test/keys.html
 
-type         input    <Enter>
+## Try common special keys
+type         :text    <Enter>
 assertText   #result  enter
 
-type         input    <Up>
+type         :text    <Up>
 assertText   #result  up
 
-type         input    <Down>
+type         :text    <Down>
 assertText   #result  down
 
-type         input    <Left>
+type         :text    <Left>
 assertText   #result  left
 
-type         input    <Right>
+type         :text    <Right>
 assertText   #result  right
 
-type         input    <Tab>
+type         :text    <Tab>
 assertText   #result  tab
 
-# type         input    <Backspace>
-# assertText   #result  backspace
+## Try special keys that affect text input
+type         :text    123<Up>abc
+assertValue  :text    abc123
 
-# type         input    <Escape>
-# assertText   #result  escape
+click        :reset
+type         :text    123<Home>abc
+assertValue  :text    abc123
+
+click        :reset
+type         :text    123<Home>abc<End>xyz
+assertValue  :text    abc123xyz
+
+click        :reset
+type         :text    123<Left>abc
+assertValue  :text    12abc3
+
+click        :reset
+type         :text    123<Backspace>
+assertValue  :text    12
+
+
+click        :reset
+type         :text    123<Home><Delete>
+assertValue  :text    23
+
