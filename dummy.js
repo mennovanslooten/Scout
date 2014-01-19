@@ -72,9 +72,9 @@ page.onInitialized = setupPage;
 page.onLoadFinished = setupPage;
 
 page.onNavigationRequested = function() {
-	//console.log('navigating to', arguments[0]);
-	page.is_loaded = false;
-	page.is_loading = true;
+	//console.log('navigating to', arguments[0], arguments[1]);
+	//page.is_loaded = false;
+	//page.is_loading = true;
 };
 
 page.onLoadStarted = function() {
@@ -192,9 +192,8 @@ function passCurrentAction() {
 
 	// If the previous action resulted in a page (re)load we need to give it
 	// some time to trigger the onNavigationRequested event. Until the next
-	// page is loaded, the next action should fail
+	// page is loaded, the next action will fail
 	setTimeout(nextAction, 5);
-	//nextAction();
 }
 
 
