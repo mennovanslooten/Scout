@@ -17,9 +17,9 @@ presses the enter key. Finally, it checks some properties of the results page.
 open               http://www.google.com/
 assertTitle        Google
 assertExists       form[action="/search"]
-type               input[name="q"]              dummy<Enter>
-assertTitle        dummy - Google zoeken
-assertUrl          q=dummy
+type               input[name="q"]              DummyJS<Enter>
+assertTitle        DummyJS - Google zoeken
+assertUrl          q=DummyJS
 assertMinLength    h3.r                         10
 ```
 
@@ -39,9 +39,9 @@ $ dummyjs demo_tests/google.dummy
   ✓ open                    http://www.google.nl/
   ✓ assertTitle             Google
   ✓ assertExists            form[action="/search"]
-  ✓ type                    input[name="q"]         dummy<Enter>
-  ✓ assertTitle             dummy - Google zoeken
-  ✓ assertUrl               q=dummy
+  ✓ type                    input[name="q"]         DummyJS<Enter>
+  ✓ assertTitle             DummyJS - Google zoeken
+  ✓ assertUrl               q=DummyJS
   ✓ assertMinLength         h3.r                    10
 PASS: Executed 7 actions in 1s.
 ```
@@ -172,6 +172,7 @@ directory, even if they are in deeper directories.
 
     $ dummyjs /path/to/my/tests
 
+## Why?
 
-
-
+In case you're wondering "Why do we need _another_ way to write Functional
+Tests?" you probably don't and that's fine. 
