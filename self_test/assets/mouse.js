@@ -1,5 +1,6 @@
 (function($) {
-	$('.mouse_target').on('click mouseenter mouseleave', function(e) {
+	$('.mouse_target').on('click mouseenter mouseleave dblclick', function(e) {
+		console.log(this.className, ' - ' , e.type);
 		$(this).addClass(e.type);
 	});
 

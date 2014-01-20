@@ -17,14 +17,14 @@ presses the enter key. Finally, it checks some properties of the results page.
 open               http://www.google.com/
 assertTitle        Google
 assertExists       form[action="/search"]
-type               input[name="q"]              dummy<enter>
+type               input[name="q"]              dummy<Enter>
 assertTitle        dummy - Google zoeken
 assertUrl          q=dummy
 assertMinLength    h3.r                         10
 ```
 
 Note the lack of callbacks or `waitFor` statements. **DummyJS waits between 
-steps for processes like DOM updates and page loads to complete.**
+steps for processes like DOM updates and page loads to complete.** 
 
 Running this test in a terminal would produce something like this:
 
@@ -39,7 +39,7 @@ $ dummyjs demo_tests/google.dummy
   ✓ open                    http://www.google.nl/
   ✓ assertTitle             Google
   ✓ assertExists            form[action="/search"]
-  ✓ type                    input[name="q"]         dummy<enter>
+  ✓ type                    input[name="q"]         dummy<Enter>
   ✓ assertTitle             dummy - Google zoeken
   ✓ assertUrl               q=dummy
   ✓ assertMinLength         h3.r                    10
@@ -68,10 +68,10 @@ already. It's possible this command needs to be run with admin priviliges:
 Test your installation by running an empty test
 
 ```
-$ touch test.dummy && dummyjs test.dummy
+$ touch mytest.dummy && dummyjs mytest.dummy
 
 ################################################################
-# Starting ./test.dummy (0 actions)
+# Starting ./mytest.dummy (0 actions)
 ################################################################
 PASS: Executed 0 actions in 0s.
 ```
@@ -128,7 +128,7 @@ is *injected* into the page.
 
 User actions are instructions to DummyJS to simulate an action performed by
 a user. This is the "Functional" part in "Functional Testing". Currently, 
-there are three actions:
+these are the actions:
 
 ```apache
 # "open" loads the provided URL into a headless browser instance.
@@ -137,6 +137,12 @@ open        http://google.com
 # "click" simulates a user moving the mouse to the first element that matches
 # the selector and then performing a left mouse click. 
 click       .some-css-selector
+
+# Alternatively, you can pass `x, y` pixel coordinates in stead of a selector:
+click       123, 456
+
+# Double-clicking is also supported:
+dblclick    .some-css-selector
 
 # "type" performs a "click" and then simulates the keystrokes needed to type
 # the text
@@ -153,12 +159,12 @@ into view before the actions are performed.
 If you have installed DummyJS with npm and saved your DummyJS test file with a 
 `.dummy` extension, you can run it from the command line:
 
-    $ dummyjs test.dummy
+    $ dummyjs mytest.dummy
 
 This will run this single test file. If you want to run more than one test, you
 can add them as arguments:
 
-    $ dummyjs test.dummy anothertest.dummy yetanother.dummy
+    $ dummyjs mytest.dummy anothertest.dummy yetanother.dummy
 
 You can combine test files in a directory and run all of them by passing the
 directory name as an argument. Note: this will run *all* `.dummy` files in the

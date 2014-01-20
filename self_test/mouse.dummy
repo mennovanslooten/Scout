@@ -12,3 +12,8 @@ click            .mouse_target_3
 click            .mouse_target_4
 click            .mouse_target_5
 click            .mouse_target_6
+
+moveMouseTo      800,800
+assertHasClass   .mouse_target_7            mouseenter
+dblclick         .mouse_target_7
+assertHasClass   .mouse_target_7            dblclick

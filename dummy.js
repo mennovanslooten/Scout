@@ -9,6 +9,7 @@
 	[ ] Log files
 	[ ] Failure messages
 	[ ] Generic <special> key handlers
+	[ ] SlimerJS compatibility?
 */
 
 phantom.clearCookies();
