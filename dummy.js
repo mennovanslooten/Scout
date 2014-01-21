@@ -1,14 +1,14 @@
 /*
 	TODO:
 	[ ] CLI arguments:
-		[ ] Continue on fail
-		[ ] Screendumps
+		[ ] Behavior on fail (continue, next, stop)
+		[X] Screendumps
 	[ ] Viewport size config action
 	[ ] Detect colorized output support
 	[ ] Dynamically erase/create screendump dir
 	[ ] Log files
 	[ ] Failure messages
-	[ ] Generic <special> key handlers
+	[X] Generic <special> key handlers
 	[ ] SlimerJS compatibility?
 */
 
@@ -27,12 +27,6 @@ var _total_actions     = 0;
 var _skipped           = [];
 var _waitfor_pause     = 10;
 var _waitfor_timeout   = 5000;
-
-/*
-for (var key in page.event.key) {
-	console.log(key, page.event.key[key]);
-}
-//*/
 
 page.is_loaded = false;
 page.is_loading = false;
@@ -121,16 +115,6 @@ function waitFor(conditionCallback, passCallback, failCallback, timeout) {
 	} else {
 		failCallback();
 	}
-}
-
-
-function parseSelector(selector) {
-	var inside_quotes = /^"(.+)"$/;
-	if (inside_quotes.test(selector)) {
-		//var text = selector.match(inside_quotes)[1];
-		return ':contains(' + selector + ')';
-	}
-	return selector;
 }
 
 
