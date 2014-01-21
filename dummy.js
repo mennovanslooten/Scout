@@ -4,6 +4,7 @@
 		[ ] Behavior on fail (continue, next, stop)
 		[X] Screendumps
 	[ ] Viewport size config action
+	[ ] Better <select> handling
 	[ ] Detect colorized output support
 	[ ] Dynamically erase/create screendump dir
 	[ ] Log files
