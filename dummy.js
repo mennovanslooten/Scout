@@ -15,21 +15,18 @@
 phantom.clearCookies();
 
 var _start_time        = new Date();
+var _cli_args          = require('./lib/arguments').parseArguments();
 var _test_files        = require('./lib/testreader').readTestFiles();
 var screendump         = require('./lib/screendump');
 var page               = require('webpage').create();
 var _action_handlers   = require('./lib/action_handlers').action_handlers;
 var _logger            = require('./lib/logger');
-var system = require('system');
 var _current_test_file = null;
 var _current_action    = null;
 var _total_actions     = 0;
 var _skipped           = [];
 var _waitfor_pause     = 10;
 var _waitfor_timeout   = 5000;
-var _options           = {
-	debug: false
-};
 
 /*
 for (var key in page.event.key) {
@@ -45,17 +42,6 @@ page.viewportSize = {
 	width: 1280,
 	height: 1280
 };
-
-// Translate --optionName args to _option.optionName = true;
-var args = system.args.slice(1);
-args.forEach(function(arg) {
-	var option = /^--(\w+)$/;
-	var matches = arg.match(option);
-	if (matches && matches.length) {
-		_options[matches[1]] = true;
-	}
-});
-
 
 function setupPage() {
 	if (page.is_loaded) return;
@@ -90,7 +76,7 @@ page.onError = function() {
 
 
 page.onConsoleMessage = function(message) {
-	if (_options.debug) {
+	if (_cli_args.debug) {
 		_logger.comment('    // ', message);
 	}
 };
@@ -199,7 +185,8 @@ function passCurrentAction() {
 
 
 function failCurrentAction() {
-	//screendump.dump('fail-' + _current_action.type);
+	if (_cli_args.faildump) screendump.dump('faildump' + _current_test_file.path.replace(/\.?\//g, '__'));
+
 	var args = [_current_action.type].concat(_current_action.args);
 	message = tabularize(args);
 	_logger.error('  ✗ ' + message);
