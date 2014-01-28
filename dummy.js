@@ -6,8 +6,8 @@
 		[ ] Behavior on fail (continue, next, stop)
 		[X] Colorize output
 		[X] Screendumps
-		[ ] Waitfor timeout
-		[ ] Waitfor step
+		[X] Waitfor timeout
+		[X] Waitfor step
 	[ ] Viewport size config action
 	[X] Better <select> handling
 	[-] Detect colorized output support
