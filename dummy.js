@@ -6,6 +6,8 @@
 		[ ] Behavior on fail (continue, next, stop)
 		[X] Colorize output
 		[X] Screendumps
+		[ ] Waitfor timeout
+		[ ] Waitfor step
 	[ ] Viewport size config action
 	[X] Better <select> handling
 	[-] Detect colorized output support
@@ -30,7 +32,7 @@ var _current_test_file = null;
 var _current_action    = null;
 var _total_actions     = 0;
 var _skipped           = [];
-var _waitfor_pause     = 10;
+var _waitfor_step      = 10;
 var _waitfor_timeout   = 5000;
 
 page.is_loaded = false;
@@ -114,8 +116,8 @@ function waitFor(conditionCallback, passCallback, failCallback, timeout) {
 			passCallback();
 		} else {
 			setTimeout(function() {
-				waitFor(conditionCallback, passCallback, failCallback, timeout - _waitfor_pause);
-			}, _waitfor_pause);
+				waitFor(conditionCallback, passCallback, failCallback, timeout - _cli_args.step);
+			}, _cli_args.step);
 		}
 	} else {
 		failCallback();
@@ -149,7 +151,7 @@ function nextAction() {
 			failCurrentAction,
 
 			// ...which is this long:
-			_waitfor_timeout);
+			_cli_args.timeout);
 	} else {
 		failCurrentAction();
 	}
