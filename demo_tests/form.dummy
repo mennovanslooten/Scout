@@ -25,10 +25,9 @@ assertText    #text + dd               Hello, world.
 assertText    #password + dd           hunter2
 assertText    #select + dd             option two
 
-# TODO: Multiple selects
 assertText    #select_multiple + dd    option two
-
 assertText    #select_multiple ~ dd    option four
+
 assertText    #textarea + dd           Lorem ipsum dolor sit amet
 assertText    #check + dd              one
 assertText    #check ~ dd              three
