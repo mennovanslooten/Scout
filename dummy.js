@@ -24,7 +24,7 @@ var _cli_args          = require('./lib/arguments').parseArguments();
 var _test_files        = require('./lib/testreader').readTestFiles();
 var screendump         = require('./lib/screendump');
 var page               = require('webpage').create();
-var _action_handlers   = require('./lib/action_handlers').action_handlers;
+var _actions           = require('./lib/actions').actions;
 var _logger            = require('./lib/logger');
 var _current_test_file = null;
 var _current_action    = null;
@@ -131,7 +131,7 @@ function nextAction() {
 		return;
 	}
 
-	var handler = _action_handlers[_current_action.type];
+	var handler = _actions[_current_action.type];
 	var args = [_current_action.type].concat(_current_action.args);
 
 	if (handler) {
@@ -139,7 +139,7 @@ function nextAction() {
 
 			// Keep executing until it returns true
 			function() {
-				return handler.apply(_action_handlers, _current_action.args);
+				return handler.apply(_actions, _current_action.args);
 			},
 
 			// Run after true is returned
@@ -151,7 +151,6 @@ function nextAction() {
 			// ...which is this long:
 			_waitfor_timeout);
 	} else {
-		// utils.dump(_current_action);
 		failCurrentAction();
 	}
 }
@@ -161,7 +160,7 @@ function passCurrentAction() {
 	if (_current_action.type !== 'log') {
 		//screendump.dump('pass-' + _current_action.type);
 		var args = [_current_action.type].concat(_current_action.args);
-		message = tabularize(args);
+		message = _logger.tabularize(args);
 		_logger.log('  ✓ ' + message);
 		_total_actions++;
 	}
@@ -177,7 +176,7 @@ function failCurrentAction() {
 	if (_cli_args.faildump) screendump.dump('faildump' + _current_test_file.path.replace(/\.?\//g, '__'));
 
 	var args = [_current_action.type].concat(_current_action.args);
-	message = tabularize(args);
+	message = _logger.tabularize(args);
 	_logger.error('  ✗ ' + message);
 	_skipped.push(_current_test_file.path);
 	nextTestFile();
@@ -207,18 +206,6 @@ function done() {
 }
 
 
-function tabularize(args) {
-	var result = '';
-	args.forEach(function(item) {
-		result += item;
-		if (item.length < 25) {
-			result += new Array(25 - item.length).join(' ');
-		} else {
-			result += '    ';
-		}
-	});
-	return result;
-}
 
 
 // Get the party started
