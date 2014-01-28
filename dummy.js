@@ -17,6 +17,7 @@
 	[X] Generic <special> key handlers
 	[ ] SlimerJS compatibility?
 	[ ] assertCSS    prop    value
+	[ ] Really think about when to test for visibility
 */
 
 phantom.clearCookies();
