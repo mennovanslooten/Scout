@@ -40,6 +40,9 @@ assertMaxLength     .assertMaxLength > *   5
 choose              .choose                Value 3
 assertValue         .choose                3
 
+choose              .choose-multiple       Value 1  Value 2
+assertValue         .choose-multiple       1,2
+
 type                .type-1                Lorem ipsum
 type                .type-2                Lorem ipsum
 type                .type-3                Lorem ipsum

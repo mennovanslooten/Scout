@@ -1,16 +1,20 @@
 /*
 	TODO:
+	[ ] Actions & Asserts
+		[ ] Save succesful tests screendump and compare with crrent action
 	[ ] CLI arguments:
 		[ ] Behavior on fail (continue, next, stop)
+		[X] Colorize output
 		[X] Screendumps
 	[ ] Viewport size config action
-	[ ] Better <select> handling
-	[ ] Detect colorized output support
-	[ ] Dynamically erase/create screendump dir
+	[X] Better <select> handling
+	[-] Detect colorized output support
+	[-] Dynamically erase/create screendump dir
 	[ ] Log files
 	[ ] Failure messages
 	[X] Generic <special> key handlers
 	[ ] SlimerJS compatibility?
+	[ ] assertCSS    prop    value
 */
 
 phantom.clearCookies();

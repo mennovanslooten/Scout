@@ -5,7 +5,7 @@ type          input[type="text"]        Hello, world.
 type          input[type="password"]    hunter2
 choose        select                    option two
 choose        select[multiple]          option two    option four
-type          textarea                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+type          textarea                  Lorem ipsum dolor sit amet
 
 click         input[type="checkbox"][value="one"]
 click         input[type="checkbox"][value="three"]
@@ -26,10 +26,10 @@ assertText    #password + dd           hunter2
 assertText    #select + dd             option two
 
 # TODO: Multiple selects
-# assertText    #select_multiple + dd    option two
+assertText    #select_multiple + dd    option two
 
 assertText    #select_multiple ~ dd    option four
-assertText    #textarea + dd           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+assertText    #textarea + dd           Lorem ipsum dolor sit amet
 assertText    #check + dd              one
 assertText    #check ~ dd              three
 assertText    #radio + dd              two

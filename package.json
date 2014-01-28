@@ -1,6 +1,6 @@
 {
 	"name": "DummyJS",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"description": "DummyJS is a Functional Testing extension for PhantomJS",
 	"main": "dummy.js",
 	"scripts": {
