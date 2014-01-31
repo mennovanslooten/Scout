@@ -4,20 +4,16 @@
 		[ ] Save succesful tests screendump and compare with crrent action
 	[ ] CLI arguments:
 		[ ] Behavior on fail (continue, next, stop)
-		[X] Colorize output
-		[X] Screendumps
-		[X] Waitfor timeout
-		[X] Waitfor step
 	[ ] Viewport size config action
-	[X] Better <select> handling
-	[-] Detect colorized output support
-	[-] Dynamically erase/create screendump dir
 	[ ] Log files
 	[ ] Failure messages
-	[X] Generic <special> key handlers
 	[ ] SlimerJS compatibility?
 	[ ] assertCSS    prop    value
 	[ ] Really think about when to test for visibility
+	[ ] oninput event support?
+	[ ] Horizontal scrolling support
+		[ ] Use page.scrollPosition()
+			http://phantomjs.org/api/webpage/property/scroll-position.html
 */
 
 phantom.clearCookies();
@@ -26,6 +22,7 @@ var _start_time        = new Date();
 var _cli_args          = require('./lib/arguments').parseArguments();
 var _test_files        = require('./lib/testreader').readTestFiles();
 var screendump         = require('./lib/screendump');
+var webpage            = require('webpage');
 var page               = require('webpage').create();
 var _actions           = require('./lib/actions').actions;
 var _logger            = require('./lib/logger');
@@ -33,17 +30,10 @@ var _current_test_file = null;
 var _current_action    = null;
 var _total_actions     = 0;
 var _skipped           = [];
-var _waitfor_step      = 10;
-var _waitfor_timeout   = 5000;
 
 page.is_loaded = false;
 page.is_loading = false;
 
-
-page.viewportSize = {
-	width: 1280,
-	height: 1280
-};
 
 function setupPage() {
 	if (page.is_loaded) return;
@@ -57,19 +47,24 @@ function setupPage() {
 }
 
 
-page.onInitialized = setupPage;
+
+/*
+page.onInitialized = function() {
+};
+page.onNavigationRequested = function() {
+};
+*/
+
 page.onLoadFinished = setupPage;
 
-page.onNavigationRequested = function() {
-	//console.log('navigating to', arguments[0], arguments[1]);
-	//page.is_loaded = false;
-	//page.is_loading = true;
-};
 
 page.onLoadStarted = function() {
-	//console.log('page load started');
 	page.is_loaded = false;
 	page.is_loading = true;
+	page.scrollPosition = {
+		top: 0,
+		left: 0
+	};
 };
 
 
