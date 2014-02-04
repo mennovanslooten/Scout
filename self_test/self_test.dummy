@@ -67,3 +67,5 @@ assertHasClass      "dolor sit amet"       .textSelector-2
 # EXPERIMENTAL:
 # assertCSS           .assertCSS             color              rgb(255, 0, 0)
 
+# Take screendump   filename               (optional) selector to capture, viewport default
+screendump          retteketet             form

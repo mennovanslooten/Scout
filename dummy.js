@@ -1,5 +1,6 @@
 /*
 	TODO:
+	[ ] API docs
 	[ ] Possible bug: localStorage shouldn't be cleared between page loads in one test
 	[ ] Actions & Asserts
 		[ ] Save succesful tests screendump and compare with crrent action
