@@ -22,8 +22,8 @@ phantom.clearCookies();
 var _start_time        = new Date();
 var _cli_args          = require('./lib/arguments').parseArguments();
 var _test_files        = require('./lib/testreader').readTestFiles();
-var screendump         = require('./lib/screendump');
-var page               = require('webpage').create();
+var _screendump         = require('./lib/screendump');
+var _page               = require('webpage').create();
 var _actions           = require('./lib/actions').actions;
 var _logger            = require('./lib/logger');
 var _current_test_file = null;
@@ -31,48 +31,48 @@ var _current_action    = null;
 var _total_actions     = 0;
 var _skipped           = [];
 
-page.is_loaded = false;
-page.is_loading = false;
+_page.is_loaded = false;
+_page.is_loading = false;
 
 
 function setupPage() {
-	if (page.is_loaded) return;
+	if (_page.is_loaded) return;
 
-	page.evaluate(function() {
+	_page.evaluate(function() {
 		window.localStorage.clear();
 	});
 
-	page.is_loaded = true;
-	page.is_loading = false;
+	_page.is_loaded = true;
+	_page.is_loading = false;
 }
 
 
 
 /*
-page.onInitialized = function() {
+_page.onInitialized = function() {
 };
-page.onNavigationRequested = function() {
+_page.onNavigationRequested = function() {
 };
 */
 
-page.onLoadFinished = setupPage;
+_page.onLoadFinished = setupPage;
 
 
-page.onLoadStarted = function() {
-	page.is_loaded = false;
-	page.is_loading = true;
-	page.scrollPosition = {
+_page.onLoadStarted = function() {
+	_page.is_loaded = false;
+	_page.is_loading = true;
+	_page.scrollPosition = {
 		top: 0,
 		left: 0
 	};
 };
 
 
-page.onError = function() {
+_page.onError = function() {
 };
 
 
-page.onConsoleMessage = function(message) {
+_page.onConsoleMessage = function(message) {
 	if (_cli_args.debug) {
 		_logger.comment('    // ', message);
 	}
@@ -82,7 +82,7 @@ page.onConsoleMessage = function(message) {
 function nextTestFile() {
 	// Clean up after ourselves
 	if (_current_test_file && _current_action) {
-		page.evaluate(function() {
+		_page.evaluate(function() {
 			window.localStorage.clear();
 		});
 	}
@@ -98,8 +98,8 @@ function nextTestFile() {
 	_logger.comment('# Starting ' + _current_test_file.path + ' (' + _current_test_file.actions.length + ' actions)');
 	_logger.comment('################################################################');
 
-	page.is_loaded = false;
-	page.is_loading = false;
+	_page.is_loaded = false;
+	_page.is_loading = false;
 
 	nextAction();
 }
@@ -107,7 +107,7 @@ function nextTestFile() {
 
 function waitFor(conditionCallback, passCallback, failCallback, timeout) {
 	if (timeout > 0) {
-		var is_passed = !page.is_loading && conditionCallback();
+		var is_passed = !_page.is_loading && conditionCallback();
 		if (is_passed) {
 			passCallback();
 		} else {
@@ -156,7 +156,7 @@ function nextAction() {
 
 function passCurrentAction() {
 	if (_current_action.type !== 'log') {
-		//screendump.dump('pass-' + _current_action.type);
+		//_screendump.dump('pass-' + _current_action.type);
 		var args = [_current_action.type].concat(_current_action.args);
 		message = _logger.tabularize(args);
 		_logger.log('  ✓ ' + message);
@@ -171,7 +171,7 @@ function passCurrentAction() {
 
 
 function failCurrentAction() {
-	if (_cli_args.faildump) screendump.dump('faildump' + _current_test_file.path.replace(/\.?\//g, '__'));
+	if (_cli_args.faildump) _screendump.dump('faildump' + _current_test_file.path.replace(/\.?\//g, '__'));
 
 	var args = [_current_action.type].concat(_current_action.args);
 	message = _logger.tabularize(args);
