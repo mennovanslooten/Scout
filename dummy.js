@@ -6,6 +6,7 @@
 		[ ] Configure CLI options at start of .dummy file
 		[ ] Cookie contents test
 	[ ] CLI arguments:
+		[ ] Help
 		[ ] Behavior on fail (continue, next, stop)
 	[X] Viewport size config action
 		[X] Resize action with resize event
@@ -32,14 +33,13 @@ var _logger            = require('./lib/logger');
 var _current_test_file = null;
 var _current_action    = null;
 var _total_actions     = 0;
-var _skipped           = [];
+var _failed            = [];
 
 
 function nextTestFile() {
 	_current_test_file = _test_files.shift();
 	if (!_current_test_file) {
-		done();
-		return;
+		return done();
 	}
 
 
@@ -77,8 +77,6 @@ function nextAction() {
 	}
 
 	var handler = _actions[_current_action.type];
-	var args = [_current_action.type].concat(_current_action.args);
-
 	if (handler) {
 		waitFor(
 
@@ -123,7 +121,7 @@ function failCurrentAction() {
 	var args = [_current_action.type].concat(_current_action.args);
 	message = _logger.tabularize(args);
 	_logger.error('  ✗ ' + message);
-	_skipped.push(_current_test_file.path);
+	_failed.push(_current_test_file.path);
 	nextTestFile();
 }
 
@@ -134,11 +132,11 @@ function done() {
 	var total_time = Math.round((new Date().valueOf() - _start_time) / 1000);
 	var message = 'Executed ' + _total_actions + ' actions';
 
-	if (_skipped.length) {
+	if (_failed.length) {
 		exit_code = 1;
 		result = 'FAIL';
-		message += ', Failed ' + _skipped.length + ' test files:';
-		message += ' in ' + _skipped.join(', ');
+		message += ', Failed ' + _failed.length + ' test files:';
+		message += ' in ' + _failed.join(', ');
 	} else {
 		message += ' in ' + total_time + 's.';
 	}
