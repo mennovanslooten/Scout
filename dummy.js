@@ -4,7 +4,8 @@
 		[ ] Save succesful tests screendump and compare with crrent action
 	[ ] CLI arguments:
 		[ ] Behavior on fail (continue, next, stop)
-	[ ] Viewport size config action
+	[X] Viewport size config action
+		[X] Resize action with resize event
 	[ ] Log files
 	[ ] Failure messages
 	[ ] SlimerJS compatibility?
@@ -12,7 +13,7 @@
 	[ ] Really think about when to test for visibility
 	[ ] oninput event support?
 	[ ] Horizontal scrolling support
-		[ ] Use page.scrollPosition()
+		[X] Use page.scrollPosition()
 			http://phantomjs.org/api/webpage/property/scroll-position.html
 */
 
@@ -22,7 +23,6 @@ var _start_time        = new Date();
 var _cli_args          = require('./lib/arguments').parseArguments();
 var _test_files        = require('./lib/testreader').readTestFiles();
 var screendump         = require('./lib/screendump');
-var webpage            = require('webpage');
 var page               = require('webpage').create();
 var _actions           = require('./lib/actions').actions;
 var _logger            = require('./lib/logger');

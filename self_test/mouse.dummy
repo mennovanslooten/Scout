@@ -17,3 +17,5 @@ moveMouseTo      800,800
 assertHasClass   .mouse_target_7            mouseenter
 dblclick         .mouse_target_7
 assertHasClass   .mouse_target_7            dblclick
+
+resize           800x600
