@@ -1,7 +1,10 @@
 /*
 	TODO:
+	[ ] Possible bug: localStorage shouldn't be cleared between page loads in one test
 	[ ] Actions & Asserts
 		[ ] Save succesful tests screendump and compare with crrent action
+		[ ] Configure CLI options at start of .dummy file
+		[ ] Cookie contents test
 	[ ] CLI arguments:
 		[ ] Behavior on fail (continue, next, stop)
 	[X] Viewport size config action
@@ -22,8 +25,8 @@ phantom.clearCookies();
 var _start_time        = new Date();
 var _cli_args          = require('./lib/arguments').parseArguments();
 var _test_files        = require('./lib/testreader').readTestFiles();
-var _screendump         = require('./lib/screendump');
-var _page               = require('webpage').create();
+var _screendump        = require('./lib/screendump');
+var _page              = require('./lib/page').page;
 var _actions           = require('./lib/actions').actions;
 var _logger            = require('./lib/logger');
 var _current_test_file = null;
@@ -31,72 +34,16 @@ var _current_action    = null;
 var _total_actions     = 0;
 var _skipped           = [];
 
-_page.is_loaded = false;
-_page.is_loading = false;
-
-
-function setupPage() {
-	if (_page.is_loaded) return;
-
-	_page.evaluate(function() {
-		window.localStorage.clear();
-	});
-
-	_page.is_loaded = true;
-	_page.is_loading = false;
-}
-
-
-
-/*
-_page.onInitialized = function() {
-};
-_page.onNavigationRequested = function() {
-};
-*/
-
-_page.onLoadFinished = setupPage;
-
-
-_page.onLoadStarted = function() {
-	_page.is_loaded = false;
-	_page.is_loading = true;
-	_page.scrollPosition = {
-		top: 0,
-		left: 0
-	};
-};
-
-
-_page.onError = function() {
-};
-
-
-_page.onConsoleMessage = function(message) {
-	if (_cli_args.debug) {
-		_logger.comment('    // ', message);
-	}
-};
-
 
 function nextTestFile() {
-	// Clean up after ourselves
-	if (_current_test_file && _current_action) {
-		_page.evaluate(function() {
-			window.localStorage.clear();
-		});
-	}
-
-	_current_action = null;
 	_current_test_file = _test_files.shift();
 	if (!_current_test_file) {
 		done();
 		return;
 	}
 
-	_logger.comment('\n################################################################');
-	_logger.comment('# Starting ' + _current_test_file.path + ' (' + _current_test_file.actions.length + ' actions)');
-	_logger.comment('################################################################');
+
+	_logger.title('Starting ' + _current_test_file.path + ' (' + _current_test_file.actions.length + ' actions)');
 
 	_page.is_loaded = false;
 	_page.is_loading = false;
@@ -202,8 +149,6 @@ function done() {
 	_logger[result.toLowerCase()](message);
 	phantom.exit(exit_code);
 }
-
-
 
 
 // Get the party started
