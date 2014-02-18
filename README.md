@@ -14,7 +14,7 @@ presses the enter key. Finally, it checks some properties of the results page.
 
 ```apache
 ## Google search retrieves 10 or more results
-open               http://www.google.com/
+open               http://www.google.nl/
 assertTitle        Google
 assertExists       form[action="/search"]
 type               input[name="q"]              DummyJS<Enter>
@@ -52,18 +52,14 @@ Step 1 - clone this github repo:
 
     $ git clone https://github.com/mennovanslooten/DummyJS.git
 
-Step 2 - cd into `DummyJS`:
+Step 2 - install with [npm](https://npmjs.org/):
 
-    $ cd DummyJS
-
-Step 3 - install with [npm](https://npmjs.org/):
-
-    $ npm install . -g
+    $ npm install DummyJS -g
 
 This will automatically install the PhantomJS dependency if it's not installed
 already. It's possible this command needs to be run with admin priviliges:
 
-    $ sudo npm install . -g
+    $ sudo npm install DummyJS -g
 
 Test your installation by running an empty test
 
