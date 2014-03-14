@@ -1,7 +1,5 @@
 /*
 	TODO:
-	[ ] API docs
-	[ ] Possible bug: localStorage shouldn't be cleared between page loads in one test
 	[ ] Actions & Asserts
 		[ ] Save succesful tests screendump and compare with crrent action
 		[ ] Configure CLI options at start of .dummy file
@@ -9,14 +7,13 @@
 	[ ] CLI arguments:
 		[ ] Help
 		[ ] Behavior on fail (continue, next, stop)
-	[X] Viewport size config action
-		[X] Resize action with resize event
 	[ ] Log files
-	[ ] Failure messages
+	[X] Failure messages
 	[ ] SlimerJS compatibility?
 	[ ] assertCSS    prop    value
 	[ ] Really think about when to test for visibility
 	[ ] oninput event support?
+	[ ] Fix path to phantomjs binary
 	[ ] Horizontal scrolling support
 		[X] Use page.scrollPosition()
 			http://phantomjs.org/api/webpage/property/scroll-position.html
@@ -35,7 +32,7 @@ var _current_test_file = null;
 var _current_action    = null;
 var _total_actions     = 0;
 var _failed            = [];
-
+var _last_action_status = '';
 
 function nextTestFile() {
 	_current_test_file = _test_files.shift();
@@ -55,7 +52,15 @@ function nextTestFile() {
 
 function waitFor(conditionCallback, passCallback, failCallback, timeout) {
 	if (timeout > 0) {
-		var is_passed = !_page.is_loading && conditionCallback();
+		//var is_passed = !_page.is_loading && conditionCallback();
+		var is_passed = false;
+
+		if (!_page.is_loading) {
+			_last_action_status = conditionCallback();
+			//console.log(_last_action_status);
+			is_passed = _last_action_status === '';
+		}
+
 		if (is_passed) {
 			passCallback();
 		} else {
@@ -122,6 +127,7 @@ function failCurrentAction() {
 	var args = [_current_action.type].concat(_current_action.args);
 	message = _logger.tabularize(args);
 	_logger.error('  ✗ ' + message);
+	_logger.error('    ' + _last_action_status);
 	_failed.push(_current_test_file.path);
 	nextTestFile();
 }
