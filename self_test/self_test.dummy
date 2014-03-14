@@ -11,6 +11,7 @@ assertExists     .assertExists
 
 assertVisible    .assertVisible
 
+assertHidden     .assertHidden-0
 assertHidden     .assertHidden-1
 assertHidden     .assertHidden-2
 assertHidden     .assertHidden-3
