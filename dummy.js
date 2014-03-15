@@ -57,7 +57,10 @@ function waitFor(conditionCallback, passCallback, failCallback, timeout) {
 
 		if (!_page.is_loading) {
 			_last_action_status = conditionCallback();
-			//console.log(_last_action_status);
+			if (typeof _last_action_status !== 'string') {
+				_last_action_status = 'Unknown error';
+			}
+
 			is_passed = _last_action_status === '';
 		}
 
