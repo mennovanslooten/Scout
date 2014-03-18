@@ -1,0 +1,22 @@
+open              http://www.reddit.com
+
+## "hot" should be selected by default
+assertHasClass    "hot"                    .selected
+
+## if "new" is clicked, we go to /new/ and "new" should be selected
+click             "new"
+assertPage        /new/
+assertHasClass    "new"                    .selected
+
+## if the "more" link is clicked we go to /subreddits/
+click             #sr-more-link
+assertPage        /subreddits/
+
+## if we search for "programming" and press enter we go to a search result page
+type              input[name="q"]          programming<Enter>
+assertPage        ?q=programming
+
+## the first result should be the /r/programming subreddit
+assertText        #siteTable > .subreddit:first-child    /r/programming
+
+

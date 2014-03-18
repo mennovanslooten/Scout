@@ -1,0 +1,13 @@
+open             http://twitter.com
+
+## http should redirect to https
+assertPage       https://twitter.com
+
+## open the language dropdown
+click            .language-dropdown
+assertVisible    .dropdown-menu
+
+## select Dutch and check if the redirect is correct
+click            "Nederlands"
+assertPage       ?lang=nl
+assertText       .js-current-language     Nederlands
