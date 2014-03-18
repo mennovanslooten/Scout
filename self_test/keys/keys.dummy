@@ -1,4 +1,4 @@
-open         ./self_test/keys.html
+open         ./index.html
 
 ## Try common special keys
 type         :text    <Enter>

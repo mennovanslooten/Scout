@@ -1,7 +1,7 @@
-open             ./self_test/index.html
+open             ./index.html
 assertTitle      DUMMY SELF TEST
-assertUrl        self_test/index.html
-assertPage       self_test/index.html
+assertUrl        base/index.html
+assertPage       base/index.html
 
 assertText       .assertText             Lorem ipsum dolor sit amet
 assertText       .assertText             Lorem ipsum
@@ -55,9 +55,9 @@ assertDisabled      .assertDisabled-1
 assertDisabled      .assertDisabled-2
 
 click               .click-1
-assertUrl           self_test/step-2.html
+assertUrl           base/index-2.html
 click               .click-2
-assertUrl           self_test/index.html
+assertUrl           base/index.html
 
 assertHasClass      .assertHasClass-1      .assertHasClass-2
 assertHasClass      .assertHasClass-2      .assertHasClass-1
