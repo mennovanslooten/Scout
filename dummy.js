@@ -1,22 +1,8 @@
 /*
 	TODO:
-	[ ] Actions & Asserts
-		[ ] Save succesful tests screendump and compare with crrent action
-		[ ] Configure CLI options at start of .dummy file
-		[ ] Cookie contents test
-	[ ] CLI arguments:
-		[ ] Help
-		[ ] Behavior on fail (continue, next, stop)
-	[ ] Log files
-	[X] Failure messages
 	[ ] SlimerJS compatibility?
-	[ ] assertCSS    prop    value
-	[ ] Really think about when to test for visibility
 	[ ] oninput event support?
-	[ ] Fix path to phantomjs binary
 	[ ] Horizontal scrolling support
-		[X] Use page.scrollPosition()
-			http://phantomjs.org/api/webpage/property/scroll-position.html
 */
 
 phantom.clearCookies();
@@ -110,7 +96,8 @@ function nextAction() {
 
 function passCurrentAction() {
 	if (_current_action.type !== 'log') {
-		//_screendump.dump('pass-' + _current_action.type);
+		if (_cli_args.passdump) _screendump.dump('passdump_' + new Date().valueOf());
+
 		var args = [_current_action.type].concat(_current_action.args);
 		message = _logger.tabularize(args);
 		_logger.log('  ✓ ' + message);

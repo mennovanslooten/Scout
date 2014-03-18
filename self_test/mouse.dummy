@@ -1,4 +1,4 @@
-open             ./self_test/mouse.html     1024x768
+open             ./self_test/mouse.html     200x200
 click            .mouse_target_1
 assertHasClass   .mouse_target_1            mouseenter
 assertHasClass   .mouse_target_1            click

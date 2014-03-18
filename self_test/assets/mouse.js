@@ -1,6 +1,7 @@
 (function($) {
 	var $win = $(window);
 	var $doc = $(document);
+	var $viewport_data = $('#viewport_data');
 	console.log('window initial:', $win.width(), $win.height());
 
 
@@ -19,9 +20,16 @@
 		});
 	});
 
-	$doc.on('scroll', function(e) {
-		console.log('scrolling', $doc.scrollTop());
+
+	$doc.on('mousemove click mouseenter mouseleave dblclick', function(e) {
+		console.log(e.type, e.pageX, e.pageY);
 	});
+
+
+	$doc.on('scroll', function(e) {
+		console.log('scrolling', $doc.scrollTop(), $doc.scrollLeft());
+	});
+
 
 	$win.on('resize', function(e) {
 		console.log('window resize:', $win.width(), $win.height());
