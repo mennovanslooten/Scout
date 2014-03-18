@@ -38,35 +38,8 @@ assertMaxLength     .assertMaxLength > *   3
 assertMaxLength     .assertMaxLength > *   4
 assertMaxLength     .assertMaxLength > *   5
 
-choose              .choose                Value 3
-assertValue         .choose                3
-
-choose              .choose-multiple       Value 1  Value 2
-assertValue         .choose-multiple       1,2
-
-type                .type-1                Lorem ipsum
-type                .type-2                Lorem ipsum
-type                .type-3                Lorem ipsum
-assertValue         .type-1                Lorem ipsum
-assertValue         .type-2                Lorem ipsum
-assertValue         .type-3                Lorem ipsum
-
-assertDisabled      .assertDisabled-1
-assertDisabled      .assertDisabled-2
-
-click               .click-1
-assertUrl           base/index-2.html
-click               .click-2
-assertUrl           base/index.html
-
 assertHasClass      .assertHasClass-1      .assertHasClass-2
 assertHasClass      .assertHasClass-2      .assertHasClass-1
 
 assertHasClass      "Lorem ipsum"          .textSelector-1
 assertHasClass      "dolor sit amet"       .textSelector-2
-
-# EXPERIMENTAL:
-# assertCSS           .assertCSS             color              rgb(255, 0, 0)
-
-# Take screendump   filename               (optional) selector to capture, viewport default
-screendump          retteketet             form

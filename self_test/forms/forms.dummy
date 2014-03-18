@@ -1,4 +1,4 @@
-open          ./demo_tests/form/index.html
+open          ./index.html
 
 ## Fill in the form data
 type          input[type="text"]        Hello, world.
@@ -15,7 +15,7 @@ click         input[type="radio"][value="two"]
 click         input[type="submit"]
 
 ## Check if it submits to the correct page
-assertPage    result.html
+assertPage    results.html
 
 ## Check if the page has the correct title
 assertTitle   DUMMY TEST FORM RESULTS
