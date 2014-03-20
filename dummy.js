@@ -1,8 +1,12 @@
 /*
 	TODO:
-	[ ] SlimerJS compatibility?
 	[ ] oninput event support?
-	[ ] Horizontal scrolling support
+	[ ] Password argument replacement masked in log
+	[ ] Comprehensive set of documented example tests
+		[ ] Reddit
+		[ ] Google
+		[ ] Twitter
+		[ ] 
 */
 
 phantom.clearCookies();

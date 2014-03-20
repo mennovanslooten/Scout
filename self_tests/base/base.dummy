@@ -1,29 +1,46 @@
+## This self test tests if all the basic assertions work
 open             ./index.html
+
+## assertTitle and assertPage should match substrings as well
 assertTitle      DUMMY SELF TEST
-assertUrl        base/index.html
 assertPage       base/index.html
 
+## assertUrl converts the argument into a regular expression
+assertUrl        [abse]/\w+.html
+
+## Special selector: "XXX" becomes :textEquals("XXX")
+assertExists     "Lorem ipsum dolor sit amet"
+
+## assertText should match substrings as well
 assertText       .assertText             Lorem ipsum dolor sit amet
 assertText       .assertText             Lorem ipsum
 assertText       .assertText             dolor sit amet
 
+## assertExists just checks if the selector matches anything in the DOM
 assertExists     .assertExists
 
+## assertVisible tests for visibility as well. 
+## Non-zero size, CSS display, visibility and opacity are all tested
 assertVisible    .assertVisible
 
+## assertHidden matches both non-existent elements as well as hidden elements
+## Hidden can be zero height/width, display:none, visibility:hidden and opacity:0
 assertHidden     .assertHidden-0
 assertHidden     .assertHidden-1
 assertHidden     .assertHidden-2
 assertHidden     .assertHidden-3
 
+## assertEmpty checks if the element has no text and no visible child nodes
 assertEmpty      .assertEmpty-1
 assertEmpty      .assertEmpty-2
 assertEmpty      .assertEmpty-3
 assertEmpty      .assertEmpty-4
 
+## assertNotEmpty matches elements with text or a visible child node
 assertNotEmpty      .assertNotEmpty-1
 assertNotEmpty      .assertNotEmpty-2
 
+## assertLength, assertMinLength and assertMaxLength accept only visible elements
 assertLength        .assertLength-0 > *    0
 assertLength        .assertLength-1 > *    1
 assertLength        .assertLength-2 > *    2

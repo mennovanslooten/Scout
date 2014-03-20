@@ -2,7 +2,7 @@ open          ./index.html
 
 ## Fill in the form data
 type          input[type="text"]        Hello, world.
-type          input[type="password"]    hunter2
+type          input[type="password"]    {password}
 choose        select                    option two
 choose        select[multiple]          option two    option four
 type          textarea                  Lorem ipsum dolor sit amet
@@ -22,7 +22,7 @@ assertTitle   DUMMY TEST FORM RESULTS
 
 ## Check if the submitted data is displayed correctly
 assertText    #text + dd               Hello, world.
-assertText    #password + dd           hunter2
+assertText    #password + dd           {password}
 assertText    #select + dd             option two
 
 assertText    #select_multiple + dd    option two
