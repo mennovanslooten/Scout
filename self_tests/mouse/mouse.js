@@ -1,12 +1,14 @@
 (function($) {
 	var $win = $(window);
 	var $doc = $(document);
-	var $viewport_data = $('#viewport_data');
-	console.log('window initial:', $win.width(), $win.height());
+	var $viewport_size = $('#viewport_size');
+	var $scroll_position = $('#scroll_position');
+
+	//console.log('window initial:', $win.width(), $win.height());
 
 
-	$('.mouse_target').on('click mouseenter mouseleave dblclick', function(e) {
-		console.log(this.className, ' - ' , e.type);
+	$('.mouse_target').on('mousedown mouseup click mouseenter mouseleave dblclick', function(e) {
+		// console.log(this.className, ' - ' , e.type);
 		$(this).addClass(e.type);
 	});
 
@@ -22,7 +24,7 @@
 
 
 	$doc.on('mousemove click mouseenter mouseleave dblclick', function(e) {
-		console.log(e.type, e.pageX, e.pageY);
+		// console.log(e.type, e.pageX, e.pageY);
 	});
 
 
@@ -31,8 +33,13 @@
 	});
 
 
-	$win.on('resize', function(e) {
+	function logViewportSize(e) {
+		$viewport_size.text($win.width() + 'x' + $win.height());
 		console.log('window resize:', $win.width(), $win.height());
-	});
+	}
+
+	$win.on('resize', logViewportSize);
+
+	logViewportSize();
 
 })(jQuery, undefined);
