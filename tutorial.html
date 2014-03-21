@@ -202,16 +202,17 @@ assertMinLength  h3.r                     10</pre>
 					Tests are run from the command line:
 				</p>
 
-				<pre><span class="prompt">$</span> dummyjs <em>&lt;testname.dummy&gt;</em></pre>
+				<pre><span class="prompt">$</span> dummyjs <em>&lt;filename&gt;</em></pre>
 
 				<p>
+					Note that test files must have a <code>.dummy</code> extension.
 					You can specify as many tests as you like:
 				</p>
 
-				<pre><span class="prompt">$</span> dummyjs <em>&lt;testname1.dummy&gt;</em> <em>&lt;testname2.dummy&gt;</em> <em>&lt;testname3.dummy&gt;</em></pre>
+				<pre><span class="prompt">$</span> dummyjs <em>&lt;filename1&gt;</em> <em>&lt;filename2&gt;</em> <em>&lt;filename3&gt;</em></pre>
 
 				<p>
-					If you pass a directory name, it will run all of the <code>.dummy</code> tests in the directory (even if they are in sub-directories):
+					If you pass a directory name, it will run all of the tests in the directory (even if they are in sub-directories):
 				</p>
 
 				<pre><span class="prompt">$</span> dummyjs <em>&lt;dirname&gt;</em></pre>
@@ -220,12 +221,13 @@ assertMinLength  h3.r                     10</pre>
 					You can pass directory names and file names together:
 				</p>
 
-				<pre><span class="prompt">$</span> dummyjs <em>&lt;dirname1&gt;</em> <em>&lt;testname1.dummy&gt;</em> <em>&lt;dirname2&gt;</em></pre>
+				<pre><span class="prompt">$</span> dummyjs <em>&lt;dirname1&gt;</em> <em>&lt;filename1&gt;</em> <em>&lt;dirname2&gt;</em></pre>
 
 				<h3>Command line options</h3>
 
 				<p>
 					Besides test names and directory names you can pass a number of options that will alter DummyJS' default behavior.
+					<!-- There are two types of options; there's <code>--optionname</code> which will turn a certain feature on, and <code>--optionname=value</code> which will alter a default -->
 				</p>
 
 				<dl>
