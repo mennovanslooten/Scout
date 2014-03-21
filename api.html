@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Tutorial - DummyJS</title>
+
+        <meta name="author" content="@mennovanslooten">
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
+    </head>
+
+    <body class="home">
+
+		<nav class="main-nav">
+			<div class="inner">
+				<ul class="main-nav-menu">
+					<li><a href="index.html">Home</a></li>
+					<li class="main-nav-menu-selected"><a href="api.html">API</a></li>
+					<li><a href="tutorial.html">Tutorial</a></li>
+				</ul>
+			</div>
+		</nav>
+
+
+        <div class="content-head">
+			<div class="inner">
+				<h1>DummyJS API</h1>
+			</div>
+        </div>
+
+
+		<!--
+		<div class="content">
+			<div class="inner">
+				<p class="intro">
+					DummyJS has two API's: an <a href="#test_api">API for <em>writing</em> tests</a> and an <a href="#cli_api">API for <em>running</em> tests</a>.
+				</p>
+			</div>
+        </div>
+		-->
+
+
+		<div class="content" id="test_api">
+			<div class="inner">
+				<h2>Test API</h2>
+			</div>
+        </div>
+
+
+		<div class="content content-api" id="helpers">
+			<div class="inner">
+				<h3>Helpers</h3>
+
+				<p>Helpers don't influence the test execution and can be used for debugging.</p>
+
+				<div class="api-item">
+					<h4>#</h4>
+					<p>A line starting with <code># </code> is commented.</p>
+					<pre># This is a comment</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>##</h4>
+					<p>Logs the text after the <code>##</code> to the terminal</p>
+					<pre>## This is a log statement</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>screendump</h4>
+					<p>Saves a screendump to disk. It takes two arguments: a mandatory file name (without extension) and an optional selector specifying which part of the screen should be dumped. If no selector is specified, the entire viewport will be dumped.</p>
+					<pre>screendump    entire_viewport</pre>
+					<pre>screendump    partial    .some-selector</pre>
+				</div>
+
+			</div>
+		</div>
+
+
+		<div class="content content-api" id="assertions">
+			<div class="inner">
+				<h3>Assertions</h3>
+
+				<p>Assertions check the page for certain properties. If an assertion fails, it is checked again and again until a certain amount of time has passed. After that time, the current test file is aborted and the next is started.</p>
+
+				<div class="api-item">
+					<h4>assertTitle</h4>
+					<p>Checks if the argument is a substring of the title of the document.</p>
+					<pre>assertTitle    My Site - Homepage</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>assertPage</h4>
+					<p>Checks if the argument is a substring of the page URL.</p>
+					<pre>assertPage    /shop/products</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>assertText</h4>
+					<p>Checks if there is an element that matches the selector that contains the specified text.</p>
+					<pre>assertText    .greeting    Hello, world.</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>assertExists</h4>
+					<p>Checks if there is an element that matches the selector.</p>
+					<pre>assertExists    a[href="#top"]</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>assertVisible</h4>
+					<p>Checks if there is a visible element that matches the selector.</p>
+					<pre>assertVisible    .confirm-dialog</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>assertHidden</h4>
+					<p>Checks if there is a hidden element that matches the selector.</p>
+					<pre>assertHidden    .confirm-dialog</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>assertEmpty</h4>
+					<p>Checks if there is an element that matches the selector that has no visible children.</p>
+					<pre>assertEmpty    #shopping_basket &gt; ul</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>assertNotEmpty</h4>
+					<p>Checks if there is an element that matches the selector that has at least one visible child.</p>
+					<pre>assertNotEmpty    #shopping_basket &gt; ul</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>assertLength</h4>
+					<p>Checks if the number of visible elements matching the selector is equal to the second argument.</p>
+					<pre>assertLength    #shopping_basket li    10</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>assertMinLength</h4>
+					<p>Checks if the number of visible elements matching the selector is at least equal to the second argument.</p>
+					<pre>assertMinLength    #shopping_basket li    6</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>assertMaxLength</h4>
+					<p>Checks if the number of visible elements matching the selector is at most equal to the second argument.</p>
+					<pre>assertMaxLength    #shopping_basket li    15</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>assertValue</h4>
+					<p>Checks if the <code>value</code> attribute of the element matching the selector is equal to the second argument.</p>
+					<pre>assertValue    [name="city"]    Detroit</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>assertHasClass</h4>
+					<p>Checks if there is an element matching the selector that has the second argument as a class name.</p>
+					<pre>assertHasClass    #main_menu li    .selected</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>assertNotHasClass</h4>
+					<p>Checks if there is no element matching the selector that has the second argument as a class name.</p>
+					<pre>assertNotHasClass    #main_menu li    .disabled</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>assertDisabled</h4>
+					<p>Checks if there is an element matching the selector that is <code>disabled</code>.</p>
+					<pre>assertDisabled    input[type="submit"]</pre>
+				</div>
+
+			</div>
+		</div>
+
+
+		<div class="content content-api" id="actions">
+			<div class="inner">
+				<h3>Actions</h3>
+
+				<p>Actions simulate user interaction with the page. Just like assertions, actions can fail.</p>
+
+				<div class="api-item">
+					<h4>open</h4>
+					<p>Opens a URL. It takes two arguments: a mandatory URL and an optional viewport size.</p>
+					<pre>open    http://www.google.com    1024x768</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>moveMouseTo</h4>
+					<p>Moves the mouse pointer. It takes one mandatory arguments which can be either a CSS selector or a set of coordinates on the page.</p>
+					<pre>moveMouseTo    .hideDialog</pre>
+					<pre>moveMouseTo    519, 1204</pre>
+					<p class="note">If a selector is specified, DummyJS will first wait for at least one element matching the selector to become visible. It will then scroll the element into view (if necessary) and then move the mouse to it.</p>
+				</div>
+
+
+				<div class="api-item">
+					<h4>click</h4>
+					<p>Executes a <code>moveMouseTo</code> with the same argument and then a left mouse click.</p>
+					<pre>click    .hideDialog</pre>
+					<pre>click    519, 1204</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>dblclick</h4>
+					<p>Executes a <code>moveMouseTo</code> with the same argument and then a double left mouse click.</p>
+					<pre>dblclick    .toggle</pre>
+				</div>
+
+
+				<div class="api-item">
+					<h4>type</h4>
+					<p>Executes sequential typing of keys into an element. It takes two mandatory arguments: a CSS selector and a string representing the characters that should be typed. This string can contain special instructions in the form of <code>&lt;KeyName&gt;</code> that will simulate keys that don't result in a character, like Tab, Enter, Up and Down.</p>
+					<pre>type    input[name="q"]    This is a test&lt;Enter&gt;</pre>
+					<pre>type    .autocomplete      dummy&lt;Down&gt;&lt;Down&gt;&lt;Enter&gt;</pre>
+					<p class="note">Before typing, DummyJS will first perform a <code>click</code> on the specified element. This includes waiting for the element to become visible, the <code>moveMouseTo</code>, etc.</p>
+				</div>
+
+
+				<div class="api-item">
+					<h4>resize</h4>
+					<p>Resizes the browser (and thus the viewport) to the specified dimensions.</p>
+					<pre>resize    800x600</pre>
+				</div>
+
+			</div>
+		</div>
+
+
+		<div class="content" id="cli_api">
+			<div class="inner">
+				<h2>Command Line API</h2>
+				<p>See <a href="tutorial.html#run">the section on running tests</a> in the tutorial.
+			</div>
+        </div>
+
+
+
+        <hr>
+    
+        <footer>
+			<div class="inner">
+				<p>&copy; 2013 <a href="https://twitter.com/mennovanslooten">@mennovanslooten</a></p>
+			</div>
+        </footer>
+
+
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/main.js"></script>
+
+
+    </body>
+</html>
+
+
+
+
+
+
+
+

@@ -1,0 +1,461 @@
+@import url(Fira/fira.css);
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, input,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, main {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box; }
+
+strong, th {
+  font-weight: bold; }
+
+em, i {
+  font-style: italic; }
+
+input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; }
+
+/*
+    ## CSS transition mixin
+
+    USAGE:
+    1. No arguments:
+        @include transition(); // only use defaults
+
+    2. One argument:
+        // only specify property
+        @include transition(background-color); 
+
+    3. Two arguments:
+        // specify property & easing function
+        @include transition(background-color, linear); 
+
+    4. Three arguments:
+        // specify property, easing function & duration
+        @include transition(background-color, linear, 0.5s); 
+
+    5. Four arguments:
+        // specify property, easing function, duration & delay
+        @include transition(background-color, linear, 0.5s, 3s); 
+
+    6. Named arguments: specify non-defaults
+        @include transition($timing: linear, $delay: 3s);
+*/
+/* mixin for retina background images */
+body {
+  background: #CCC;
+  background: #eee;
+  color: #444;
+  /*
+  font-family: 'Myiad Pro', 'Lucida Grande', sans-serif;
+  font-family: 'Myriad Pro', 'Lucida Grande', sans-serif;
+  font-family: 'Lucida Grande', sans-serif;
+  */
+  font-family: 'Fira Sans', 'Lucida Grande', sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.5;
+  /*letter-spacing: -0.025em;*/
+  	/*
+  	&:after {
+  		width: 60 * $unit;
+  		background: yellow;
+  		position: fixed;
+  		left: 50%;
+  		top: 0;
+  		bottom: 0;
+  		margin-left: -30 * $unit;
+  		content: "";
+  		opacity: 0.1;
+  		border: 0 solid red;
+  		border-right-width: 2 * $unit;
+  		border-left-width: 2 * $unit;
+  	}
+  
+  	&:before {
+  		width: 120 * $unit;
+  		background: yellow;
+  		position: fixed;
+  		left: 50%;
+  		top: 0;
+  		bottom: 0;
+  		margin-left: -60 * $unit;
+  		content: "";
+  		opacity: 0.1;
+  		border: 0 solid red;
+  		border-right-width: 2 * $unit;
+  		border-left-width: 2 * $unit;
+  	}
+  	*/ }
+
+hr {
+  width: auto;
+  border: none;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  margin: 24px 0; }
+
+a:link {
+  color: #0033ff;
+  text-decoration: none; }
+a:visited {
+  color: #0024b3; }
+a:hover {
+  color: #000; }
+
+h1, h2, h3, h4 {
+  color: #333;
+  color: #222;
+  margin: 0;
+  padding: 8px 0;
+  font-family: 'Fira Sans', 'Lucida Grande', sans-serif;
+  font-weight: 600; }
+
+h1 {
+  font-size: 48px;
+  line-height: 56px;
+  /*font-size: 2 * 1.5 * 1.5 * 1.5 * $unit;*/ }
+
+h2 {
+  font-size: 32px;
+  line-height: 40px;
+  /*font-size: 2 * 1.5 * 1.5 * $unit;*/ }
+
+h3 {
+  font-size: 24px;
+  line-height: 32px;
+  /*font-size: 2 * 1.5 * $unit;*/
+  padding-bottom: 0; }
+
+h4 {
+  font-size: 16px;
+  line-height: 24px;
+  /*font-size: 2 * $unit;*/
+  font-weight: bold; }
+
+p {
+  margin: 0;
+  padding: 8px 0; }
+
+pre, code {
+  background: white;
+  /*font-family: monospace;*/
+  /*font-family: 'monaco', 'source code pro', 'menlo', 'andale mono', monospace;*/
+  font-family: 'Fira Mono', 'monaco', 'source code pro', 'menlo', 'andale mono', monospace;
+  letter-spacing: 0;
+  font-size: 14px;
+  font-size: 0.8em; }
+
+code {
+  white-space: nowrap;
+  padding: 0 8px; }
+
+.prompt {
+  color: #999; }
+
+pre {
+  padding: 16px; }
+
+.inner {
+  width: 960px;
+  margin: 0 auto; }
+
+.main-nav {
+  background: #CCC;
+  background: #333; }
+
+.main-nav-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: right; }
+  .main-nav-menu > li {
+    display: inline-block;
+    margin: 0; }
+    .main-nav-menu > li > a {
+      color: #FFF;
+      font-weight: bold;
+      display: block;
+      padding: 16px 24px;
+      -webkit-transition-property: all;
+      -moz-transition-property: all;
+      transition-property: all;
+      -webkit-transition-timing-function: ease-in-out;
+      -moz-transition-timing-function: ease-in-out;
+      transition-timing-function: ease-in-out;
+      -webkit-transition-delay: 0;
+      -moz-transition-delay: 0;
+      transition-delay: 0;
+      -webkit-transition-duration: 0.1s;
+      -moz-transition-duration: 0.1s;
+      transition-duration: 0.1s; }
+      .main-nav-menu > li > a:hover {
+        padding-bottom: 8px;
+        border-bottom: 8px solid white; }
+  .main-nav-menu > .main-nav-menu-selected {
+    background: black; }
+    .main-nav-menu > .main-nav-menu-selected > a:hover {
+      padding: 16px 24px;
+      border: none; }
+
+.home-head {
+  /*
+   * Clearfix: contain floats
+   *
+   * For modern browsers
+   * 1. The space content is one way to avoid an Opera bug when the
+   *    `contenteditable` attribute is included anywhere else in the document.
+   *    Otherwise it causes space to appear at the top and bottom of elements
+   *    that receive the `clearfix` class.
+   * 2. The use of `table` rather than `block` is only necessary if using
+   *    `:before` to contain the top-margins of child elements.
+   */
+  padding: 24px 0;
+  background: white;
+  background: black;
+  color: white; }
+  .home-head:before, .home-head:after {
+    content: " ";
+    /* 1 */
+    display: table;
+    /* 2 */ }
+  .home-head:after {
+    clear: both; }
+  .home-head h1 {
+    width: 312px;
+    /*padding: 2 * $unit 0;*/
+    float: left;
+    font-size: 64px;
+    line-height: 80px;
+    color: white; }
+  .home-head p {
+    width: 632px;
+    float: right;
+    font-size: 32px;
+    line-height: 40px;
+    font-style: italic; }
+
+.home-examples {
+  padding: 24px 0; }
+
+.home-example {
+  /*
+   * Clearfix: contain floats
+   *
+   * For modern browsers
+   * 1. The space content is one way to avoid an Opera bug when the
+   *    `contenteditable` attribute is included anywhere else in the document.
+   *    Otherwise it causes space to appear at the top and bottom of elements
+   *    that receive the `clearfix` class.
+   * 2. The use of `table` rather than `block` is only necessary if using
+   *    `:before` to contain the top-margins of child elements.
+   */
+  clear: both;
+  padding: 24px 0; }
+  .home-example:before, .home-example:after {
+    content: " ";
+    /* 1 */
+    display: table;
+    /* 2 */ }
+  .home-example:after {
+    clear: both; }
+  .home-example h2 {
+    /*
+    width: 40 * $unit;
+    padding: 2 * $unit;
+    float: left;
+    text-align: right;
+    */
+    padding: 16px 0 16px 320px;
+    /*
+    small {
+    	display: block;
+    	font-size: 2 * $unit;
+    	line-height: 2 * $unit;
+    }
+    */ }
+  .home-example p {
+    width: 640px;
+    padding: 16px 0;
+    float: right;
+    width: 312px;
+    padding: 16px 0;
+    float: left; }
+  .home-example .home-example-more {
+    /*width: 80 * $unit;*/
+    /*float: right;*/
+    padding: 8px 0;
+    clear: right;
+    width: 632px;
+    float: right; }
+  .home-example pre {
+    width: 632px;
+    float: right; }
+
+.content-head {
+  padding: 24px 0;
+  background: white;
+  text-align: center; }
+
+.content .inner {
+  width: 640px; }
+.content h2 {
+  padding-top: 32px; }
+.content h3 {
+  padding-top: 16px; }
+.content pre {
+  /*width: 100 * $unit;*/
+  margin: 16px 0;
+  /*margin-left: -10 * $unit;*/ }
+  .content pre + pre {
+    margin-top: -15px; }
+.content ul {
+  padding: 8px 0; }
+  .content ul li {
+    list-style: square; }
+    .content ul li + li {
+      margin-top: 8px; }
+.content dl {
+  /*
+   * Clearfix: contain floats
+   *
+   * For modern browsers
+   * 1. The space content is one way to avoid an Opera bug when the
+   *    `contenteditable` attribute is included anywhere else in the document.
+   *    Otherwise it causes space to appear at the top and bottom of elements
+   *    that receive the `clearfix` class.
+   * 2. The use of `table` rather than `block` is only necessary if using
+   *    `:before` to contain the top-margins of child elements.
+   */
+  padding: 8px 0; }
+  .content dl:before, .content dl:after {
+    content: " ";
+    /* 1 */
+    display: table;
+    /* 2 */ }
+  .content dl:after {
+    clear: both; }
+  .content dl dt {
+    width: 192px;
+    text-align: right;
+    float: left;
+    clear: both;
+    padding: 0 16px; }
+    .content dl dt ~ dt {
+      margin-top: 8px; }
+  .content dl dd {
+    width: 448px;
+    float: right;
+    clear: right;
+    padding: 0 16px; }
+    .content dl dd ~ dd {
+      margin-top: 8px; }
+.content .intro {
+  padding: 32px 0;
+  font-size: 24px;
+  line-height: 32px;
+  font-style: italic; }
+  .content .intro em {
+    font-weight: bold; }
+.content .note {
+  padding: 16px;
+  margin: 16px 0;
+  border-left: 8px solid #cccccc;
+  border-right: 8px solid #cccccc;
+  font-style: italic;
+  position: relative; }
+  .content .note:before, .content .note:after {
+    content: '';
+    border-top: 8px solid #cccccc;
+    border-bottom: 8px solid #cccccc;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 16px; }
+  .content .note:before {
+    left: 0; }
+  .content .note:after {
+    right: 0; }
+
+/*
+.content-api {
+	.inner {
+		position: relative;
+	}
+
+	h4 {
+		position: absolute;
+		width: 18 * $unit;
+		left: -20 * $unit;
+		text-align: right;
+	}
+
+	p {
+		code:first-child {
+			display: none;
+		}
+	}
+}
+*/
+.api-item {
+  margin: 16px 0;
+  padding: 8px 16px 8px 160px;
+  /*border: 1px solid white;*/
+  background: rgba(255, 255, 255, 0.5);
+  background: #DDD;
+  position: relative; }
+  .api-item h4 {
+    position: absolute;
+    /*width: 18 * $unit;*/
+    /*left: -20 * $unit;*/
+    left: 16px;
+    /*background: white;*/
+    /*text-align: right;*/ }
+
+footer {
+  text-align: center; }

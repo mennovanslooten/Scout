@@ -1,0 +1,247 @@
+@mixin second-border-left($color) {
+    -moz-box-shadow: -1px 0 0 0 $color;
+    -webkit-box-shadow: -1px 0 0 0 $color;
+    box-shadow: -1px 0 0 0 $color;
+}
+
+@mixin transparent-bg($color, $opacity) {
+    background: $color;
+    background: rgba($color, $opacity);
+}
+
+@mixin transparent-color($color, $opacity) {
+    color: $color;
+    color: rgba($color, $opacity);
+}
+
+@mixin border-box {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+@mixin slidefixed {
+    overflow: hidden;
+    -moz-transition: height 0.3s ease-in-out;
+    -webkit-transition: height 0.3s ease-in-out;
+}
+
+
+@mixin slidemaxheight {
+    overflow: hidden;
+    max-height: 0;
+    -moz-transition: max-height 0.6s ease-in-out;
+    -webkit-transition: max-height 0.6s ease-in-out;
+}
+
+@mixin clearfix {
+    /*
+     * Clearfix: contain floats
+     *
+     * For modern browsers
+     * 1. The space content is one way to avoid an Opera bug when the
+     *    `contenteditable` attribute is included anywhere else in the document.
+     *    Otherwise it causes space to appear at the top and bottom of elements
+     *    that receive the `clearfix` class.
+     * 2. The use of `table` rather than `block` is only necessary if using
+     *    `:before` to contain the top-margins of child elements.
+     */
+
+    &:before,
+    &:after {
+        content: " "; /* 1 */
+        display: table; /* 2 */
+    }
+
+    &:after {
+        clear: both;
+    }
+}
+
+
+/*
+    ## CSS transition mixin
+
+    USAGE:
+    1. No arguments:
+        @include transition(); // only use defaults
+
+    2. One argument:
+        // only specify property
+        @include transition(background-color); 
+
+    3. Two arguments:
+        // specify property & easing function
+        @include transition(background-color, linear); 
+
+    4. Three arguments:
+        // specify property, easing function & duration
+        @include transition(background-color, linear, 0.5s); 
+
+    5. Four arguments:
+        // specify property, easing function, duration & delay
+        @include transition(background-color, linear, 0.5s, 3s); 
+
+    6. Named arguments: specify non-defaults
+        @include transition($timing: linear, $delay: 3s);
+*/
+
+@mixin transition($prop: all, $timing: ease-in-out, $duration: 0.3s, $delay: 0) {
+    -webkit-transition-property: $prop;
+       -moz-transition-property: $prop;
+            transition-property: $prop;
+
+    -webkit-transition-timing-function: $timing;
+       -moz-transition-timing-function: $timing;
+            transition-timing-function: $timing;
+
+    -webkit-transition-delay: $delay;
+       -moz-transition-delay: $delay;
+            transition-delay: $delay;
+
+    -webkit-transition-duration: $duration;
+       -moz-transition-duration: $duration;
+            transition-duration: $duration;
+}
+
+/* mixin for retina background images */
+@mixin bg-retina($file, $type, $width, $height) {
+    background-image: url($file + '.' + $type);
+
+    @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+        & {
+            background-image: url($file + '@2x.' + $type);
+            background-size: $width $height;
+        }
+    }
+}
+
+@mixin arrow-up($size: 10px, $color: black) {
+	width: 0; 
+	height: 0; 
+	border-left: $size solid transparent;
+	border-right: $size solid transparent;
+	border-bottom: $size solid $color;
+}
+
+@mixin arrow-down($size: 10px, $color: black) {
+	width: 0; 
+	height: 0; 
+	border-left: $size solid transparent;
+	border-right: $size solid transparent;
+	border-top: $size solid $color;
+}
+
+@mixin arrow-right($size: 10px, $color: black) {
+	width: 0; 
+	height: 0; 
+	border-top: $size solid transparent;
+	border-bottom: $size solid transparent;
+	border-left: $size solid $color;
+}
+
+@mixin arrow-left($size: 10px, $color: black) {
+	width: 0; 
+	height: 0; 
+	border-top: $size solid transparent;
+	border-bottom: $size solid transparent; 
+	border-right: $size solid $color; 
+}
+
+@mixin arrow-on-bottom($size: 10px, $color: black) {
+    &:after {
+        @include arrow-down($size, $color);
+        position: absolute;
+        left: 50%;
+        content: "";
+        margin-left: -$size;
+        bottom: -$size;
+    }
+}
+
+@mixin arrow-on-right($size: 10px, $color: black) {
+    &:after {
+        @include arrow-right($size, $color);
+        position: absolute;
+        top: 50%;
+        content: "";
+        margin-top: -$size;
+        right: -$size;
+    }
+}
+
+@mixin arrow-on-left($size: 10px, $color: black) {
+    &:after {
+        @include arrow-left($size, $color);
+        position: absolute;
+        top: 50%;
+        content: "";
+        margin-top: -$size;
+        left: -$size;
+    }
+}
+
+@mixin arrow-on-top($size: 10px, $color: black) {
+    &:after {
+        @include arrow-up($size, $color);
+        position: absolute;
+        left: 50%;
+        content: "";
+        margin-left: -$size;
+        top: -$size;
+    }
+}
+
+@mixin linear-gradient($direction, $col1, $col2, $col3) {
+    background-color: $col3;
+    background-image: 		  linear-gradient($direction, $col1, $col2);
+    background-image: 	   -o-linear-gradient($direction, $col1, $col2);
+    background-image: 	  -ms-linear-gradient($direction, $col1, $col2);
+    background-image: 	 -moz-linear-gradient($direction, $col1, $col2);
+    background-image: -webkit-linear-gradient($direction, $col1, $col2);
+}
+
+
+
+@mixin menu() {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+
+	> li {
+		padding: 0;
+		margin: 0;
+		display: block;
+
+		> span,
+		> a {
+			display: block;
+			text-decoration: none;
+		}
+	}
+}
+
+
+@mixin inline-menu() {
+	@include menu;
+
+	> li {
+		display: inline-block;
+	}
+}
+
+
+@mixin horizontal-menu() {
+	@include menu;
+	@include clearfix;
+
+	> li {
+		float: left;
+	}
+}
+
+
+@mixin vertical-menu() {
+	@include menu;
+}
+

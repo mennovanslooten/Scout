@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Home - DummyJS</title>
+
+        <meta name="author" content="@mennovanslooten">
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
+    </head>
+
+    <body class="home">
+
+		<nav class="main-nav">
+			<div class="inner">
+				<ul class="main-nav-menu">
+					<li class="main-nav-menu-selected"><a href="index.html">Home</a></li>
+					<li><a href="api.html">API</a></li>
+					<li><a href="tutorial.html">Tutorial</a></li>
+				</ul>
+			</div>
+		</nav>
+
+
+        <div class="home-head">
+			<div class="inner">
+				<h1>DummyJS</h1>
+				<p>The absolute quickest and easiest way to write and run functional tests for websites.</p>
+			</div>
+        </div>
+
+
+		<div class="home-examples">
+			<div class="home-example">
+				<div class="inner">
+					<h2>Install</h2>
+					<p>DummyJS is a command line tool and can be installed with <a href="https://npmjs.org/">git</a> and <a href="https://npmjs.org/">npm</a>.</p>
+					<pre>$ git clone https://github.com/mennovanslooten/DummyJS.git
+$ npm install DummyJS -g</pre>
+					<p class="home-example-more">
+						<a href="tutorial.html#install">More about installing DummyJS</a>
+					</p>
+			</div>
+
+			<div class="home-example">
+				<div class="inner">
+					<h2>Write</h2>
+					<p>Tests are simple lists of commands and asserts.</p>
+					<pre>open             http://my.test.site
+click            .show-greeting
+assertVisible    .greeting</pre>
+					<p class="home-example-more">
+						<a href="tutorial.html#write">More about writing DummyJS tests</a>
+					</p>
+				</div>
+			</div>
+
+			<div class="home-example">
+				<div class="inner">
+					<h2>Run</h2>
+					<p>Tests are run from the command line in <a href="http://phantomjs.org">a headless browser</a>.</p>
+					<pre>$ dummyjs mytest.dummy
+
+############################################################
+# Starting ./mytest.dummy (4 actions)
+############################################################
+
+✓ open                    http://my.test.site
+✓ click                   .show-greeting
+✓ assertVisible           .greeting
+
+PASS: Executed 3 actions in 1s.</pre>
+					<p class="home-example-more">
+						<a href="tutorial.html#run">More about running DummyJS tests</a>
+					</p>
+				</div>
+			</div>
+		</div>
+
+        <hr>
+    
+        <footer>
+			<div class="inner">
+				<p>&copy; 2013 <a href="https://twitter.com/mennovanslooten">@mennovanslooten</a></p>
+			</div>
+        </footer>
+
+
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/main.js"></script>
+
+
+    </body>
+</html>
+
+
+
+
+
+

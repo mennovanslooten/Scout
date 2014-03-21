@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Tutorial - DummyJS</title>
+
+        <meta name="author" content="@mennovanslooten">
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
+    </head>
+
+    <body class="home">
+
+		<nav class="main-nav">
+			<div class="inner">
+				<ul class="main-nav-menu">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="api.html">API</a></li>
+					<li class="main-nav-menu-selected"><a href="tutorial.html">Tutorial</a></li>
+				</ul>
+			</div>
+		</nav>
+
+
+        <div class="content-head">
+			<div class="inner">
+				<h1>DummyJS Tutorial</h1>
+			</div>
+        </div>
+
+
+		<div class="content" id="install">
+			<div class="inner">
+				<h2>Installing DummyJS</h2>
+				<p>
+					Installing DummyJS is easiest with <a href="https://npmjs.org/">npm</a> and <a href="https://npmjs.org/">git</a>.
+					To install DummyJS, open your terminal and clone the repository from GitHub:
+				</p>
+
+				<pre><span class="prompt">$</span> git clone https://github.com/mennovanslooten/DummyJS.git</pre>
+
+				<p>
+					Then, <code>cd</code> into the newly created directory, and run <code>npm install</code>:
+				</p>
+
+				<pre><span class="prompt">$</span> cd DummyJS
+<span class="prompt">$</span> npm install . -g</pre>
+
+				<p>
+					If npm doesn't have the permission to run the install process you will get a long error with this message in the middle:
+				</p>
+
+				<pre>Please try running this command again as root/Administrator.</pre>
+
+				<p>
+					In that case, run the install command again with <code>sudo</code>:
+				</p>
+
+				<pre><span class="prompt">$</span> sudo npm install . -g</pre>
+
+				<p>
+					After the installation completed, you can test if it works by creating and running an empty test:
+				</p>
+
+				<pre><span class="prompt">$</span> touch mytest.dummy && dummyjs mytest.dummy</pre>
+			</div>
+		</div>
+
+		<div class="content" id="write">
+			<div class="inner">
+				<h2>Writing tests</h2>
+
+				<p>
+					A <em>functional test</em> needs to do 2 things:
+				</p>
+
+				<ul>
+					<li><strong>Actions (simulate user interaction)</strong>, e.g. mouse clicks or key presses.</li>
+					<li><strong>Assertions (test the page properties)</strong>, e.g. element visibility or text content.</li>
+				</ul>
+
+				<p>
+					For example, a functional test for a login form would be: open the login page (action)
+
+				<!--
+				<p>
+					For example, let's say we want to test Google search.
+					The most basic test script would look something like this in plain English:
+				</p>
+
+				<ul>
+					<li>Open http://google.com in a browser.</li>
+					<li>Type "this is a test" in the search field and press <code>Enter</code>.</li>
+					<li>Verify there are at least 10 search results.</li>
+				</ul>
+
+				<p>
+					The DummyJS equivalent could look something like this:
+				</p>
+
+				<pre>open               http://www.google.com/
+type               input[name="q"]              this is a test<Enter>
+assertMinLength    h3.r                         10</pre>
+				-->
+				<h3>Creating a test file</h3>
+				<p>
+				<!-- Let's build our first DummyJS test step by step. -->
+					<!-- First, we need to <strong>create a test file</strong>. -->
+					DummyJS test files are plain text files, with a <em>.dummy</em> extension.
+					<!-- For this example, we will create a file called <code>example.dummy</code>. I like to use the terminal to do this: -->
+					To test the installation we already created <em>mytest.dummy</em>.
+					Open this file with your favorite text editor and add the following lines:
+				</p>
+
+				<!--
+				<pre>$ touch example.dummy</pre>
+
+				<p>
+					Now open this file with your favorite text editor and add the following lines:
+				</p>
+				-->
+
+				<pre>open             http://www.google.com/
+type             input[name="q"]          this is a test&lt;Enter&gt;
+assertMinLength  h3.r                     10</pre>
+				
+				<h3>Actions</h3>
+
+				<p>
+					Let's go over this line-by-line.
+					Every line is an <em>instruction</em>.
+					The first line is an instruction for DummyJS to open a page with the Google homepage:
+				</p>
+
+				<pre>open             http://www.google.com/</pre>
+
+				<p>
+					<code>open</code> is an <em>action</em> and the Google URL is the <em>argument</em>.
+					Not surprisingly, this line instructs DummyJS to open the URL.
+					The next line is another instruction, this time to <code>type</code> a sequence of keys into the search field:
+				</p>
+
+				<pre>type             input[name="q"]          this is a test&lt;Enter&gt;</pre>
+
+				<p>
+					The word <code>type</code> is again the action, but this action takes two arguments:
+					a <em>CSS selector</em> to specify the target element (here an <code>&lt;input name="q"&gt;</code> and the text that need to be typed.
+				</p>
+
+				<p>
+					DummyJS will simulate a user typing the characters in quick sucession.
+					You may have guessed that the sequence <code>&lt;Enter&gt;</code> instructs DummyJS to simulate an enter key.
+					DummyJS supports a large number of special keys, like <code>&lt;Up&gt;</code>, <code>&lt;Escape&gt;</code> and <code>&lt;Delete&gt;</code>.
+				</p>
+
+				<p>
+					Note that <strong>DummyJS always waits for the previous instruction to succeed before continuing with the next</strong>, so it will only start typing when the page has been fully loaded.
+				</p>
+
+				<h3>Asserts</h3>
+
+				<pre>assertMinLength  h3.r                     10</pre>
+
+				<p>
+					Instructions starting with "assert" are <em>assertions</em>: tests that verify that a certain statement about the page is true.
+					In this case, DummyJS will check that there are at least 10 <code>&lt;h3 class="r"&gt;</code> elements visible on the page.
+				</p>
+
+				<h3>Waiting for truth</h3>
+
+				<p>
+					Internally, actions are also assertions.
+					The <code>type</code> action, for example, will first perform an <code>assertVisible</code> on the target element since a user can't type in an element that doesn't exist or isn't visible.
+				</p>
+
+				<p>
+					Additionally, if an assertion isn't immediately true, DummyJS will keep on trying until a timeout is reached.
+					This will automatically deal with any delays that occur between user actions and results happening in the page.
+				</p>
+
+				
+			</div>
+		</div>
+
+		<div class="content" id="run">
+			<div class="inner">
+				<h2>Running tests</h2>
+
+				<p>
+					Tests are run from the command line:
+				</p>
+
+				<pre><span class="prompt">$</span> dummyjs <em>&lt;filename&gt;</em></pre>
+
+				<p>
+					You can specify as many tests as you like:
+				</p>
+
+				<pre><span class="prompt">$</span> dummyjs <em>&lt;filename1&gt;</em> <em>&lt;filename2&gt;</em> <em>&lt;filename3&gt;</em></pre>
+
+				<p>
+					If you pass a directory name, it will run all of the tests in the directory (even if they are in sub-directories):
+				</p>
+
+				<pre><span class="prompt">$</span> dummyjs <em>&lt;dirname&gt;</em></pre>
+
+				<p>
+					You can pass directory names and file names together:
+				</p>
+
+				<pre><span class="prompt">$</span> dummyjs <em>&lt;dirname1&gt;</em> <em>&lt;filename1&gt;</em> <em>&lt;dirname2&gt;</em></pre>
+
+				<h3>Command line options</h3>
+
+				<p>
+					Besides test names and directory names you can pass a number of options that will alter DummyJS' default behavior.
+					<!-- There are two types of options; there's <code>--optionname</code> which will turn a certain feature on, and <code>--optionname=value</code> which will alter a default -->
+				</p>
+
+				<dl>
+					<dt><code>--debug</code></dt>
+					<dd>Log <code>console.log()</code> calls made in the browser to the terminal.</dd>
+
+					<dt><code>--faildump</code></dt>
+					<dd>Dump a screenshot to disk if an action or assertion fails.</dd>
+
+					<dt><code>--color</code></dt>
+					<dd>Logs everything in pretty colors to the terminal. If your terminal does not support this it might end up ugly.</dd>
+
+					<dt><code>--timeout=<em>&lt;number&gt;</em></code></dt>
+					<dd>Set the time (in milliseconds) DummyJS will retry actions and assertions before giving up.</dd>
+
+					<dt><code>--step=<em>&lt;number&gt;</em></code></dt>
+					<dd>Set the time (in milliseconds) between two retries.</dd>
+				</dl>
+
+				<p>
+					Command line options can be combined:
+				</p>
+
+
+				<pre><span class="prompt">$</span> dummyjs <em>&lt;filename&gt;</em> --debug --color --timeout=1000</pre>
+
+				<p>
+				</p>
+			</div>
+		</div>
+
+        <hr>
+    
+        <footer>
+			<div class="inner">
+				<p>&copy; 2013 <a href="https://twitter.com/mennovanslooten">@mennovanslooten</a></p>
+			</div>
+        </footer>
+
+
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/main.js"></script>
+
+
+    </body>
+</html>
+
+
+
+
+
+
+
