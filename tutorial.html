@@ -202,16 +202,16 @@ assertMinLength  h3.r                     10</pre>
 					Tests are run from the command line:
 				</p>
 
-				<pre><span class="prompt">$</span> dummyjs <em>&lt;filename&gt;</em></pre>
+				<pre><span class="prompt">$</span> dummyjs <em>&lt;testname.dummy&gt;</em></pre>
 
 				<p>
 					You can specify as many tests as you like:
 				</p>
 
-				<pre><span class="prompt">$</span> dummyjs <em>&lt;filename1&gt;</em> <em>&lt;filename2&gt;</em> <em>&lt;filename3&gt;</em></pre>
+				<pre><span class="prompt">$</span> dummyjs <em>&lt;testname1.dummy&gt;</em> <em>&lt;testname2.dummy&gt;</em> <em>&lt;testname3.dummy&gt;</em></pre>
 
 				<p>
-					If you pass a directory name, it will run all of the tests in the directory (even if they are in sub-directories):
+					If you pass a directory name, it will run all of the <code>.dummy</code> tests in the directory (even if they are in sub-directories):
 				</p>
 
 				<pre><span class="prompt">$</span> dummyjs <em>&lt;dirname&gt;</em></pre>
@@ -220,21 +220,23 @@ assertMinLength  h3.r                     10</pre>
 					You can pass directory names and file names together:
 				</p>
 
-				<pre><span class="prompt">$</span> dummyjs <em>&lt;dirname1&gt;</em> <em>&lt;filename1&gt;</em> <em>&lt;dirname2&gt;</em></pre>
+				<pre><span class="prompt">$</span> dummyjs <em>&lt;dirname1&gt;</em> <em>&lt;testname1.dummy&gt;</em> <em>&lt;dirname2&gt;</em></pre>
 
 				<h3>Command line options</h3>
 
 				<p>
 					Besides test names and directory names you can pass a number of options that will alter DummyJS' default behavior.
-					<!-- There are two types of options; there's <code>--optionname</code> which will turn a certain feature on, and <code>--optionname=value</code> which will alter a default -->
 				</p>
 
 				<dl>
 					<dt><code>--debug</code></dt>
-					<dd>Log <code>console.log()</code> calls made in the browser to the terminal.</dd>
+					<dd>Log <code>console.log()</code> calls made in the browser as well as any JavaScript errors to the terminal.</dd>
 
 					<dt><code>--faildump</code></dt>
 					<dd>Dump a screenshot to disk if an action or assertion fails.</dd>
+
+					<dt><code>--passdump</code></dt>
+					<dd>Dump a screenshot to disk if an action or assertion passes.</dd>
 
 					<dt><code>--color</code></dt>
 					<dd>Logs everything in pretty colors to the terminal. If your terminal does not support this it might end up ugly.</dd>
