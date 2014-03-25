@@ -134,9 +134,10 @@ assertMinLength    h3.r                         10</pre>
 				</p>
 				-->
 
-				<pre>open             http://www.google.com/
-type             input[name="q"]          this is a test&lt;Enter&gt;
-assertMinLength  h3.r                     10</pre>
+				<pre>
+open               http://www.google.com/
+type               input[name="q"]          this is a test&lt;Enter&gt;
+assertMinLength    h3.r                     10</pre>
 				
 				<h3>Actions</h3>
 
@@ -146,7 +147,7 @@ assertMinLength  h3.r                     10</pre>
 					The first line is an instruction for DummyJS to open a page with the Google homepage:
 				</p>
 
-				<pre>open             http://www.google.com/</pre>
+				<pre>open    http://www.google.com/</pre>
 
 				<p>
 					<code>open</code> is an <em>action</em> and the Google URL is the <em>argument</em>.
@@ -154,7 +155,7 @@ assertMinLength  h3.r                     10</pre>
 					The next line is another instruction, this time to <code>type</code> a sequence of keys into the search field:
 				</p>
 
-				<pre>type             input[name="q"]          this is a test&lt;Enter&gt;</pre>
+				<pre>type    input[name="q"]    this is a test&lt;Enter&gt;</pre>
 
 				<p>
 					The word <code>type</code> is again the action, but this action takes two arguments:
@@ -173,7 +174,7 @@ assertMinLength  h3.r                     10</pre>
 
 				<h3>Asserts</h3>
 
-				<pre>assertMinLength  h3.r                     10</pre>
+				<pre>assertMinLength    h3.r    10</pre>
 
 				<p>
 					Instructions starting with "assert" are <em>assertions</em>: tests that verify that a certain statement about the page is true.
