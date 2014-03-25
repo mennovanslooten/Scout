@@ -509,6 +509,7 @@ footer {
 
 	&:after {
 		font-size: 8 * $unit;
+		line-height: 10 * $unit;
 		font-weight: bold;
 		position: absolute;
 		left: 0;

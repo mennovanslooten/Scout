@@ -531,6 +531,7 @@ footer {
   .feature-events:after,
   .feature-tolerance:after {
     font-size: 64px;
+    line-height: 80px;
     font-weight: bold;
     position: absolute;
     left: 0;
