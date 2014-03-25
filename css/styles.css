@@ -208,6 +208,8 @@ pre {
 .main-nav {
   background: #CCC;
   background: #333; }
+  .main-nav .inner {
+    position: relative; }
 
 .main-nav-menu {
   list-style: none;
@@ -242,6 +244,9 @@ pre {
     .main-nav-menu > .main-nav-menu-selected > a:hover {
       padding: 16px 24px;
       border: none; }
+  .main-nav-menu > .main-nav-github {
+    position: absolute;
+    left: 0; }
 
 .home-head {
   /*
@@ -442,14 +447,14 @@ pre {
 	}
 }
 */
-.api-item {
+.xapi-item {
   margin: 16px 0;
   padding: 8px 16px 8px 160px;
   /*border: 1px solid white;*/
   background: rgba(255, 255, 255, 0.5);
   background: #DDD;
   position: relative; }
-  .api-item h4 {
+  .xapi-item h4 {
     position: absolute;
     /*width: 18 * $unit;*/
     /*left: -20 * $unit;*/
@@ -457,5 +462,84 @@ pre {
     /*background: white;*/
     /*text-align: right;*/ }
 
+.api-item {
+  margin: 16px 0;
+  padding: 8px 16px;
+  /*border: 1px solid white;*/
+  background: rgba(255, 255, 255, 0.5);
+  background: #DDD;
+  position: relative; }
+
 footer {
   text-align: center; }
+
+.main-feature h3 {
+  /*text-align: center;*/ }
+
+/*
+.feature-left,
+.feature-right {
+	width: 36 * $unit;
+}
+
+.feature-left {
+	float: left;
+	position: relative;
+
+	&:after {
+		content: "+";
+		position: absolute;
+		right: -6 * $unit;
+		top: 50%;
+		width: 6 * $unit;
+		height: 6 * $unit;
+		text-align: center;
+		font-size: 4 * $unit;
+	}
+}
+
+.feature-right {
+	float: right;
+}
+
+.feature-sum {
+	clear: both;
+}
+*/
+.content-features .inner {
+  position: relative; }
+
+.main-feature {
+  margin: 16px 0;
+  padding: 8px 16px 8px 176px;
+  /*border: 1px solid white;*/
+  background: rgba(255, 255, 255, 0.5);
+  background: #DDD;
+  position: relative; }
+  .main-feature h3 {
+    position: absolute;
+    /*width: 18 * $unit;*/
+    /*left: -20 * $unit;*/
+    left: 16px;
+    /*background: white;*/
+    /*text-align: right;*/
+    width: 144px; }
+
+.feature-events,
+.feature-tolerance {
+  margin-bottom: 80px; }
+  .feature-events:after,
+  .feature-tolerance:after {
+    font-size: 64px;
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -80px;
+    text-align: center; }
+
+.feature-events:after {
+  content: "+"; }
+
+.feature-tolerance:after {
+  content: "="; }

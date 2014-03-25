@@ -148,6 +148,10 @@ pre {
 .main-nav {
 	background: #CCC;
 	background: #333;
+
+	.inner {
+		position: relative;
+	}
 }
 
 .main-nav-menu {
@@ -180,6 +184,11 @@ pre {
 			padding: 2 * $unit 3 * $unit;
 			border: none;
 		}
+	}
+
+	> .main-nav-github {
+		position: absolute;
+		left: 0;
 	}
 }
 
@@ -398,7 +407,7 @@ pre {
 }
 */
 
-.api-item {
+.xapi-item {
 	margin: 2 * $unit 0;
 	padding: 1 * $unit 2 * $unit 1 * $unit 20 * $unit;
 	/*border: 1px solid white;*/
@@ -416,6 +425,103 @@ pre {
 	}
 }
 
+.api-item {
+	margin: 2 * $unit 0;
+	padding: 1 * $unit 2 * $unit;
+	/*border: 1px solid white;*/
+	background: rgba(255, 255, 255, 0.5);
+	background: #DDD;
+	position: relative;
+
+	h4 {
+	}
+}
+
 footer {
 	text-align: center;
+}
+
+.main-feature {
+	h3 {
+		/*text-align: center;*/
+	}
+}
+
+/*
+.feature-left,
+.feature-right {
+	width: 36 * $unit;
+}
+
+.feature-left {
+	float: left;
+	position: relative;
+
+	&:after {
+		content: "+";
+		position: absolute;
+		right: -6 * $unit;
+		top: 50%;
+		width: 6 * $unit;
+		height: 6 * $unit;
+		text-align: center;
+		font-size: 4 * $unit;
+	}
+}
+
+.feature-right {
+	float: right;
+}
+
+.feature-sum {
+	clear: both;
+}
+*/
+
+.content-features {
+	.inner {
+		position: relative;
+	}
+}
+
+.main-feature {
+	margin: 2 * $unit 0;
+	padding: 1 * $unit 2 * $unit 1 * $unit 22 * $unit;
+	/*border: 1px solid white;*/
+	background: rgba(255, 255, 255, 0.5);
+	background: #DDD;
+	position: relative;
+
+	h3 {
+		position: absolute;
+		/*width: 18 * $unit;*/
+		/*left: -20 * $unit;*/
+		left: 2 * $unit;
+		/*background: white;*/
+		/*text-align: right;*/
+		width: 18 * $unit;
+	}
+}
+
+.feature-events,
+.feature-tolerance {
+	margin-bottom: 10 * $unit;
+
+	&:after {
+		font-size: 8 * $unit;
+		font-weight: bold;
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: -10 * $unit;;
+		text-align: center;
+	}
+}
+
+.feature-events:after {
+	content: "+";
+}
+
+.feature-tolerance:after {
+	content: "=";
 }
