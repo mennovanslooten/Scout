@@ -57,7 +57,7 @@
 
 				<div class="api-item">
 					<h4>moveMouseTo</h4>
-					<p>Moves the mouse pointer. It takes one mandatory arguments which can be either a CSS selector or a set of coordinates on the page.</p>
+					<p>Moves the mouse pointer. It takes one mandatory arguments which can be either <a href="#selectors">a CSS selector</a> or a set of coordinates on the page.</p>
 					<pre>moveMouseTo    .hideDialog</pre>
 					<pre>moveMouseTo    519, 1204</pre>
 					<p class="note">If a selector is specified, DummyJS will first wait for at least one element matching the selector to become visible. It will then scroll the element into view (if necessary) and then move the mouse to it.</p>
@@ -239,6 +239,19 @@
 					<pre>screendump    partial    .some-selector</pre>
 				</div>
 
+			</div>
+		</div>
+
+
+		<div class="content content-api" id="selectors">
+			<div class="inner">
+				<h3>Selectors</h3>
+
+				<p>All standard CSS3 selectors can be used to target elements, as well as all the convenient <a href="http://api.jquery.com/category/selectors/jquery-selector-extensions/">jQuery extensions</a>, like <code>:checkbox</code>, <code>:has()</code> and <code>:odd</code>. Additionally, DummyJS supports a shortcut for <strong>selecting by text content</strong>. If a text in double quotes is passed, it will look for elements matching that text exactly. This can be used in place of any argument that expects a selector.</p>
+
+				<pre>click    "Next page"</pre>
+				<pre>assertVisible    "Welcome, John Connor"</pre>
+				<pre>assertHasClass    "Features"    .selected</pre>
 			</div>
 		</div>
 
