@@ -1,15 +1,15 @@
 /*
 	TODO:
-	[ ] oninput event support?
-	[ ] Password argument replacement masked in log
-	[ ] Comprehensive set of documented example tests
-		[ ] Reddit
-		[ ] Google
-		[ ] Twitter
-		[ ] 
+	[ ] World Peace
 */
 
 phantom.clearCookies();
+
+function dir(obj) {
+	for (var p in obj) {
+		console.log(p, ':', obj[p]);
+	}
+}
 
 var _start_time        = new Date();
 var _cli_args          = require('./lib/arguments').parseArguments();
@@ -23,6 +23,7 @@ var _current_action    = null;
 var _total_actions     = 0;
 var _failed            = [];
 var _last_action_status = '';
+
 
 function nextTestFile() {
 	_current_test_file = _test_files.shift();
@@ -42,7 +43,6 @@ function nextTestFile() {
 
 function waitFor(conditionCallback, passCallback, failCallback, timeout) {
 	if (timeout > 0) {
-		//var is_passed = !_page.is_loading && conditionCallback();
 		var is_passed = false;
 
 		if (!_page.is_loading) {
@@ -57,8 +57,11 @@ function waitFor(conditionCallback, passCallback, failCallback, timeout) {
 		if (is_passed) {
 			passCallback();
 		} else {
+			var d1 = new Date();
 			setTimeout(function() {
-				waitFor(conditionCallback, passCallback, failCallback, timeout - _cli_args.step);
+				var d2 = new Date();
+				var elapsed = d2 - d1;
+				waitFor(conditionCallback, passCallback, failCallback, timeout - elapsed);
 			}, _cli_args.step);
 		}
 	} else {
@@ -72,6 +75,10 @@ function nextAction() {
 
 	if (!_current_action) {
 		nextTestFile();
+		return;
+	} else if (_current_action.type === 'done') {
+		_current_test_file.actions.length = 0;
+		nextAction();
 		return;
 	}
 
@@ -107,6 +114,8 @@ function passCurrentAction() {
 		_logger.log('  ✓ ' + message);
 		_total_actions++;
 	}
+
+	_current_test_file.passed.push(_current_action);
 
 	// If the previous action resulted in a page (re)load we need to give it
 	// some time to trigger the onNavigationRequested event. Until the next
