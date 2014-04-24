@@ -1,4 +1,4 @@
-open             ./demo_tests/todomvc/index.html
+open             ./index.html
 assertTitle      Backbone.js • TodoMVC
 
 ## lets start with an easy one: the header should say todos
@@ -25,12 +25,12 @@ assertText       #clear-completed                 Clear completed (1)
 
 
 ## check the contents of the "active" tab
-click            a[href="#/active"]
+click            "Active"
 assertLength     #todo-list > li                  2
 
 
 ## check the contents of the "completed" tab
-click            a[href="#/completed"]
+click            "Completed"
 assertLength     #todo-list > li                  1
 
 
@@ -40,7 +40,7 @@ assertLength     #todo-list > li                  0
 
 
 ## the "all" list should still have 2 items left
-click            a[href="#/"]
+click            "All"
 assertLength     #todo-list > li                  2
 
 

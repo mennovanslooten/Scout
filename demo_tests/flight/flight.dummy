@@ -1,4 +1,4 @@
-open             ./demo_tests/flight/index.html
+open             ./index.html
 
 ## Inbox should be selected by default and have 5 items
 assertHasClass   #inbox                     .selected
