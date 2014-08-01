@@ -208,6 +208,16 @@
 					<pre>assertDisabled    input[type="submit"]</pre>
 				</div>
 
+
+				<div class="api-item">
+					<h4>assertResembles</h4>
+					<p>Makes a screendump and checks if it matches a previously made screendump. It takes two arguments: a mandatory file name (without extension) and an optional selector specifying which part of the screen should be dumped. If no selector is specified, the entire viewport will be dumped.</p>
+					<p>If there is no previously saved screendump, it will create it for future tests and pass the assert. Comparisons are made using <a href="http://huddle.github.io/Resemble.js/">Resemble.js</a>.</p>
+					<!-- <p>Makes a screendump of the first element matching the selector and checks if it matches a previously saved screendump with the specified filename. If there is no previously saved screendump, it will create it for future tests. Comparisons are made using <a href="http://huddle.github.io/Resemble.js/">Resemble.js</a>.</p> -->
+					<pre>assertResembles    screendump-loginpage</pre>
+					<pre>assertResembles    screendump-loginform    form[action="/login"]</pre>
+				</div>
+
 			</div>
 		</div>
 
@@ -249,9 +259,11 @@
 
 				<p>All standard CSS3 selectors can be used to target elements, as well as all the convenient <a href="http://api.jquery.com/category/selectors/jquery-selector-extensions/">jQuery extensions</a>, like <code>:checkbox</code>, <code>:has()</code> and <code>:odd</code>. Additionally, DummyJS supports a shortcut for <strong>selecting by text content</strong>. If a text in double quotes is passed, it will look for elements matching that text exactly. This can be used in place of any argument that expects a selector.</p>
 
-				<pre>click    "Next page"</pre>
-				<pre>assertVisible    "Welcome, John Connor"</pre>
-				<pre>assertHasClass    "Features"    .selected</pre>
+				<div class="api-item">
+					<pre>click    "Next page"</pre>
+					<pre>assertVisible    "Welcome, John Connor"</pre>
+					<pre>assertHasClass    "Features"    .selected</pre>
+				</div>
 			</div>
 		</div>
 
