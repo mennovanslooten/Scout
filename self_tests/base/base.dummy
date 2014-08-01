@@ -9,7 +9,7 @@ assertPage       base/index.html
 assertUrl        [abse]/\w+.html
 
 
-assertResembles  body                   base_screendump
+assertResembles  base_screendump
 
 ## Special selector: "XXX" becomes :textEquals("XXX")
 assertExists     "Lorem ipsum dolor sit amet"
