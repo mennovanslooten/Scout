@@ -37,3 +37,8 @@ assertText    #textarea + dd           Lorem ipsum dolor sit amet
 assertText    #check + dd              one
 assertText    #check ~ dd              three
 assertText    #radio + dd              two
+
+back
+assertPage    index.html
+forward
+assertPage    results.html

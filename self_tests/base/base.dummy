@@ -8,7 +8,7 @@ assertPage       base/index.html
 ## assertUrl converts the argument into a regular expression
 assertUrl        [abse]/\w+.html
 
-
+## Make a screendump of the viewport and compare to a previously saved screendump
 assertResembles  base_screendump
 
 ## Special selector: "XXX" becomes :textEquals("XXX")

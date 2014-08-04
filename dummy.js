@@ -1,6 +1,7 @@
 /*
 	TODO:
 	[ ] World Peace
+	[ ] Back/forward button action
 */
 
 phantom.clearCookies();
@@ -31,7 +32,6 @@ function nextTestFile() {
 		return done();
 	}
 
-
 	_logger.title('Starting ' + _current_test_file.path + ' (' + _current_test_file.actions.length + ' actions)');
 
 	_page.is_loaded = false;
@@ -46,6 +46,8 @@ function waitFor(conditionCallback, passCallback, failCallback, timeout) {
 		var is_passed = false;
 
 		if (!_page.is_loading) {
+			// A test or action has passed when it returns an empty string,
+			// which means there were no errors to report
 			_last_action_status = conditionCallback();
 			if (typeof _last_action_status !== 'string') {
 				_last_action_status = 'Unknown error';
