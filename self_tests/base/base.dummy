@@ -1,65 +1,65 @@
 ## This self test tests if all the basic assertions work
-open             ./index.html
+open               ./index.html
 
 ## assertTitle and assertPage should match substrings as well
-assertTitle      DUMMY SELF TEST
-assertPage       base/index.html
+assertTitle        DUMMY SELF TEST
+assertPage         base/index.html
 
 ## assertUrl converts the argument into a regular expression
-assertUrl        [abse]/\w+.html
+assertUrl          [abse]/\w+.html
 
 ## Make a screendump of the viewport and compare to a previously saved screendump
-assertResembles  base_screendump
+assertResembles    base_screendump
 
 ## Special selector: "XXX" becomes :textEquals("XXX")
-assertExists     "Lorem ipsum dolor sit amet"
+assertExists       "Lorem ipsum dolor sit amet"
 
 ## assertText should match substrings as well
-assertText       .assertText             Lorem ipsum dolor sit amet
-assertText       .assertText             Lorem ipsum
-assertText       .assertText             dolor sit amet
+assertText         .assertText                     Lorem ipsum dolor sit amet
+assertText         .assertText                     Lorem ipsum
+assertText         .assertText                     dolor sit amet
 
 ## assertExists just checks if the selector matches anything in the DOM
-assertExists     .assertExists
+assertExists       .assertExists
 
 ## assertVisible tests for visibility as well. 
 ## Non-zero size, CSS display, visibility and opacity are all tested
-assertVisible    .assertVisible
+assertVisible      .assertVisible
 
 ## assertHidden matches both non-existent elements as well as hidden elements
 ## Hidden can be zero height/width, display:none, visibility:hidden and opacity:0
-assertHidden     .assertHidden-0
-assertHidden     .assertHidden-1
-assertHidden     .assertHidden-2
-assertHidden     .assertHidden-3
+assertHidden       .assertHidden-0
+assertHidden       .assertHidden-1
+assertHidden       .assertHidden-2
+assertHidden       .assertHidden-3
 
 ## assertEmpty checks if the element has no text and no visible child nodes
-assertEmpty      .assertEmpty-1
-assertEmpty      .assertEmpty-2
-assertEmpty      .assertEmpty-3
-assertEmpty      .assertEmpty-4
+assertEmpty        .assertEmpty-1
+assertEmpty        .assertEmpty-2
+assertEmpty        .assertEmpty-3
+assertEmpty        .assertEmpty-4
 
 ## assertNotEmpty matches elements with text or a visible child node
-assertNotEmpty      .assertNotEmpty-1
-assertNotEmpty      .assertNotEmpty-2
+assertNotEmpty     .assertNotEmpty-1
+assertNotEmpty     .assertNotEmpty-2
 
 ## assertLength, assertMinLength and assertMaxLength accept only visible elements
-assertLength        .assertLength-0 > *    0
-assertLength        .assertLength-1 > *    1
-assertLength        .assertLength-2 > *    2
-assertLength        .assertLength-3 > *    3
+assertLength       .assertLength-0 > *             0
+assertLength       .assertLength-1 > *             1
+assertLength       .assertLength-2 > *             2
+assertLength       .assertLength-3 > *             3
 
-assertMinLength     .assertMinLength > *   0
-assertMinLength     .assertMinLength > *   1
-assertMinLength     .assertMinLength > *   2
-assertMinLength     .assertMinLength > *   3
+assertMinLength    .assertMinLength > *            0
+assertMinLength    .assertMinLength > *            1
+assertMinLength    .assertMinLength > *            2
+assertMinLength    .assertMinLength > *            3
 
-assertMaxLength     .assertMaxLength > *   3
-assertMaxLength     .assertMaxLength > *   4
-assertMaxLength     .assertMaxLength > *   5
+assertMaxLength    .assertMaxLength > *            3
+assertMaxLength    .assertMaxLength > *            4
+assertMaxLength    .assertMaxLength > *            5
 
-assertHasClass      .assertHasClass-1      .assertHasClass-2
-assertHasClass      .assertHasClass-2      .assertHasClass-1
+assertHasClass     .assertHasClass-1               .assertHasClass-2
+assertHasClass     .assertHasClass-2               .assertHasClass-1
 
-assertHasClass      "Lorem ipsum"          .textSelector-1
-assertHasClass      "dolor sit amet"       .textSelector-2
+assertHasClass     "Lorem ipsum"                   .textSelector-1
+assertHasClass     "dolor sit amet"                .textSelector-2

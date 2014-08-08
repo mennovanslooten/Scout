@@ -12,17 +12,18 @@ function dir(obj) {
 	}
 }
 
-var _start_time        = new Date();
-var _cli_args          = require('./lib/arguments').parseArguments();
-var _test_files        = require('./lib/testreader').readTestFiles();
-var _screendump        = require('./lib/screendump');
-var _page              = require('./lib/page').page;
-var _actions           = require('./lib/actions').actions;
-var _logger            = require('./lib/logger');
-var _current_test_file = null;
-var _current_action    = null;
-var _total_actions     = 0;
-var _failed            = [];
+var _start_time         = new Date();
+var _cli_args           = require('./lib/arguments').parseArguments();
+var _test_files         = require('./lib/testreader').readTestFiles();
+var _screendump         = require('./lib/screendump');
+var _page               = require('./lib/page').page;
+var _actions            = require('./lib/actions').actions;
+var _logger             = require('./lib/logger');
+var _formatter          = require('./lib/formatter');
+var _current_test_file  = null;
+var _current_action     = null;
+var _total_actions      = 0;
+var _failed             = [];
 var _last_action_status = '';
 
 
@@ -30,6 +31,11 @@ function nextTestFile() {
 	_current_test_file = _test_files.shift();
 	if (!_current_test_file) {
 		return done();
+	}
+
+	if (_cli_args.reformat) {
+		_formatter.reformat(_current_test_file);
+		return nextTestFile();
 	}
 
 	_logger.title('Starting ' + _current_test_file.path + ' (' + _current_test_file.actions.length + ' actions)');
@@ -139,7 +145,12 @@ function failCurrentAction() {
 
 
 function done() {
+	if (_cli_args.reformat) {
+		return phantom.exit(0);
+	}
+
 	var exit_code = 0;
+
 	var result = 'PASS';
 	var total_time = Math.round((new Date().valueOf() - _start_time) / 1000);
 	var message = 'Executed ' + _total_actions + ' actions';

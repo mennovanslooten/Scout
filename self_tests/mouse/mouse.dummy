@@ -1,42 +1,42 @@
 ## This self test tests if mouse event and viewport simulation works correctly
 ## The viewport is set intentionally small to necessitate scrolling
-open             ./index.html     200x200
+open              ./index.html       200x200
 
 ## Check if the viewport size is set correctly
-assertText       #viewport_size   200x200
+assertText        #viewport_size     200x200
 
 ## The JS in the page adds a class with the name of the event to the mouse targets if a mouse event occurs
 
 ## (Double) Clicking an element simulates the mouse moving to the element before the click event
 
 ## Click the first target
-click            .mouse_target_1
+click             .mouse_target_1
 
 ## After a click the target should have had a mouseenter/down/up and a click event
-assertHasClass   .mouse_target_1            .mouseenter.mousedown.mouseup.click
+assertHasClass    .mouse_target_1    .mouseenter.mousedown.mouseup.click
 
 ## Double click the second target
-dblclick            .mouse_target_2
+dblclick          .mouse_target_2
 
 ## If we click another element, the previous target should have had a mouseleave event
-assertHasClass   .mouse_target_1            .mouseleave
+assertHasClass    .mouse_target_1    .mouseleave
 
 ## After a click the target should have had a mouseenter/down/up and a click event
-assertHasClass   .mouse_target_2            .mouseenter.mousedown.mouseup.dblclick
+assertHasClass    .mouse_target_2    .mouseenter.mousedown.mouseup.dblclick
 
 ## These targets are all outside of the viewport. To click them requires DummyJS to simulate scrolling the page
-click            .mouse_target_3
-click            .mouse_target_4
-click            .mouse_target_5
-click            .mouse_target_6
+click             .mouse_target_3
+click             .mouse_target_4
+click             .mouse_target_5
+click             .mouse_target_6
 
 ## Coordinates are always relative to the top left corner of the page.
 ## These coordinates are outside of the viewport on top of target 7
-moveMouseTo      800,800
+moveMouseTo       800,800
 
 ## If everything was simulated correctly, the target should have a mouseenter class
-assertHasClass   .mouse_target_7            mouseenter
+assertHasClass    .mouse_target_7    mouseenter
 
 ## Resize events are logged in #viewport_size
-resize           800x600
-assertText       #viewport_size   800x600
+resize            800x600
+assertText        #viewport_size     800x600

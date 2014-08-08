@@ -1,50 +1,50 @@
 ## This self test tests if keyboard event simulation works correctly
-open         ./index.html
+open           ./index.html
 
 ## The JS in the page logs each pressed key in #result
 ## Special keys can be specified as <Keyname>. 
-type         :text    <Enter>
-assertText   #result  enter
+type           :text           <Enter>
+assertText     #result         enter
 
-type         :text    <Up>
-assertText   #result  up
+type           :text           <Up>
+assertText     #result         up
 
-type         :text    <Down>
-assertText   #result  down
+type           :text           <Down>
+assertText     #result         down
 
-type         :text    <Left>
-assertText   #result  left
+type           :text           <Left>
+assertText     #result         left
 
-type         :text    <Right>
-assertText   #result  right
+type           :text           <Right>
+assertText     #result         right
 
-type         :text    <Tab>
-assertText   #result  tab
+type           :text           <Tab>
+assertText     #result         tab
 
 ## Special keys that move the cursor inside a text field should work
 ## Clicking :reset clears the field
-click        :reset
-type         :text    123<Up>abc
-assertValue  :text    abc123
+click          :reset
+type           :text           123<Up>abc
+assertValue    :text           abc123
 
-click        :reset
-type         :text    123<Home>abc
-assertValue  :text    abc123
+click          :reset
+type           :text           123<Home>abc
+assertValue    :text           abc123
 
-click        :reset
-type         :text    123<Home>abc<End>xyz
-assertValue  :text    abc123xyz
+click          :reset
+type           :text           123<Home>abc<End>xyz
+assertValue    :text           abc123xyz
 
-click        :reset
-type         :text    123<Left>abc
-assertValue  :text    12abc3
+click          :reset
+type           :text           123<Left>abc
+assertValue    :text           12abc3
 
-click        :reset
-type         :text    123<Backspace>
-assertValue  :text    12
+click          :reset
+type           :text           123<Backspace>
+assertValue    :text           12
 
 
-click        :reset
-type         :text    123<Home><Delete>
-assertValue  :text    23
+click          :reset
+type           :text           123<Home><Delete>
+assertValue    :text           23
 

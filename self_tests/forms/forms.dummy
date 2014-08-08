@@ -4,15 +4,15 @@ open          ./index.html
 ## Fill in the form data
 
 ## Text-based inputs can be filled with "type"
-type          input[type="text"]        Hello, world.
-type          input[type="password"]    {password}
-type          textarea                  Lorem ipsum dolor sit amet
+type          input[type="text"]                       Hello, world.
+type          input[type="password"]                   {password}
+type          textarea                                 Lorem ipsum dolor sit amet
 
 ## Selects can be set with "choose"
-choose        select                    option two
+choose        select                                   option two
 
 ## Multiple selects can be set by specifying more than one value, separated by 2 or more spaces
-choose        select[multiple]          option two    option four
+choose        select[multiple]                         option two                    option four
 
 ## Radiobuttons and checkboxes can be set with "click"
 click         input[type="checkbox"][value="one"]
@@ -26,17 +26,17 @@ click         input[type="submit"]
 assertPage    results.html
 
 ## Check if the submitted data is displayed correctly
-assertText    #text + dd               Hello, world.
-assertText    #password + dd           {password}
-assertText    #select + dd             option two
+assertText    #text + dd                               Hello, world.
+assertText    #password + dd                           {password}
+assertText    #select + dd                             option two
 
-assertText    #select_multiple + dd    option two
-assertText    #select_multiple ~ dd    option four
+assertText    #select_multiple + dd                    option two
+assertText    #select_multiple ~ dd                    option four
 
-assertText    #textarea + dd           Lorem ipsum dolor sit amet
-assertText    #check + dd              one
-assertText    #check ~ dd              three
-assertText    #radio + dd              two
+assertText    #textarea + dd                           Lorem ipsum dolor sit amet
+assertText    #check + dd                              one
+assertText    #check ~ dd                              three
+assertText    #radio + dd                              two
 
 back
 assertPage    index.html
