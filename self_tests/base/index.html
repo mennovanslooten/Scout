@@ -12,9 +12,15 @@
 			body {
 			}
 
+			.hide-viewport {
+				position: absolute;
+				top: 3000px;
+			}
+
 			.hide-display {
 				display: none;
 			}
+
 			.hide-visibility {
 				visibility: hidden;
 			}
@@ -36,7 +42,8 @@
 		<p class="assertExists">This element exists</p>
 
 
-		<p class="assertVisible">This element is visible</p>
+		<p class="assertVisible-1">This element is visible inside the viewport</p>
+		<p class="assertVisible-2 hide-viewport">This element is visible outside the viewport</p>
 
 
 		<p class="assertHidden-1 hide-display">This element is hidden through CSS display</p>
