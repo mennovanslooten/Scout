@@ -224,6 +224,7 @@ pre {
       font-weight: bold;
       display: block;
       padding: 16px 24px;
+      border-bottom: 0 solid white;
       -webkit-transition-property: all;
       -moz-transition-property: all;
       transition-property: all;
@@ -238,7 +239,7 @@ pre {
       transition-duration: 0.1s; }
       .main-nav-menu > li > a:hover {
         padding-bottom: 8px;
-        border-bottom: 8px solid white; }
+        border-bottom-width: 8px; }
   .main-nav-menu > .main-nav-menu-selected {
     background: black; }
     .main-nav-menu > .main-nav-menu-selected > a:hover {
@@ -247,6 +248,41 @@ pre {
   .main-nav-menu > .main-nav-github {
     position: absolute;
     left: 0; }
+
+.sub-nav {
+  background: #CCC; }
+  .sub-nav .inner {
+    position: relative; }
+
+.sub-nav-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center; }
+  .sub-nav-menu > li {
+    display: inline-block;
+    margin: 0; }
+    .sub-nav-menu > li > a {
+      color: black;
+      /*font-weight: bold;*/
+      display: block;
+      padding: 16px 24px;
+      -webkit-transition-property: all;
+      -moz-transition-property: all;
+      transition-property: all;
+      -webkit-transition-timing-function: ease-in-out;
+      -moz-transition-timing-function: ease-in-out;
+      transition-timing-function: ease-in-out;
+      -webkit-transition-delay: 0;
+      -moz-transition-delay: 0;
+      transition-delay: 0;
+      -webkit-transition-duration: 0.1s;
+      -moz-transition-duration: 0.1s;
+      transition-duration: 0.1s;
+      border-bottom: 0 solid white; }
+      .sub-nav-menu > li > a:hover {
+        padding-bottom: 8px;
+        border-bottom-width: 8px; }
 
 .home-head {
   /*

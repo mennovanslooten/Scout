@@ -169,11 +169,12 @@ pre {
 			font-weight: bold;
 			display: block;
 			padding: 2 * $unit 3 * $unit;
+			border-bottom: 0 solid white;
 			@include transition($duration: 0.1s);
 
 			&:hover {
 				padding-bottom: $unit;
-				border-bottom: $unit solid white;
+				border-bottom-width: $unit;
 			}
 		}
 	}
@@ -189,6 +190,40 @@ pre {
 	> .main-nav-github {
 		position: absolute;
 		left: 0;
+	}
+}
+
+.sub-nav {
+	background: #CCC;
+
+	.inner {
+		position: relative;
+	}
+}
+
+.sub-nav-menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+
+	> li {
+		display: inline-block;
+		margin: 0;
+
+		> a {
+			color: black;
+			/*font-weight: bold;*/
+			display: block;
+			padding: 2 * $unit 3 * $unit;
+			@include transition($duration: 0.1s);
+			border-bottom: 0 solid white;
+
+			&:hover {
+				padding-bottom: $unit;
+				border-bottom-width: $unit;
+			}
+		}
 	}
 }
 

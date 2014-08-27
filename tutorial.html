@@ -23,6 +23,7 @@
 					<li><a href="api.html">API</a></li>
 					<li class="main-nav-menu-selected"><a href="tutorial.html">Tutorial</a></li>
 					<li><a href="features.html">Features</a></li>
+					<li><a href="examples.html">Examples</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -33,6 +34,18 @@
 				<h1>DummyJS Tutorial</h1>
 			</div>
         </div>
+
+
+		<nav class="sub-nav">
+			<div class="inner">
+				<ul class="sub-nav-menu">
+					<li><a href="#install">Installing</a></li>
+					<li><a href="#write">Writing</a></li>
+					<li><a href="#run">Running</a></li>
+					<li><a href="#format">Formatting</a></li>
+				</ul>
+			</div>
+		</nav>
 
 
 		<div class="content" id="install">
@@ -84,6 +97,7 @@ PASS: Executed 0 actions in 0s.</pre>
 			<div class="inner">
 				<h2>Writing tests</h2>
 
+				<!--
 				<p>
 					A <em>functional test</em> needs to do 2 things:
 				</p>
@@ -92,6 +106,7 @@ PASS: Executed 0 actions in 0s.</pre>
 					<li><strong>Actions (simulate user interaction)</strong>, e.g. mouse clicks or key presses.</li>
 					<li><strong>Assertions (test the page properties)</strong>, e.g. element visibility or text content.</li>
 				</ul>
+				-->
 
 				<!--
 				<p>
@@ -165,9 +180,9 @@ assertMinLength    h3.r                     10</pre>
 					DummyJS supports a large number of special keys, like <code>&lt;Up&gt;</code>, <code>&lt;Escape&gt;</code> and <code>&lt;Delete&gt;</code>.
 				</p>
 
-				<p>
-					Note that <strong>DummyJS always waits for the previous instruction to succeed before continuing with the next</strong>, so it will only start typing when the page has been fully loaded.
-				</p>
+				<!--<p>-->
+					<!--<a href="api.html#actions">Actions API</a>-->
+				<!--</p>-->
 
 				<h3>Asserts</h3>
 
@@ -178,18 +193,24 @@ assertMinLength    h3.r                     10</pre>
 					In this case, DummyJS will check that there are at least 10 <code>&lt;h3 class="r"&gt;</code> elements visible on the page.
 				</p>
 
-				<h3>Waiting for truth</h3>
-
 				<p>
-					Internally, actions are also assertions.
-					The <code>type</code> action, for example, will first perform an <code>assertVisible</code> on the target element since a user can't type in an element that doesn't exist or isn't visible.
+					Internally, actions are also assertions and can also fail.
+					For example, the <code>type</code> action will fail when no focusable element matching the selector can be found
+					and <code>open</code> will fail when the page cannot be loaded.
 				</p>
 
+				<!--<h3>Waiting for truth</h3>-->
+
 				<p>
-					Additionally, if an assertion isn't immediately true, DummyJS will keep on trying until a timeout is reached.
-					This will automatically deal with any delays that occur between user actions and results happening in the page.
+					If an assertion or action doesn't immediately pass, DummyJS will keep on trying until a timeout is reached.
+					Only after an instruction has succeeded will DummyJS continue with the next.
+					If the timeout is reached, the test fails.
 				</p>
 
+
+				<!--<p>-->
+					<!--Note that <strong>DummyJS always waits for the previous instruction to succeed before continuing with the next</strong>, so it will only start typing when the page has been fully loaded.-->
+				<!--</p>-->
 				
 			</div>
 		</div>
@@ -202,26 +223,26 @@ assertMinLength    h3.r                     10</pre>
 					Tests are run from the command line:
 				</p>
 
-				<pre><span class="prompt">$</span> dummyjs <em>&lt;filename&gt;</em></pre>
+				<pre><span class="prompt">$</span> dummyjs <em>filename.dummy</em></pre>
 
 				<p>
 					Note that test files must have a <code>.dummy</code> extension.
 					You can specify as many tests as you like:
 				</p>
 
-				<pre><span class="prompt">$</span> dummyjs <em>&lt;filename1&gt;</em> <em>&lt;filename2&gt;</em> <em>&lt;filename3&gt;</em></pre>
+				<pre><span class="prompt">$</span> dummyjs <em>filename1.dummy</em> <em>filename2.dummy</em> <em>filename3.dummy</em></pre>
 
 				<p>
 					If you pass a directory name, it will run all of the tests in the directory (even if they are in sub-directories):
 				</p>
 
-				<pre><span class="prompt">$</span> dummyjs <em>&lt;dirname&gt;</em></pre>
+				<pre><span class="prompt">$</span> dummyjs <em>dirname</em></pre>
 
 				<p>
 					You can pass directory names and file names together:
 				</p>
 
-				<pre><span class="prompt">$</span> dummyjs <em>&lt;dirname1&gt;</em> <em>&lt;filename1&gt;</em> <em>&lt;dirname2&gt;</em></pre>
+				<pre><span class="prompt">$</span> dummyjs <em>dirname1</em> <em>filename1.dummy</em> <em>dirname2</em></pre>
 
 				<h3>Command line options</h3>
 
@@ -232,13 +253,13 @@ assertMinLength    h3.r                     10</pre>
 
 				<dl>
 					<dt><code>--debug</code></dt>
-					<dd>Log <code>console.log()</code> calls made in the browser as well as any JavaScript errors to the terminal.</dd>
+					<dd>Write <code>console.log()</code> calls made in the browser as well as any JavaScript errors to the terminal.</dd>
 
 					<dt><code>--faildump</code></dt>
 					<dd>Dump a screenshot to disk if an action or assertion fails.</dd>
 
 					<dt><code>--passdump</code></dt>
-					<dd>Dump a screenshot to disk if an action or assertion passes.</dd>
+					<dd>Dump a screenshot to disk if an action or assertion passes. <em>Warning:</em> this makes running tests very slow.</dd>
 
 					<dt><code>--color</code></dt>
 					<dd>Logs everything in pretty colors to the terminal. If your terminal does not support this it might end up ugly.</dd>
@@ -248,6 +269,9 @@ assertMinLength    h3.r                     10</pre>
 
 					<dt><code>--step=<em>&lt;number&gt;</em></code></dt>
 					<dd>Set the time (in milliseconds) between two retries.</dd>
+
+					<dt><code>--reformat</code></dt>
+					<dd>Skips running any tests, but outputs neatly formatted tests file to the console. See <a href="#format">Formatting tests</a>.</dd>
 				</dl>
 
 				<p>
@@ -255,10 +279,30 @@ assertMinLength    h3.r                     10</pre>
 				</p>
 
 
-				<pre><span class="prompt">$</span> dummyjs <em>&lt;filename&gt;</em> --debug --color --timeout=1000</pre>
+				<pre><span class="prompt">$</span> dummyjs <em>filename.dummy</em> --debug --color --timeout=1000</pre>
 
 				<p>
 				</p>
+			</div>
+		</div>
+
+
+		<div class="content" id="format">
+			<div class="inner">
+				<h2>Formatting tests</h2>
+
+				<p>
+					While writing tests is pretty easy, it can be a pain to keep the <code>.dummy</code> files nicely formatted and the columns lined up.
+					For that reason, DummyJS has a <code>--reformat</code> command line option that will read the specified test files and output them in reformatted to the console.
+				</p>
+
+				<pre><span class="prompt">$</span> dummyjs --reformat <em>filename.dummy</em></pre>
+
+				<p>
+					You can use the <code>&gt;</code> symbol to write the formatted output to disk:
+				</p>
+
+				<pre><span class="prompt">$</span> dummyjs --reformat <em>filename.dummy</em> &gt; <em>newfilename.dummy</em></pre>
 			</div>
 		</div>
 

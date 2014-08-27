@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Examples - DummyJS</title>
+
+        <meta name="author" content="@mennovanslooten">
+        <meta name="keywords" content="">
+        <meta name="description" content="">
+        <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="css/styles.css" type="text/css" />
+    </head>
+
+    <body class="home">
+
+		<nav class="main-nav">
+			<div class="inner">
+				<ul class="main-nav-menu">
+					<li class="main-nav-github"><a href="https://github.com/mennovanslooten/DummyJS">GitHub</a></li>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="api.html">API</a></li>
+					<li><a href="tutorial.html">Tutorial</a></li>
+					<li><a href="features.html">Features</a></li>
+					<li class="main-nav-menu-selected"><a href="examples.html">Examples</a></li>
+				</ul>
+			</div>
+		</nav>
+
+
+        <div class="content-head">
+			<div class="inner">
+				<h1>DummyJS Examples</h1>
+			</div>
+        </div>
+
+		<nav class="sub-nav">
+			<div class="inner">
+				<ul class="sub-nav-menu">
+					<li><a href="#navigation">Navigation examples</a></li>
+					<li><a href="#form">Form examples</a></li>
+					<li><a href="#assertion">Assertion examples</a></li>
+				</ul>
+			</div>
+		</nav>
+
+
+		<div id="navigation" class="content">
+			<div class="inner">
+
+				<h2>Navigation examples</h2>
+
+				<h3>Opening a page</h3>
+				<p>The <code>open</code> command navigates to the URL specified. For example, let's open the Google homepage:</p>
+				<pre>open    http://google.com</pre>
+
+				<h3>Clicking a link</h3>
+				<p>There are several ways to identify and click a link in a page. The most convenient one is by text content. This example clicks a link with the text "Hello, world."</p>
+				<pre>click    "Hello, world."</pre>
+				<p>Alternatively, you can use the CSS attribute selector to target the link with the correct destination:</p>
+				<pre>click    [href="/home"]</pre>
+
+				<h3>Going back or forward in history</h3>
+				<p>The <code>back</code> and <code>forward</code> actions go back or forward one step in history.</p>
+				<pre>back</pre>
+
+				<h3>Checking the location</h3>
+				<p>There are two ways to check we're currently at the correct location. The easiest is <code>assertPage</code>, which checks if the argument is a substring of the current URL.</p>
+				<pre>assertPage    /home.html</pre>
+
+				<h3>Combined example</h3>
+				<p>Here's a combined example that follows and checks some links on reddit.com:</p>
+				<pre>open          http://reddit.com
+
+click         "new"
+assertPage    /new
+
+click         "rising"
+assertPage    /rising
+
+back
+assertPage    /new</pre>
+			</div>
+        </div>
+
+
+		<div id="form" class="content">
+			<div class="inner">
+
+				<h2>Form examples</h2>
+
+				<h3>Entering text</h3>
+				<p>The <code>type</code> command will enter the specified text in the first element that matches the specified selector.</p>
+				<pre>type    [name="q"]    Hello, world</pre>
+				<!--<p>DummyJS will simulate every event and every keystroke that would be triggered if a real user would enter the text.</p>-->
+
+				<h3>Clicking checkboxes and radiobuttons</h3>
+				<p>To select a particular checkbox or radiobutton, you can often target them by their unique name/value combination.</p>
+				<pre>click    [name="terms"][value="1"]</pre>
+				<p>Additionally, if the page uses <code>&lt;label&gt;</code> elements correctly, you can target those by their text content:</p>
+				<pre>click    "I agree with the terms &amp; conditions"</pre>
+
+				<h3>Choosing an option in a select</h3>
+				<p>With the <code>choose</code> action, you can choose a <code>&lt;select&gt;</code>'s option by text:</p>
+				<pre>choose    [name="country"]    "The Netherlands"</pre>
+
+				<h3>Submitting a form</h3>
+				<p>Submitting a form is done in the same way as a real user would do it. Click the submit button:</p>
+				<pre>click    :submit</pre>
+				<p>Or, if the form is set up in that way, hit the <code>enter</code> key inside a text input:</p>
+				<pre>type    [name="message"]    goodbye&lt;Enter&gt;</pre>
+
+				<h3>Combined example</h3>
+				<p>Here's a combined example that opens the Twitter advanced search form, and searches for positive tweets about functional testing in English:</p>
+				<pre>open      https://twitter.com/search-advanced
+type      [name="ands"]        functional testing
+choose    [name="lang"]        English (English)
+click     "Positive :)"
+click     "Include retweets"
+click     "Search"</pre>
+			</div>
+        </div>
+
+
+		<div id="assertion" class="content">
+			<div class="inner">
+
+				<h2>Assertion examples</h2>
+
+				<h3>Visibility</h3>
+				<p>The <code>assertVisible</code> command checks if an element matching the selector is visible, i.e. not hidden and non-zero values for width, height and opacity.</p>
+				<pre>assertVisible    .autocomplete-popup</pre>
+				<p>The <code>assertHidden</code> command checks if there are no elements matching the selector that are visible.</p>
+				<pre>assertHidden    .autocomplete-popup</pre>
+
+				<h3>In viewport</h3>
+				<p>The <code>assertInViewport</code> command will check if the element is not only visible, but also in the viewport.</p>
+				<pre>assertInViewport    h1</pre>
+
+				<h3>Text content</h3>
+				<p>The command <code>assertText</code> checks if a visible element matching the selector contains the specified text.</p>
+				<pre>assertText    h1    Lorem ipsum</pre>
+
+				<h3>Checking the location</h3>
+				<p>There are two ways to check we're currently at the correct location. The easiest is <code>assertPage</code>, which checks if the argument is a substring of the current URL.</p>
+				<pre>assertPage    /home.html</pre>
+
+				<h3>Combined example</h3>
+				<p>Here's a combined example that follows and checks some links on reddit.com:</p>
+				<pre>open          http://reddit.com
+
+click         "new"
+assertPage    /new
+
+click         "rising"
+assertPage    /rising
+
+back
+assertPage    /new</pre>
+			</div>
+        </div>
+
+
+
+        <hr>
+    
+        <footer>
+			<div class="inner">
+				<p>&copy; 2013 <a href="https://twitter.com/mennovanslooten">@mennovanslooten</a></p>
+			</div>
+        </footer>
+
+
+
+        <script src="js/jquery.min.js"></script>
+        <script src="js/main.js"></script>
+
+
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
