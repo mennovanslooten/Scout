@@ -2,6 +2,7 @@
 	TODO:
 	[ ] World Peace
 	[ ] Back/forward button action
+	[?] Support for CSV files
 */
 
 phantom.clearCookies();
