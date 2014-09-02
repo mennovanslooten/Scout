@@ -8,7 +8,7 @@
 	[ ] "Touch" flag that skips mousemove sequence
 	[?] .dummyjsrc file support with default options
 	[ ] JS function documentation
-	[ ] Add check for elements being covered by other elements
+	[X] Add check for elements being covered by other elements
 	[ ] Improve detection of page navigation
 */
 
