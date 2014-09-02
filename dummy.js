@@ -3,6 +3,13 @@
 	[ ] World Peace
 	[ ] Back/forward button action
 	[?] Support for CSV files
+	[ ] Remove resemble.js dependency
+	[ ] Add mousedown/move/up support (drag & drop)
+	[ ] "Touch" flag that skips mousemove sequence
+	[?] .dummyjsrc file support with default options
+	[ ] JS function documentation
+	[ ] Add check for elements being covered by other elements
+	[ ] Improve detection of page navigation
 */
 
 phantom.clearCookies();
@@ -66,11 +73,11 @@ function waitFor(conditionCallback, passCallback, failCallback, timeout) {
 		if (is_passed) {
 			passCallback();
 		} else {
-			var d1 = new Date();
 			setTimeout(function() {
-				var d2 = new Date();
-				var elapsed = d2 - d1;
-				waitFor(conditionCallback, passCallback, failCallback, timeout - elapsed);
+				if (!_page.is_loading) {
+					timeout -= _cli_args.step;
+				}
+				waitFor(conditionCallback, passCallback, failCallback, timeout);
 			}, _cli_args.step);
 		}
 	} else {

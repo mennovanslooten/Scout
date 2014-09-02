@@ -4,7 +4,7 @@
   "description": "DummyJS is a Functional Testing extension for PhantomJS",
   "main": "dummy.js",
   "scripts": {
-    "test": "phantomjs ./dummy.js ./self_test"
+    "test": "phantomjs ./dummy.js ./self_tests"
   },
   "bin": {
     "dummyjs": "./bin/dummyjs"
