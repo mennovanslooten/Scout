@@ -32,18 +32,12 @@ assertInViewport       .assertVisible-1
 assertVisible          .assertVisible-2
 assertNotInViewport    .assertVisible-2
 
-## This element is visible but partially covered
-assertVisible          .assertVisible-3
-
 ## assertHidden matches both non-existent elements as well as hidden elements
 ## Hidden can be zero height/width, display:none, visibility:hidden and opacity:0
 assertHidden           .assertHidden-0
 assertHidden           .assertHidden-1
 assertHidden           .assertHidden-2
 assertHidden           .assertHidden-3
-
-## Elements that are completely covered by other elements are also considered hidden
-assertHidden           .assertHidden-4
 
 ## assertEmpty checks if the element has no text and no visible child nodes
 assertEmpty            .assertEmpty-1

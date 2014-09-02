@@ -73,9 +73,12 @@ function waitFor(conditionCallback, passCallback, failCallback, timeout) {
 		if (is_passed) {
 			passCallback();
 		} else {
+			var d1 = new Date();
 			setTimeout(function() {
 				if (!_page.is_loading) {
-					timeout -= _cli_args.step;
+					var d2 = new Date();
+					var elapsed = d2 - d1;
+					timeout -= elapsed;
 				}
 				waitFor(conditionCallback, passCallback, failCallback, timeout);
 			}, _cli_args.step);

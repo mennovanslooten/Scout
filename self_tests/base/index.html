@@ -28,35 +28,6 @@
 				opacity: 0;
 			}
 
-			.hide-partially-covered {
-				position: absolute;
-				left: 500px;
-				top: 500px;
-				width: 300px;
-				z-index: 2;
-				background: #CCC;
-			}
-
-			.hide-covered {
-				position: absolute;
-				left: 500px;
-				top: 550px;
-				width: 200px;
-				z-index: 2;
-				background: #CCC;
-			}
-
-			.cover {
-				position: absolute;
-				left: 490px;
-				top: 490px;
-				width: 250px;
-				height: 150px;
-				background: yellow;
-				opacity: 0.5;
-				z-index: 3;
-			}
-
 			.assertCSS {
 				color: red;
 			}
@@ -73,14 +44,10 @@
 
 		<p class="assertVisible-1">This element is visible inside the viewport</p>
 		<p class="assertVisible-2 hide-viewport">This element is visible outside the viewport</p>
-		<p class="assertVisible-3 hide-partially-covered">This element is visible but partially covered by another element</p>
-
 
 		<p class="assertHidden-1 hide-display">This element is hidden through CSS display</p>
 		<p class="assertHidden-2 hide-visibility">This element is hidden through CSS visibility</p>
 		<p class="assertHidden-3 hide-opacity">This element is hidden through CSS opacity</p>
-		<p class="assertHidden-4 hide-covered">This element is completely covered by another element</p>
-		<div class="cover"></div>
 
 
 		<p class="assertEmpty-1"><!-- This element is empty --></p>
