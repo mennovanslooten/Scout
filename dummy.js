@@ -3,22 +3,17 @@
 	[ ] World Peace
 	[ ] Back/forward button action
 	[?] Support for CSV files
-	[ ] Remove resemble.js dependency
+	[X] Remove resemble.js dependency
 	[ ] Add mousedown/move/up support (drag & drop)
 	[ ] "Touch" flag that skips mousemove sequence
 	[?] .dummyjsrc file support with default options
 	[ ] JS function documentation
 	[X] Add check for elements being covered by other elements
 	[ ] Improve detection of page navigation
+	[ ] Add (non) verbose option
 */
 
 phantom.clearCookies();
-
-function dir(obj) {
-	for (var p in obj) {
-		console.log(p, ':', obj[p]);
-	}
-}
 
 var _start_time         = new Date();
 var _cli_args           = require('./lib/arguments').parseArguments();
@@ -31,6 +26,7 @@ var _formatter          = require('./lib/formatter');
 var _current_test_file  = null;
 var _current_action     = null;
 var _total_actions      = 0;
+var _passed             = [];
 var _failed             = [];
 var _last_action_status = '';
 
@@ -93,6 +89,9 @@ function nextAction() {
 	_current_action = _current_test_file.actions.shift();
 
 	if (!_current_action) {
+		_passed.push({
+			path: _current_test_file.path
+		});
 		nextTestFile();
 		return;
 	} else if (_current_action.type === 'done') {
@@ -150,7 +149,12 @@ function failCurrentAction() {
 	message = _logger.tabularize(args);
 	_logger.error('  ✗ ' + message);
 	_logger.error('    ' + _last_action_status);
-	_failed.push(_current_test_file.path);
+	//_failed.push(_current_test_file.path);
+	_failed.push({
+		path: _current_test_file.path,
+		action: message,
+		error: _last_action_status
+	});
 	nextTestFile();
 }
 
@@ -160,28 +164,51 @@ function done() {
 		return phantom.exit(0);
 	}
 
-	var exit_code = 0;
+	_logger.title('Results');
 
 	var result = 'PASS';
+	var exit_code = 0;
+
+	//var result = 'PASS';
 	var total_time = Math.round((new Date().valueOf() - _start_time) / 1000);
-	var message = 'Executed ' + _total_actions + ' actions';
+	//var message = 'Executed ' + _total_actions + ' actions';
+	//
+	var total = _passed.length + _failed.length;
 
 	if (_failed.length) {
-		exit_code = 1;
 		result = 'FAIL';
-		message += ', Failed ' + _failed.length + ' test files:';
-		message += ' in ' + _failed.join(', ');
-	} else {
-		message += ' in ' + total_time + 's.';
+		exit_code = 1;
+		_logger.comment('\n# Failed ' + _failed.length + ' of ' + total + ':');
+
+		for (var i = 0; i < _failed.length; i++) {
+			var fail = _failed[i];
+			_logger.error('  ✗ ' + fail.path);
+			_logger.error('    ' + fail.action);
+			_logger.error('    ' + fail.error);
+		}
 	}
 
+	if (_passed.length) {
+		_logger.comment('\n# Passed ' + _passed.length + ' of ' + total + ':');
+		for (var i = 0; i < _passed.length; i++) {
+			_logger.log('  ✓ ' + _passed[i].path);
+		}
+	}
 
-	var codes = [30, 41];
-	message = result + ': ' + message;
-	_logger[result.toLowerCase()](message);
+	_logger[result.toLowerCase()]('\n[' + result + '] Executed ' + _total_actions + ' actions in ' + total_time + 's.');
+
+	//message = result + ': ' + message;
+	//_logger[result.toLowerCase()](message);
 	phantom.exit(exit_code);
 }
 
 
 // Get the party started
 nextTestFile();
+
+function dir(obj) {
+	for (var p in obj) {
+		console.log(p, ':', obj[p]);
+	}
+}
+
