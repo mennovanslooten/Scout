@@ -1,6 +1,7 @@
 /*
 	TODO:
 	[ ] World Peace
+	[?] Parallel testing
 	[ ] Back/forward button action
 	[?] Support for CSV files
 	[X] Remove resemble.js dependency
@@ -31,6 +32,9 @@ var _failed             = [];
 var _last_action_status = '';
 
 
+_logger.mute(_cli_args.verbosity > 0);
+
+
 function nextTestFile() {
 	_current_test_file = _test_files.shift();
 	if (!_current_test_file) {
@@ -42,7 +46,11 @@ function nextTestFile() {
 		return nextTestFile();
 	}
 
-	_logger.title('Starting ' + _current_test_file.path + ' (' + _current_test_file.actions.length + ' actions)');
+	if (_passed.length || _failed.length) {
+		_logger.log('');
+	}
+
+	_logger.title('Starting: ' + _current_test_file.path);
 
 	_page.is_loaded = false;
 	_page.is_loading = false;
@@ -164,7 +172,7 @@ function done() {
 		return phantom.exit(0);
 	}
 
-	_logger.title('Results');
+	_logger.mute(_cli_args.verbosity > 1);
 
 	var result = 'PASS';
 	var exit_code = 0;
@@ -175,30 +183,42 @@ function done() {
 	//
 	var total = _passed.length + _failed.length;
 
+	if (total > 1) {
+		//_logger.title('Results');
+	}
+
 	if (_failed.length) {
 		result = 'FAIL';
 		exit_code = 1;
-		_logger.comment('\n# Failed ' + _failed.length + ' of ' + total + ':');
 
-		for (var i = 0; i < _failed.length; i++) {
-			var fail = _failed[i];
-			_logger.error('  ✗ ' + fail.path);
-			_logger.error('    ' + fail.action);
-			_logger.error('    ' + fail.error);
+		// If more than one test file is run, show a list of failures tests
+		if (total > 1) {
+			_logger.comment('\n----------------------------------------------------------------');
+			_logger.error('# Failed ' + _failed.length + ' of ' + total + ':');
+
+			for (var i = 0; i < _failed.length; i++) {
+				var fail = _failed[i];
+				_logger.error('  ✗ ' + fail.path);
+				_logger.error('    ' + fail.action);
+				_logger.error('    ' + fail.error);
+			}
 		}
 	}
 
+	/*
 	if (_passed.length) {
-		_logger.comment('\n# Passed ' + _passed.length + ' of ' + total + ':');
-		for (var i = 0; i < _passed.length; i++) {
-			_logger.log('  ✓ ' + _passed[i].path);
+		if (total > 1) {
+			_logger.comment('\n# Passed ' + _passed.length + ' of ' + total + ':');
+			for (var i = 0; i < _passed.length; i++) {
+				_logger.log('  ✓ ' + _passed[i].path);
+			}
 		}
 	}
+	*/
 
+	_logger.mute(_cli_args.verbosity > 2);
 	_logger[result.toLowerCase()]('\n[' + result + '] Executed ' + _total_actions + ' actions in ' + total_time + 's.');
 
-	//message = result + ': ' + message;
-	//_logger[result.toLowerCase()](message);
 	phantom.exit(exit_code);
 }
 
