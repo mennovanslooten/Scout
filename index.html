@@ -43,20 +43,21 @@
 				<div class="home-intro-item">
 					<h2>Write E2E tests in English</h2>
 					<pre>open             http://my.test.site
-click            .show-greeting
-assertVisible    .greeting</pre>
-				</div>
+type             :text                 John
+click            "Say hi!"
+assertText       .greeting             Hi, John!</div>
 
 
 				<div class="home-intro-item">
 					<h2>And run them in a terminal</h2>
 					<pre>$ dummyjs mytest.dummy
 
-✓ open                    http://my.test.site
-✓ click                   .show-greeting
-✓ assertVisible           .greeting
+✓ open                http://my.test.site
+✓ type                :text                 John
+✓ click               "Say hi!"
+✓ assertText          .greeting             Hi, John!
 
-PASS: Executed 3 actions in 1s.</pre>
+PASS: Executed 4 actions in 1s.</pre>
 				</div>
 
 			</div>
