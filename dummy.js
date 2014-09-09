@@ -50,7 +50,7 @@ function nextTestFile() {
 		_logger.log('');
 	}
 
-	_logger.title('Starting: ' + _current_test_file.path);
+	if (_test_files.length) _logger.title('Starting: ' + _current_test_file.path);
 
 	_page.is_loaded = false;
 	_page.is_loading = false;
@@ -109,12 +109,26 @@ function nextAction() {
 	}
 
 	var handler = _actions[_current_action.type];
+	var args = _current_action.args.map(function(arg) {
+		/*
+			Selectors of this form: 
+				"Some text"
+			will be transformed to this form:
+				:textEquals("Some text")
+		*/
+		var inside_quotes = /^"([^"]+)"$/;
+		if (inside_quotes.test(arg)) {
+			return ':textEquals(' + arg + ')';
+		}
+		return arg
+	});
 	if (handler) {
 		waitFor(
 
 			// Keep executing until it returns true
 			function() {
-				return handler.apply(_actions, _current_action.args);
+				//return handler.apply(_actions, _current_action.args);
+				return handler.apply(_actions, args);
 			},
 
 			// Run after true is returned
