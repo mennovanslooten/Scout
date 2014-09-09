@@ -20,10 +20,10 @@
 				<ul class="main-nav-menu">
 					<li class="main-nav-github"><a href="https://github.com/mennovanslooten/DummyJS">GitHub</a></li>
 					<li class="main-nav-menu-selected"><a href="index.html">Home</a></li>
+					<li><a href="getting_started.html">Getting started</a></li>
 					<li><a href="api.html">API</a></li>
-					<li><a href="tutorial.html">Tutorial</a></li>
 					<li><a href="features.html">Features</a></li>
-					<li><a href="examples.html">Examples</a></li>
+					<!--<li><a href="examples.html">Examples</a></li>-->
 				</ul>
 			</div>
 		</nav>
@@ -32,59 +32,79 @@
         <div class="home-head">
 			<div class="inner">
 				<h1>DummyJS</h1>
-				<p>The absolute quickest and easiest way to write and run functional tests for websites.</p>
+				<p>Smart Functional Testing</p>
 			</div>
         </div>
 
 
-		<div class="home-examples">
-			<div class="home-example">
-				<div class="inner">
-					<h2>Install</h2>
-					<p>DummyJS is a command line tool and can be installed with <a href="https://npmjs.org/">git</a> and <a href="https://npmjs.org/">npm</a>.</p>
-					<pre>$ git clone https://github.com/mennovanslooten/DummyJS.git
-$ npm install DummyJS -g</pre>
-					<p class="home-example-more">
-						<a href="tutorial.html#install">More about installing DummyJS</a>
-					</p>
-			</div>
+		<div class="home-intro">
+			<div class="inner">
 
-			<div class="home-example">
-				<div class="inner">
-					<h2>Write</h2>
-					<p>Tests are simple lists of actions and asserts.</p>
+				<div class="home-intro-item">
+					<h2>Write E2E tests in English</h2>
 					<pre>open             http://my.test.site
 click            .show-greeting
 assertVisible    .greeting</pre>
-					<p class="home-example-more">
-						<a href="tutorial.html#write">More about writing DummyJS tests</a>
-					</p>
 				</div>
-			</div>
 
-			<div class="home-example">
-				<div class="inner">
-					<h2>Run</h2>
-					<p>Tests are run from the command line in <a href="http://phantomjs.org">a headless browser</a>.</p>
+
+				<div class="home-intro-item">
+					<h2>And run them in a terminal</h2>
 					<pre>$ dummyjs mytest.dummy
-
-############################################################
-# Starting ./mytest.dummy (4 actions)
-############################################################
 
 ✓ open                    http://my.test.site
 ✓ click                   .show-greeting
 ✓ assertVisible           .greeting
 
 PASS: Executed 3 actions in 1s.</pre>
-					<p class="home-example-more">
-						<a href="tutorial.html#run">More about running DummyJS tests</a>
-					</p>
 				</div>
-			</div>
-		</div>
 
-        <hr>
+			</div>
+        </div>
+
+
+		<div class="home-usps">
+			<div class="inner">
+
+				<h2>DummyJS will automatically:</h2>
+
+				<ul class="usp-list">
+					<li><i class="fa fa-fw fa-2x fa-laptop"></i> Run the tests in a real (invisible) browser.</li>
+					<li><i class="fa fa-fw fa-2x fa-user"></i> Trigger all mouse, keyboard and scroll events a user would.</li>
+					<li><i class="fa fa-fw fa-2x fa-clock-o"></i> Deal with delays like page loads, Ajax requests and animations.</li>
+				</ul>
+
+			</div>
+        </div>
+
+
+		<div class="home-usps">
+			<div class="inner">
+				<h2>DummyJS tests are:</h2>
+
+				<div class="usp-item">
+					<h3>Robust</h3>
+					<p>Unlike most tools, DummyJS tests are resilient to change. Elements can change, move or disappear and DummyJS will adapt.</p>
+				</div>
+
+				<div class="usp-item">
+					<h3>Easy to write</h3>
+					<p>Instructions are plain English. Target elements by their text content or with CSS selectors.</p>
+				</div>
+
+				<div class="usp-item">
+					<h3>Easy to run</h3>
+					<p>DummyJS is a command line tool with various options to make your life easier. </p>
+				</div>
+
+				<div class="usp-item">
+					<h3>Fast</h3>
+					<p>Because DummyJS will deal automatically with delays tests don't need <code>waitFor</code> instructions. DummyJS waits only as long necessary.</p>
+				</div>
+
+			</div>
+        </div>
+
     
         <footer>
 			<div class="inner">

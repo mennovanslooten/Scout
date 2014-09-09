@@ -20,10 +20,10 @@
 				<ul class="main-nav-menu">
 					<li class="main-nav-github"><a href="https://github.com/mennovanslooten/DummyJS">GitHub</a></li>
 					<li><a href="index.html">Home</a></li>
+					<li><a href="getting_started.html">Getting started</a></li>
 					<li class="main-nav-menu-selected"><a href="api.html">API</a></li>
-					<li><a href="tutorial.html">Tutorial</a></li>
 					<li><a href="features.html">Features</a></li>
-					<li><a href="examples.html">Examples</a></li>
+					<!--<li><a href="examples.html">Examples</a></li>-->
 				</ul>
 			</div>
 		</nav>
@@ -37,15 +37,56 @@
 
 
 		<nav class="sub-nav">
-			<div class="inner">
-				<ul class="sub-nav-menu">
-					<li><a href="#actions">Actions</a></li>
-					<li><a href="#assertions">Assertions</a></li>
-					<li><a href="#helpers">Helpers</a></li>
-					<li><a href="#selectors">Selectors</a></li>
-					<li><a href="#cli">Command Line</a></li>
-				</ul>
-			</div>
+			<ul class="sub-nav-menu">
+				<li>
+					<a href="#actions">Actions</a>
+					<ul>
+						<li><a href="#open">open</a></li>
+						<li><a href="#back">back</a></li>
+						<li><a href="#forward">forward</a></li>
+						<li><a href="#moveMouseTo">moveMouseTo</a></li>
+						<li><a href="#click">click</a></li>
+						<li><a href="#dblclick">dblclick</a></li>
+						<li><a href="#type">type</a></li>
+						<li><a href="#resize">resize</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#assertions">Assertions</a>
+					<ul>
+						<li><a href="#assertTitle">assertTitle</a></li>
+						<li><a href="#assertPage">assertPage</a></li>
+						<li><a href="#assertText">assertText</a></li>
+						<li><a href="#assertExists">assertExists</a></li>
+						<li><a href="#assertVisible">assertVisible</a></li>
+						<li><a href="#assertHidden">assertHidden</a></li>
+						<li><a href="#assertEmpty">assertEmpty</a></li>
+						<li><a href="#assertNotEmpty">assertNotEmpty</a></li>
+						<li><a href="#assertLength">assertLength</a></li>
+						<li><a href="#assertMinLength">assertMinLength</a></li>
+						<li><a href="#assertMaxLength">assertMaxLength</a></li>
+						<li><a href="#assertValue">assertValue</a></li>
+						<li><a href="#assertHasClass">assertHasClass</a></li>
+						<li><a href="#assertNotHasClass">assertNotHasClass</a></li>
+						<li><a href="#assertDisabled">assertDisabled</a></li>
+						<li><a href="#assertResembles">assertResembles</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#helpers">Helpers</a>
+					<ul>
+						<li><a href="#comment">#</a></li>
+						<li><a href="#log">##</a></li>
+						<li><a href="#screendump">screendump</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="#selectors">Selectors</a>
+				</li>
+				<li>
+					<a href="#cli">Command Line</a>
+				</li>
+			</ul>
 		</nav>
 
 
@@ -53,9 +94,12 @@
 			<div class="inner">
 				<h2>Actions</h2>
 
-				<p>Actions simulate user interaction with the page. If the action cannot be executed (for example because the target element does not exist or is invisible) the action will fail.</p>
+				<p>
+					Actions simulate user interaction with the page.
+					<!--If the action cannot be executed (for example because the target element does not exist or is invisible) the action will fail.-->
+				</p>
 
-				<div class="api-item">
+				<div id="open" class="api-item">
 					<h3>open</h3>
 					<p>Opens a URL. It takes two arguments: a mandatory URL and an optional viewport size. If not specified, the viewport size will default to 1280x1280.</p>
 					<pre>open    http://www.google.com</pre>
@@ -63,30 +107,30 @@
 				</div>
 
 
-				<div class="api-item">
+				<div id="back" class="api-item">
 					<h3>back</h3>
 					<p>Go one page back in history.</p>
 					<pre>back</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="forward" class="api-item">
 					<h3>forward</h3>
 					<p>Go one page forward in history.</p>
 					<pre>forward</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="moveMouseTo" class="api-item">
 					<h3>moveMouseTo</h3>
-					<p>Moves the mouse pointer. It takes one mandatory arguments which can be either <a href="#selectors">a CSS selector</a> or a set of coordinates on the page.</p>
+					<p>Moves the mouse pointer. It takes one mandatory arguments which can be either <a href="#selectors">a CSS selector</a> or a set of coordinates on the page. The pointer is not moved to the destination instantly but follows a path across the page.</p>
 					<pre>moveMouseTo    .hideDialog</pre>
 					<pre>moveMouseTo    519, 1204</pre>
 					<p class="note">If a selector is specified, DummyJS will first wait for at least one element matching the selector to become visible. It will then scroll the element into view (if necessary) and then move the mouse to it.</p>
 				</div>
 
 
-				<div class="api-item">
+				<div id="click" class="api-item">
 					<h3>click</h3>
 					<p>Executes a <code>moveMouseTo</code> with the same argument and then a left mouse click.</p>
 					<pre>click    .hideDialog</pre>
@@ -94,14 +138,14 @@
 				</div>
 
 
-				<div class="api-item">
+				<div id="dblclick" class="api-item">
 					<h3>dblclick</h3>
 					<p>Executes a <code>moveMouseTo</code> with the same argument and then a double left mouse click.</p>
 					<pre>dblclick    .toggle</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="type" class="api-item">
 					<h3>type</h3>
 					<p>Executes sequential typing of keys into an element. It takes two mandatory arguments: a CSS selector and a string representing the characters that should be typed. This string can contain special instructions in the form of <code>&lt;KeyName&gt;</code> that will simulate keys that don't result in a character, like Tab, Enter, Up and Down.</p>
 					<pre>type    input[name="q"]    This is a test&lt;Enter&gt;</pre>
@@ -110,7 +154,7 @@
 				</div>
 
 
-				<div class="api-item">
+				<div id="resize" class="api-item">
 					<h3>resize</h3>
 					<p>Resizes the viewport to the specified dimensions. This will fire a JavaScript <code>onresize</code> event.</p>
 					<pre>resize    800x600</pre>
@@ -124,114 +168,118 @@
 			<div class="inner">
 				<h2>Assertions</h2>
 
-				<p>Assertions check the page for certain properties. If an assertion doesn't immediately succeed, it is repeatedly checked until a certain amount of time has passed. After that time, the current test file is aborted and the next is started.</p>
+				<p>
+					Assertions check the page for certain properties.
+					<!--If an assertion doesn't immediately succeed, it is repeatedly checked until a certain amount of time has passed.-->
+					<!--After that time, the current test file is aborted and the next is started.-->
+				</p>
 
-				<div class="api-item">
+				<div id="assertTitle" class="api-item">
 					<h3>assertTitle</h3>
 					<p>Checks if the argument is a substring of the document title.</p>
 					<pre>assertTitle    My Site - Homepage</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="assertPage" class="api-item">
 					<h3>assertPage</h3>
 					<p>Checks if the argument is a substring of the page URL.</p>
 					<pre>assertPage    /shop/products</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="assertText" class="api-item">
 					<h3>assertText</h3>
 					<p>Checks if there is an element that matches the selector that contains the specified text.</p>
 					<pre>assertText    .greeting    Hello, world.</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="assertExists" class="api-item">
 					<h3>assertExists</h3>
 					<p>Checks if there is an element that matches the selector.</p>
 					<pre>assertExists    a[href="#top"]</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="assertVisible" class="api-item">
 					<h3>assertVisible</h3>
 					<p>Checks if there is a visible element that matches the selector.</p>
 					<pre>assertVisible    .confirm-dialog</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="assertHidden" class="api-item">
 					<h3>assertHidden</h3>
 					<p>Checks if there is a hidden element that matches the selector.</p>
 					<pre>assertHidden    .confirm-dialog</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="assertEmpty" class="api-item">
 					<h3>assertEmpty</h3>
 					<p>Checks if there is an element that matches the selector that has no visible children.</p>
 					<pre>assertEmpty    #shopping_basket &gt; ul</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="assertNotEmpty" class="api-item">
 					<h3>assertNotEmpty</h3>
 					<p>Checks if there is an element that matches the selector that has at least one visible child.</p>
 					<pre>assertNotEmpty    #shopping_basket &gt; ul</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="assertLength" class="api-item">
 					<h3>assertLength</h3>
 					<p>Checks if the number of visible elements matching the selector is equal to the second argument.</p>
 					<pre>assertLength    #shopping_basket li    10</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="assertMinLength" class="api-item">
 					<h3>assertMinLength</h3>
 					<p>Checks if the number of visible elements matching the selector is at least equal to the second argument.</p>
 					<pre>assertMinLength    #shopping_basket li    6</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="assertMaxLength" class="api-item">
 					<h3>assertMaxLength</h3>
 					<p>Checks if the number of visible elements matching the selector is at most equal to the second argument.</p>
 					<pre>assertMaxLength    #shopping_basket li    15</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="assertValue" class="api-item">
 					<h3>assertValue</h3>
 					<p>Checks if the <code>value</code> attribute of the element matching the selector is equal to the second argument.</p>
 					<pre>assertValue    [name="city"]    Detroit</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="assertHasClass" class="api-item">
 					<h3>assertHasClass</h3>
 					<p>Checks if there is an element matching the selector that has the second argument as a class name.</p>
 					<pre>assertHasClass    #main_menu li    .selected</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="assertNotHasClass" class="api-item">
 					<h3>assertNotHasClass</h3>
 					<p>Checks if there is no element matching the selector that has the second argument as a class name.</p>
 					<pre>assertNotHasClass    #main_menu li    .disabled</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="assertDisabled" class="api-item">
 					<h3>assertDisabled</h3>
 					<p>Checks if there is an element matching the selector that is <code>disabled</code>.</p>
 					<pre>assertDisabled    input[type="submit"]</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="assertResembles" class="api-item">
 					<h3>assertResembles</h3>
 					<p>Makes a screendump and checks if it matches a previously made screendump. It takes two arguments: a mandatory file name (without extension) and an optional selector specifying which part of the screen should be dumped. If no selector is specified, the entire viewport will be dumped.</p>
 					<p>If there is no previously saved screendump, it will create it for future tests and pass the assert. Comparisons are made using <a href="http://huddle.github.io/Resemble.js/">Resemble.js</a>.</p>
@@ -250,25 +298,27 @@
 
 				<p>Helpers don't influence the test execution and can be used for debugging.</p>
 
-				<div class="api-item">
+				<div id="comment" class="api-item">
 					<h3>#</h3>
-					<p>A line starting with <code># </code> is commented.</p>
+					<p>A line starting with <code># </code> is commented and will be ignored.</p>
 					<pre># This is a comment</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="log" class="api-item">
 					<h3>##</h3>
 					<p>Logs the text after the <code>##</code> to the terminal</p>
 					<pre>## This is a log statement</pre>
 				</div>
 
 
-				<div class="api-item">
+				<div id="screendump" class="api-item">
 					<h3>screendump</h3>
-					<p>Saves a screendump to disk. It takes two arguments: a mandatory file name (without extension) and an optional selector specifying which part of the screen should be dumped. If no selector is specified, the entire viewport will be dumped.</p>
-					<pre>screendump    entire_viewport</pre>
-					<pre>screendump    partial    .some-selector</pre>
+					<p>Saves a screendump to disk. It takes two arguments: a mandatory file name (without extension) and an optional selector specifying which part of the screen should be dumped. If no selector is specified, the entire viewport will be dumped. Screendumps are saved as <code>.png</code> in the directory where DummyJS was called.</p>
+					<pre># Saves "entire_viewport.png"
+screendump    entire_viewport</pre>
+					<pre># Saves "partial.png"
+screendump    partial    .some-selector</pre>
 				</div>
 
 			</div>
@@ -293,14 +343,11 @@
 		<div class="content" id="cli">
 			<div class="inner">
 				<h2>Command Line API</h2>
-				<p>See <a href="tutorial.html#run">the section on running tests</a> in the tutorial.
+				<p>See <a href="getting_started.html#run">the section on running tests</a> in Getting Started.
 			</div>
         </div>
 
 
-
-        <hr>
-    
         <footer>
 			<div class="inner">
 				<p>&copy; 2013 <a href="https://twitter.com/mennovanslooten">@mennovanslooten</a></p>

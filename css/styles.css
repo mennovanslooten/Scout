@@ -1,4 +1,6 @@
+@charset "UTF-8";
 @import url(Fira/fira.css);
+@import url(font-awesome.css);
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -247,42 +249,48 @@ pre {
       border: none; }
   .main-nav-menu > .main-nav-github {
     position: absolute;
-    left: 0; }
+    left: 0;
+    background: #666; }
 
 .sub-nav {
-  background: #CCC; }
-  .sub-nav .inner {
-    position: relative; }
+  background: #CCC;
+  position: absolute;
+  left: 50%;
+  width: 300px;
+  margin-left: -480px; }
 
 .sub-nav-menu {
   list-style: none;
   margin: 0;
   padding: 0;
-  text-align: center; }
+  text-align: left; }
   .sub-nav-menu > li {
-    display: inline-block;
-    margin: 0; }
+    margin: 0;
+    border-bottom: 1px solid #EFEFEF; }
     .sub-nav-menu > li > a {
       color: black;
-      /*font-weight: bold;*/
+      font-weight: bold;
       display: block;
-      padding: 16px 24px;
-      -webkit-transition-property: all;
-      -moz-transition-property: all;
-      transition-property: all;
-      -webkit-transition-timing-function: ease-in-out;
-      -moz-transition-timing-function: ease-in-out;
-      transition-timing-function: ease-in-out;
-      -webkit-transition-delay: 0;
-      -moz-transition-delay: 0;
-      transition-delay: 0;
-      -webkit-transition-duration: 0.1s;
-      -moz-transition-duration: 0.1s;
-      transition-duration: 0.1s;
-      border-bottom: 0 solid white; }
+      padding: 16px 32px;
+      /*@include transition($duration: 0.1s);*/
+      /*border-left: 0 solid white;*/ }
       .sub-nav-menu > li > a:hover {
-        padding-bottom: 8px;
-        border-bottom-width: 8px; }
+        background: #FFF;
+        /*padding-left: 2 * $unit;*/
+        /*border-left-width: $unit;*/ }
+    .sub-nav-menu > li > ul {
+      list-style: none;
+      margin: 0;
+      padding: 0 0 16px;
+      text-align: left; }
+      .sub-nav-menu > li > ul > li {
+        margin: 0; }
+        .sub-nav-menu > li > ul > li > a {
+          color: black;
+          display: block;
+          padding: 0px 48px; }
+          .sub-nav-menu > li > ul > li > a:hover {
+            text-decoration: underline; }
 
 .home-head {
   /*
@@ -318,8 +326,74 @@ pre {
     width: 632px;
     float: right;
     font-size: 32px;
-    line-height: 40px;
+    line-height: 80px;
     font-style: italic; }
+
+.home-intro {
+  background: #CCC;
+  overflow: auto;
+  padding: 32px 0; }
+
+.home-intro-item {
+  width: 464px;
+  float: left; }
+  .home-intro-item h2 {
+    padding-bottom: 16px; }
+  .home-intro-item + .home-intro-item {
+    float: right; }
+
+.home-usps {
+  background: #E7E7E7; }
+  .home-usps .inner {
+    overflow: auto;
+    padding: 32px 0; }
+  .home-usps h2 {
+    text-align: center; }
+  .home-usps + .home-usps {
+    border-top: 1px solid #CCC; }
+
+.usp-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  /*-webkit-column-count: 3;*/
+  /*-webkit-column-gap: 4 * $unit;*/ }
+  .usp-list li {
+    padding: 0 0 0 64px;
+    margin: 0 32px 0 0;
+    position: relative;
+    width: 298.664px;
+    float: left;
+    font-size: 20px;
+    line-height: 24px;
+    /*
+    &:before { 
+    	content: "✓";
+    	position: absolute;
+    	left: 0;
+    	top: 0;
+    }
+    */ }
+    .usp-list li .fa {
+      position: absolute;
+      left: 0;
+      top: 0; }
+    .usp-list li:nth-child(3n) {
+      margin-right: 0; }
+
+.usp-item {
+  padding: 0;
+  margin: 16px 0 0;
+  width: 464px;
+  position: relative; }
+  .usp-item p {
+    padding: 0;
+    margin: 0; }
+  .usp-item:nth-child(even) {
+    float: left;
+    clear: both; }
+  .usp-item:nth-child(odd) {
+    float: right; }
 
 .home-examples {
   padding: 24px 0; }
@@ -381,10 +455,15 @@ pre {
 .content-head {
   padding: 24px 0;
   background: white;
-  text-align: center; }
+  /*text-align: center;*/ }
+  .content-head .inner {
+    padding-left: 320px; }
 
 .content .inner {
-  width: 640px; }
+  /*width: 80 * $unit;*/
+  border-left: 300px solid #dddddd;
+  padding-left: 20px;
+  padding-bottom: 16px; }
 .content h2 {
   padding-top: 32px; }
 .content h3 {
@@ -499,7 +578,7 @@ pre {
     /*text-align: right;*/ }
 
 .api-item {
-  margin: 16px 0;
+  margin: 16px 0 0;
   padding: 8px 16px;
   /*border: 1px solid white;*/
   background: rgba(255, 255, 255, 0.5);
@@ -507,7 +586,14 @@ pre {
   position: relative; }
 
 footer {
+  background: #666;
+  color: #CCC;
+  line-height: 64px;
   text-align: center; }
+  footer a:link {
+    color: #FFF; }
+    footer a:link:hover {
+      text-decoration: underline; }
 
 .main-feature h3 {
   /*text-align: center;*/ }

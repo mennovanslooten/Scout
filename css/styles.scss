@@ -2,6 +2,7 @@ $link-color: #03F;
 $unit: 8px;
 
 @import "Fira/fira.css";
+@import "font-awesome.css";
 @import "reset";
 @import "utils";
 
@@ -190,38 +191,61 @@ pre {
 	> .main-nav-github {
 		position: absolute;
 		left: 0;
+		background: #666;
 	}
 }
 
 .sub-nav {
 	background: #CCC;
-
-	.inner {
-		position: relative;
-	}
+	position: absolute;
+	left: 50%;
+	width: 37.5 * $unit;
+	margin-left: -60 * $unit;
 }
 
 .sub-nav-menu {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	text-align: center;
+	text-align: left;
 
 	> li {
-		display: inline-block;
 		margin: 0;
+		border-bottom: 1px solid #EFEFEF;
 
 		> a {
 			color: black;
-			/*font-weight: bold;*/
+			font-weight: bold;
 			display: block;
-			padding: 2 * $unit 3 * $unit;
-			@include transition($duration: 0.1s);
-			border-bottom: 0 solid white;
+			padding: 2 * $unit 4 * $unit;
+			/*@include transition($duration: 0.1s);*/
+			/*border-left: 0 solid white;*/
 
 			&:hover {
-				padding-bottom: $unit;
-				border-bottom-width: $unit;
+				background: #FFF;
+				/*padding-left: 2 * $unit;*/
+				/*border-left-width: $unit;*/
+			}
+		}
+
+		> ul {
+			list-style: none;
+			margin: 0;
+			padding: 0 0 2 * $unit;
+			text-align: left;
+
+			> li {
+				margin: 0;
+
+				> a {
+					color: black;
+					display: block;
+					padding: 0 * $unit 6 * $unit;
+
+					&:hover {
+						text-decoration: underline;
+					}
+				}
 			}
 		}
 	}
@@ -247,10 +271,105 @@ pre {
 		width: 79 * $unit;
 		float: right;
 		font-size: 4 * $unit;
-		line-height: 5 * $unit;
+		line-height: 10 * $unit;
 		font-style: italic;
 	}
 }
+
+.home-intro {
+	background: #CCC;
+	overflow: auto;
+	padding: 4 * $unit 0;
+}
+
+.home-intro-item {
+	width: 58 * $unit;
+	float: left;
+
+	h2 {
+		padding-bottom: 2 * $unit;
+	}
+
+	+ .home-intro-item {
+		float: right;
+	}
+}
+
+.home-usps {
+	background: #E7E7E7;
+	
+	.inner {
+		overflow: auto;
+		padding: 4 * $unit 0;
+	}
+
+	h2 {
+		text-align: center;
+	}
+
+	& + .home-usps {
+		border-top: 1px solid #CCC;
+	}
+}
+
+.usp-list {
+	list-style: none;
+	padding: 0;
+	margin: 2 * $unit 0 0;
+	/*-webkit-column-count: 3;*/
+	/*-webkit-column-gap: 4 * $unit;*/
+
+	li {
+		padding: 0 0 0 8 * $unit;
+		margin: 0 4 * $unit 0 0;
+		position: relative;
+		width: 37.333 * $unit;
+		float: left;
+		font-size: 2.5 * $unit;
+		line-height: 3 * $unit;
+
+		/*
+		&:before { 
+			content: "✓";
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		*/
+
+		.fa { 
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+
+		&:nth-child(3n) {
+			margin-right: 0;
+		}
+	}
+}
+
+.usp-item {
+	padding: 0;
+	margin: 2 * $unit 0 0;
+	width: 58 * $unit;
+	position: relative;
+
+	p {
+		padding: 0;
+		margin: 0;
+	}
+
+	&:nth-child(even) {
+		float: left;
+		clear: both;
+	}
+
+	&:nth-child(odd) {
+		float: right;
+	}
+}
+
 
 .home-examples {
 	padding: 3 * $unit 0;
@@ -310,14 +429,21 @@ pre {
 .content-head {
 	padding: 3 * $unit 0;
 	background: white;
-	text-align: center;
+	/*text-align: center;*/
+
+	.inner {
+		padding-left: 40 * $unit;
+	}
 }
 
 .content {
 	//padding: 2 * $unit 0;
 
 	.inner {
-		width: 80 * $unit;
+		/*width: 80 * $unit;*/
+		border-left: 37.5 * $unit solid #DDD;
+		padding-left: 2.5 * $unit;
+		padding-bottom: 2 * $unit;
 	}
 
 	h2 {
@@ -461,7 +587,7 @@ pre {
 }
 
 .api-item {
-	margin: 2 * $unit 0;
+	margin: 2 * $unit 0 0;
 	padding: 1 * $unit 2 * $unit;
 	/*border: 1px solid white;*/
 	background: rgba(255, 255, 255, 0.5);
@@ -473,7 +599,18 @@ pre {
 }
 
 footer {
+	background: #666;
+	color: #CCC;
+	line-height: 8 * $unit;
 	text-align: center;
+
+	a:link {
+		color: #FFF;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 }
 
 .main-feature {
