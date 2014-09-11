@@ -26,6 +26,7 @@ assertText       #clear-completed                 Clear completed (1)
 
 ## check the contents of the "active" tab
 click            "Active"
+# click            [href="#/active"]
 assertLength     #todo-list > li                  2
 
 

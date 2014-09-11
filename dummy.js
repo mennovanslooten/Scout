@@ -2,7 +2,7 @@
 	TODO:
 	[ ] World Peace
 	[?] Parallel testing
-	[ ] Back/forward button action
+	[X] Back/forward button action
 	[?] Support for CSV files
 	[X] Remove resemble.js dependency
 	[ ] Add mousedown/move/up support (drag & drop)
@@ -11,7 +11,7 @@
 	[ ] JS function documentation
 	[X] Add check for elements being covered by other elements
 	[ ] Improve detection of page navigation
-	[ ] Add (non) verbose option
+	[X] Add (non) verbose option
 */
 
 phantom.clearCookies();
@@ -59,8 +59,8 @@ function nextTestFile() {
 }
 
 
-function waitFor(conditionCallback, passCallback, failCallback, timeout) {
-	if (timeout > 0) {
+function waitFor(conditionCallback, passCallback, failCallback, remaining_time) {
+	if (remaining_time > 0) {
 		var is_passed = false;
 
 		if (!_page.is_loading) {
@@ -82,9 +82,9 @@ function waitFor(conditionCallback, passCallback, failCallback, timeout) {
 				if (!_page.is_loading) {
 					var d2 = new Date();
 					var elapsed = d2 - d1;
-					timeout -= elapsed;
+					remaining_time -= elapsed;
 				}
-				waitFor(conditionCallback, passCallback, failCallback, timeout);
+				waitFor(conditionCallback, passCallback, failCallback, remaining_time);
 			}, _cli_args.step);
 		}
 	} else {
