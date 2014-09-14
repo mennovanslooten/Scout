@@ -1,4 +1,0 @@
-open           http://www.youtube.com
-type           #masthead-search-term       rick roll<Enter>
-click          #search-results > li:first
-assertTitle    Rick Astley - Never Gonna Give You Up

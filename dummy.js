@@ -2,16 +2,14 @@
 	TODO:
 	[ ] World Peace
 	[?] Parallel testing
-	[X] Back/forward button action
 	[?] Support for CSV files
-	[X] Remove resemble.js dependency
 	[ ] Add mousedown/move/up support (drag & drop)
 	[ ] "Touch" flag that skips mousemove sequence
 	[?] .dummyjsrc file support with default options
 	[ ] JS function documentation
-	[X] Add check for elements being covered by other elements
 	[ ] Improve detection of page navigation
-	[X] Add (non) verbose option
+	[ ] Add "include" action to include other files
+	[ ] Add (random) string generation
 */
 
 phantom.clearCookies();
@@ -29,10 +27,11 @@ var _current_action     = null;
 var _total_actions      = 0;
 var _passed             = [];
 var _failed             = [];
+var _remembered         = {};
 var _last_action_status = '';
 
 
-_logger.mute(_cli_args.verbosity > 0);
+_logger.mute(_cli_args.quiet > 0);
 
 
 function nextTestFile() {
@@ -109,26 +108,57 @@ function nextAction() {
 	}
 
 	var handler = _actions[_current_action.type];
-	var args = _current_action.args.map(function(arg) {
-		/*
-			Selectors of this form: 
-				"Some text"
-			will be transformed to this form:
-				:textEquals("Some text")
-		*/
+
+	// Replace special argument formats
+	_current_action.args = _current_action.args.map(function(arg) {
 		var inside_quotes = /^"([^"]+)"$/;
+		var random        = /{{(\d+)}}/g;
+		var variable      = /{([a-z_]+)}/g;
+
 		if (inside_quotes.test(arg)) {
+			// Arguments of this form: 
+			// "Some text"
+			// will be replaced with
+			// :textEquals("Some text")
 			return ':textEquals(' + arg + ')';
+
+		} else if (random.test(arg)) {
+			// Strings of this form: 
+			// {{number}}
+			// will be replaced with a random string of length number
+			var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-.0123456789'.split('');
+			var result = arg.replace(random, function(match, length) {
+				var length = parseInt(length, 10);
+				var generated = '';
+				for (var i = 0; i < length; i++) {
+					//generated += String.fromCharCode(Math.floor(Math.random() * 255));
+					generated += chars[Math.floor(Math.random() * chars.length)];
+				}
+				return generated;
+			});
+			return result;
+
+		} else if (variable.test(arg)) {
+			// Strings of this form:
+			// {variable_name}
+			// will be replaced with the value of _remembered.variable_name
+			// if it exists
+			var result = arg.replace(variable, function(match, variable_name) {
+				return _remembered[variable_name] || variable_name;
+			});
+			return result;
 		}
-		return arg
+
+		return arg;
 	});
+
 	if (handler) {
 		waitFor(
 
 			// Keep executing until it returns true
 			function() {
-				//return handler.apply(_actions, _current_action.args);
-				return handler.apply(_actions, args);
+				return handler.apply(_actions, _current_action.args);
+				//return handler.apply(_actions, args);
 			},
 
 			// Run after true is returned
@@ -186,7 +216,7 @@ function done() {
 		return phantom.exit(0);
 	}
 
-	_logger.mute(_cli_args.verbosity > 1);
+	_logger.mute(_cli_args.quiet > 1);
 
 	var result = 'PASS';
 	var exit_code = 0;
@@ -195,9 +225,9 @@ function done() {
 	var total_time = Math.round((new Date().valueOf() - _start_time) / 1000);
 	//var message = 'Executed ' + _total_actions + ' actions';
 	//
-	var total = _passed.length + _failed.length;
+	var total_tests = _passed.length + _failed.length;
 
-	if (total > 1) {
+	if (total_tests > 1) {
 		//_logger.title('Results');
 	}
 
@@ -206,9 +236,9 @@ function done() {
 		exit_code = 1;
 
 		// If more than one test file is run, show a list of failures tests
-		if (total > 1) {
+		if (total_tests > 1) {
 			_logger.comment('\n----------------------------------------------------------------');
-			_logger.error('# Failed ' + _failed.length + ' of ' + total + ':');
+			_logger.error('# Failed ' + _failed.length + ' of ' + total_tests + ':');
 
 			for (var i = 0; i < _failed.length; i++) {
 				var fail = _failed[i];
@@ -221,8 +251,8 @@ function done() {
 
 	/*
 	if (_passed.length) {
-		if (total > 1) {
-			_logger.comment('\n# Passed ' + _passed.length + ' of ' + total + ':');
+		if (total_tests > 1) {
+			_logger.comment('\n# Passed ' + _passed.length + ' of ' + total_tests + ':');
 			for (var i = 0; i < _passed.length; i++) {
 				_logger.log('  ✓ ' + _passed[i].path);
 			}
@@ -230,8 +260,8 @@ function done() {
 	}
 	*/
 
-	_logger.mute(_cli_args.verbosity > 2);
-	_logger[result.toLowerCase()]('\n[' + result + '] Executed ' + _total_actions + ' actions in ' + total_time + 's.');
+	_logger.mute(_cli_args.quiet > 2);
+	_logger[result.toLowerCase()]('\n[' + result + '] Executed ' + _total_actions + ' actions from ' + total_tests + ' tests in ' + total_time + 's.');
 
 	phantom.exit(exit_code);
 }
