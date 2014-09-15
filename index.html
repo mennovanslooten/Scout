@@ -38,15 +38,15 @@
 			<div class="inner">
 
 				<div class="home-intro-item">
-					<h2>Write E2E tests in English</h2>
-					<pre>open             http://my.test.site
-type             :text                 John
-click            "Say hi!"
-assertText       .greeting             Hi, John!</div>
+					<h2>Write E2E tests in English:</h2>
+					<pre>open            http://my.test.site
+type            :text                 John
+click           "Say hi!"
+assertText      .greeting             Hi, John!</div>
 
 
 				<div class="home-intro-item">
-					<h2>And run them in a terminal</h2>
+					<h2>Run them from a command line:</h2>
 					<pre>$ dummyjs mytest.dummy
 
 ✓ open                http://my.test.site
@@ -67,9 +67,9 @@ PASS: Executed 4 actions in 1s.</pre>
 				<h2>DummyJS will automatically:</h2>
 
 				<ul class="usp-list">
-					<li><i class="fa fa-fw fa-2x fa-laptop"></i> Run the tests in a real (invisible) browser.</li>
-					<li><i class="fa fa-fw fa-2x fa-user"></i> Trigger all mouse, keyboard and scroll events a user would.</li>
-					<li><i class="fa fa-fw fa-2x fa-clock-o"></i> Deal with delays like page loads, Ajax requests and animations.</li>
+					<li><!-- <i class="fa fa-fw fa-2x fa-laptop"></i> --> Run the tests in a real (invisible) browser.</li>
+					<li><!-- <i class="fa fa-fw fa-2x fa-user"></i> --> Trigger all mouse, keyboard and scroll events a user would.</li>
+					<li><!-- <i class="fa fa-fw fa-2x fa-clock-o"></i> --> Deal with delays like page loads, Ajax requests and animations.</li>
 				</ul>
 
 			</div>
@@ -82,7 +82,7 @@ PASS: Executed 4 actions in 1s.</pre>
 
 				<div class="usp-item">
 					<h3>Robust</h3>
-					<p>Unlike most tools, DummyJS tests are resilient to change. Elements can change, move or disappear and DummyJS will adapt.</p>
+					<p>Tests are very resilient to changes in the page. Elements can change, move or disappear and DummyJS will adapt.</p>
 				</div>
 
 				<div class="usp-item">
@@ -97,7 +97,7 @@ PASS: Executed 4 actions in 1s.</pre>
 
 				<div class="usp-item">
 					<h3>Fast</h3>
-					<p>Because DummyJS will deal automatically with delays tests don't need <code>waitFor</code> instructions. DummyJS waits only as long necessary.</p>
+					<p>Because DummyJS automatically deals with delays, tests don't need artificial <code>waitFor</code> instructions.</p>
 				</div>
 
 			</div>

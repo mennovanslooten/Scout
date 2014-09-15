@@ -70,7 +70,7 @@
 					</ul>
 				</li>
 				<li>
-					<a href="#helpers">Helpers</a>
+					<a href="#debugging">Debugging</a>
 					<ul>
 						<li><a href="#comment">#</a></li>
 						<li><a href="#log">##</a></li>
@@ -78,7 +78,7 @@
 					</ul>
 				</li>
 				<li>
-					<a href="#selectors">Selectors</a>
+					<a href="#arguments">Arguments</a>
 				</li>
 				<li>
 					<a href="#cli">Command Line</a>
@@ -289,11 +289,9 @@
 		</div>
 
 
-		<div class="content content-api" id="helpers">
+		<div class="content content-api" id="debugging">
 			<div class="inner">
-				<h2>Helpers</h2>
-
-				<p>Helpers don't influence the test execution and can be used for debugging.</p>
+				<h2>Debugging</h2>
 
 				<div id="comment" class="api-item">
 					<h3>#</h3>
@@ -318,20 +316,60 @@ screendump    entire_viewport</pre>
 screendump    partial    .some-selector</pre>
 				</div>
 
+
+				<div id="remember" class="api-item">
+					<h3>remember</h3>
+					<p>Stores the text or value (in case of an <code>&lt;input&gt;</code> or <code>&lt;select&gt;</code>) of an element in a temporary variable. Stored variables can be used as <code>{varname}</code>. Stored variables are remembered as long as DummyJS is running and can be used in other tests.</p>
+					<pre># Store the value of a password field in a variable called pwd
+remember    :password    pwd</pre>
+					<pre># Store the text content of a paragraph in a variable called txt
+remember    p:first    txt</pre>
+				</div>
+
 			</div>
 		</div>
 
 
-		<div class="content content-api" id="selectors">
+		<div class="content content-api" id="arguments">
 			<div class="inner">
-				<h2>Selectors</h2>
+				<h2>Arguments</h2>
 
-				<p>All standard CSS3 selectors can be used to target elements, as well as all the convenient <a href="http://api.jquery.com/category/selectors/jquery-selector-extensions/">jQuery extensions</a>, like <code>:checkbox</code>, <code>:has()</code> and <code>:odd</code>. Additionally, DummyJS supports a shortcut for <strong>selecting by text content:</strong> if a text in double quotes is passed, it will look for elements matching that text exactly. This can be used in place of any argument that expects a selector.</p>
+				<div id="selectors" class="api-item">
+					<h3>Selectors</h3>
+					<p>All standard CSS3 selectors can be used to target elements, as well as all the convenient <a href="http://api.jquery.com/category/selectors/jquery-selector-extensions/">jQuery extensions</a>, like <code>:checkbox</code>, <code>:has()</code> and <code>:odd</code>.</p>
 
-				<div class="api-item">
+					<pre>click    :submit</pre>
+					<pre>assertVisible    #modal_dialog</pre>
+					<pre>assertHasClass    input[name="email"]    .input-error</pre>
+				</div>
+
+				<div id="targeting_by_text" class="api-item">
+					<h3>Targeting by text</h3>
+					<p>Besides the standard jQuery selectors, DummyJS supports a shortcut for <strong>selecting by text content:</strong> if a text in double quotes is passed, it will look for elements matching that text exactly. This can be used in place of any argument that expects a selector.</p>
+
 					<pre>click    "Next page"</pre>
 					<pre>assertVisible    "Welcome, John Connor"</pre>
 					<pre>assertHasClass    "Features"    .selected</pre>
+				</div>
+
+				<div id="random_string_generation" class="api-item">
+					<h3>Random string generation</h3>
+					<p>Sometimes, usually when testing a form, you need the ability to generate random strings. For example, when you test a registration form you might need a unique email address to prevent any "already registered" type errors.</p>
+					<p>DummyJS can generate random strings of any length with <code>{{xyz}}</code>, where xyz is a number specifying the length of the string. The {{xyz}} pattern can occur anywhere in any argument.</p>
+
+					<pre>type    [name="password"]    {{8}}</pre>
+					<pre>type    [name="email"]    {{4}}@{{6}}.com</pre>
+					<p class="note">The generated string will be visible in the console log.</p>
+				</div>
+
+				<div id="variable_replacement" class="api-item">
+					<h3>Variable replacement</h3>
+					<p>Variables that have been stored with the <a href="#remember"><code>remember</code></a> command can be reused with the <code>{varname}</code> pattern.</p>
+
+					<pre>
+type          [name="username"]    {{8}}
+remember      [name="username"]    username
+assertText    .info                {username} is still available</pre>
 				</div>
 			</div>
 		</div>

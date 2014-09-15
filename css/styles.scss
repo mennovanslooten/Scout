@@ -2,7 +2,7 @@ $link-color: #03F;
 $unit: 8px;
 
 @import "Fira/fira.css";
-@import "font-awesome.css";
+/*@import "font-awesome.css";*/
 @import "reset";
 @import "utils";
 
@@ -320,7 +320,7 @@ pre {
 	/*-webkit-column-gap: 4 * $unit;*/
 
 	li {
-		padding: 0 0 0 8 * $unit;
+		padding: 0 0 0 4 * $unit;
 		margin: 0 4 * $unit 0 0;
 		position: relative;
 		width: 37.333 * $unit;
@@ -328,13 +328,14 @@ pre {
 		font-size: 2.5 * $unit;
 		line-height: 3 * $unit;
 
-		/*
 		&:before { 
 			content: "✓";
 			position: absolute;
 			left: 0;
 			top: 0;
+			font-size: 4 * $unit;
 		}
+		/*
 		*/
 
 		.fa { 

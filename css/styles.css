@@ -1,6 +1,6 @@
 @charset "UTF-8";
 @import url(Fira/fira.css);
-@import url(font-awesome.css);
+/*@import "font-awesome.css";*/
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -359,7 +359,7 @@ pre {
   /*-webkit-column-count: 3;*/
   /*-webkit-column-gap: 4 * $unit;*/ }
   .usp-list li {
-    padding: 0 0 0 64px;
+    padding: 0 0 0 32px;
     margin: 0 32px 0 0;
     position: relative;
     width: 298.664px;
@@ -367,13 +367,13 @@ pre {
     font-size: 20px;
     line-height: 24px;
     /*
-    &:before { 
-    	content: "✓";
-    	position: absolute;
-    	left: 0;
-    	top: 0;
-    }
     */ }
+    .usp-list li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 32px; }
     .usp-list li .fa {
       position: absolute;
       left: 0;
