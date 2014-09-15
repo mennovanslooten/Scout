@@ -5,7 +5,15 @@ open          ./index.html
 
 ## Text-based inputs can be filled with "type"
 type          input[type="text"]                       Hello, world.
-type          input[type="password"]                   {password}
+
+## Strings of the form {{number}} are replaced with a random string of length number
+type          input[type="password"]                   {{4}}___{{4}}---{{4}}
+
+## remember stores the value or text of an element in a variable
+remember      input[type="password"]                   password
+
+## Remembered values can be logged: {{password}}
+
 type          textarea                                 Lorem ipsum dolor sit amet
 
 ## Selects can be set with "choose"
@@ -27,6 +35,8 @@ assertPage    results.html
 
 ## Check if the submitted data is displayed correctly
 assertText    #text + dd                               Hello, world.
+
+## We can recall the previously stored variable here
 assertText    #password + dd                           {password}
 assertText    #select + dd                             option two
 
