@@ -96,12 +96,18 @@ function nextAction() {
 	_current_action = _current_test_file.actions.shift();
 
 	if (!_current_action) {
+		// If there are no more actions in the current test file
+		// the test has passed...
 		_passed.push({
 			path: _current_test_file.path
 		});
+
+		// ...and we continue with the next
 		nextTestFile();
 		return;
 	} else if (_current_action.type === 'done') {
+		// The action "done" skips the rest of the test file
+		// Useful for debugging
 		_current_test_file.actions.length = 0;
 		nextAction();
 		return;
@@ -158,7 +164,6 @@ function nextAction() {
 			// Keep executing until it returns true
 			function() {
 				return handler.apply(_actions, _current_action.args);
-				//return handler.apply(_actions, args);
 			},
 
 			// Run after true is returned
@@ -170,6 +175,7 @@ function nextAction() {
 			// ...which is this long:
 			_cli_args.timeout);
 	} else {
+		_last_action_status = 'Unknown action: <' + _current_action.type + '>';
 		failCurrentAction();
 	}
 }
@@ -199,14 +205,16 @@ function failCurrentAction() {
 
 	var args = [_current_action.type].concat(_current_action.args);
 	message = _logger.tabularize(args);
+
 	_logger.error('  ✗ ' + message);
 	_logger.error('    ' + _last_action_status);
-	//_failed.push(_current_test_file.path);
+
 	_failed.push({
 		path: _current_test_file.path,
 		action: message,
 		error: _last_action_status
 	});
+
 	nextTestFile();
 }
 
