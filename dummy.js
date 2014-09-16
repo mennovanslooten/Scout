@@ -48,7 +48,8 @@ function nextTestFile() {
 		_logger.log('');
 	}
 
-	if (_test_files.length) _logger.title('Starting: ' + _current_test_file.path);
+	var total = _passed.length + _failed.length + _test_files.length;
+	if (total > 1) _logger.title('Starting: ' + _current_test_file.path);
 
 	_page.is_loaded = false;
 	_page.is_loading = false;
@@ -77,11 +78,11 @@ function waitFor(conditionCallback, passCallback, failCallback, remaining_time) 
 		} else {
 			var d1 = new Date();
 			setTimeout(function() {
-				if (!_page.is_loading) {
+				//if (!_page.is_loading) {
 					var d2 = new Date();
 					var elapsed = d2 - d1;
 					remaining_time -= elapsed;
-				}
+				//}
 				waitFor(conditionCallback, passCallback, failCallback, remaining_time);
 			}, _cli_args.step);
 		}
@@ -179,10 +180,12 @@ function passCurrentAction() {
 		if (_cli_args.passdump) _screendump.dump('passdump_' + new Date().valueOf());
 
 		_current_action.end_time = new Date();
-		var duration = _current_action.end_time - _current_action.start_time;
 		var args = [_current_action.type].concat(_current_action.args)
-		args.push(duration + 'ms');
-		message = _logger.tabularize(args);
+
+		//var duration = _current_action.end_time - _current_action.start_time;
+		//args.unshift(duration + 'ms');
+
+		var message = _logger.format(args, _current_test_file.columns);
 		_logger.log('  ✓ ' + message);
 		_total_actions++;
 	}
@@ -200,7 +203,7 @@ function failCurrentAction() {
 	if (_cli_args.faildump) _screendump.dump('faildump' + _current_test_file.path.replace(/\.?\//g, '__'));
 
 	var args = [_current_action.type].concat(_current_action.args);
-	message = _logger.tabularize(args);
+	var message = _logger.format(args, _current_test_file.columns);
 
 	_logger.error('  ✗ ' + message);
 	_logger.error('    ' + _last_action_status);
@@ -279,4 +282,3 @@ function dir(obj) {
 		console.log(p, ':', obj[p]);
 	}
 }
-
