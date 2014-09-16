@@ -1,15 +1,14 @@
 /*
 	TODO:
 	[ ] World Peace
+	[ ] npm publish
 	[?] Parallel testing
 	[?] Support for CSV files
 	[ ] Add mousedown/move/up support (drag & drop)
 	[ ] "Touch" flag that skips mousemove sequence
 	[?] .dummyjsrc file support with default options
 	[ ] JS function documentation
-	[ ] Improve detection of page navigation
 	[ ] Add "include" action to include other files
-	[ ] Add (random) string generation
 */
 
 phantom.clearCookies();
@@ -159,6 +158,8 @@ function nextAction() {
 	});
 
 	if (handler) {
+		_current_action.start_time = new Date();
+
 		waitFor(
 
 			// Keep executing until it returns true
@@ -185,7 +186,10 @@ function passCurrentAction() {
 	if (_current_action.type !== 'log') {
 		if (_cli_args.passdump) _screendump.dump('passdump_' + new Date().valueOf());
 
-		var args = [_current_action.type].concat(_current_action.args);
+		_current_action.end_time = new Date();
+		var duration = _current_action.end_time - _current_action.start_time;
+		var args = [_current_action.type].concat(_current_action.args)
+		args.push(duration + 'ms');
 		message = _logger.tabularize(args);
 		_logger.log('  ✓ ' + message);
 		_total_actions++;
