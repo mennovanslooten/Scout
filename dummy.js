@@ -117,18 +117,10 @@ function nextAction() {
 
 	// Replace special argument formats
 	_current_action.args = _current_action.args.map(function(arg) {
-		var inside_quotes = /^"([^"]+)"$/;
 		var random        = /{{(\d+)}}/g;
 		var variable      = /{([a-z_]+)}/g;
 
-		if (inside_quotes.test(arg)) {
-			// Arguments of this form: 
-			// "Some text"
-			// will be replaced with
-			// :textEquals("Some text")
-			return ':textEquals(' + arg + ')';
-
-		} else if (random.test(arg)) {
+		if (random.test(arg)) {
 			// Strings of this form: 
 			// {{number}}
 			// will be replaced with a random string of length number
