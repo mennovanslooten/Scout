@@ -34,6 +34,8 @@ _logger.mute(_cli_args.quiet > 0);
 
 
 function nextTestFile() {
+	_page.clearCookies();
+
 	_current_test = _tests.shift();
 	if (!_current_test) {
 		return done();
@@ -48,7 +50,7 @@ function nextTestFile() {
 		_logger.log('');
 	}
 
-	var total = _passed.length + _failed.length + _tests.length;
+	var total = _passed.length + _failed.length + _tests.length + 1;
 	if (total > 1) _logger.title('Starting: ' + _current_test.path);
 
 	_page.is_loaded = false;
