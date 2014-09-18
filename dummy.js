@@ -76,6 +76,7 @@ function waitFor(conditionCallback, passCallback, failCallback, remaining_time) 
 		if (is_passed) {
 			passCallback();
 		} else if (_current_action.optional) {
+			// If it didn't pass but is optional we can skip it
 			nextAction();
 		} else {
 			var d1 = new Date();
