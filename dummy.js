@@ -15,13 +15,13 @@ phantom.clearCookies();
 
 var _start_time         = new Date();
 var _cli_args           = require('./lib/arguments').parseArguments();
-var _test_files         = require('./lib/testreader').readTestFiles();
+var _tests              = require('./lib/testreader').readTestFiles();
 var _screendump         = require('./lib/screendump');
 var _page               = require('./lib/page').page;
 var _actions            = require('./lib/actions').actions;
 var _logger             = require('./lib/logger');
 var _formatter          = require('./lib/formatter');
-var _current_test_file  = null;
+var _current_test       = null;
 var _current_action     = null;
 var _total_actions      = 0;
 var _passed             = [];
@@ -34,13 +34,13 @@ _logger.mute(_cli_args.quiet > 0);
 
 
 function nextTestFile() {
-	_current_test_file = _test_files.shift();
-	if (!_current_test_file) {
+	_current_test = _tests.shift();
+	if (!_current_test) {
 		return done();
 	}
 
 	if (_cli_args.reformat) {
-		_formatter.reformat(_current_test_file);
+		_formatter.reformat(_current_test);
 		return nextTestFile();
 	}
 
@@ -48,8 +48,8 @@ function nextTestFile() {
 		_logger.log('');
 	}
 
-	var total = _passed.length + _failed.length + _test_files.length;
-	if (total > 1) _logger.title('Starting: ' + _current_test_file.path);
+	var total = _passed.length + _failed.length + _tests.length;
+	if (total > 1) _logger.title('Starting: ' + _current_test.path);
 
 	_page.is_loaded = false;
 	_page.is_loading = false;
@@ -75,6 +75,8 @@ function waitFor(conditionCallback, passCallback, failCallback, remaining_time) 
 
 		if (is_passed) {
 			passCallback();
+		} else if (_current_action.optional) {
+			nextAction();
 		} else {
 			var d1 = new Date();
 			setTimeout(function() {
@@ -93,13 +95,13 @@ function waitFor(conditionCallback, passCallback, failCallback, remaining_time) 
 
 
 function nextAction() {
-	_current_action = _current_test_file.actions.shift();
+	_current_action = _current_test.actions.shift();
 
 	if (!_current_action) {
 		// If there are no more actions in the current test file
 		// the test has passed...
 		_passed.push({
-			path: _current_test_file.path
+			path: _current_test.path
 		});
 
 		// ...and we continue with the next
@@ -108,7 +110,7 @@ function nextAction() {
 	} else if (_current_action.type === 'done') {
 		// The action "done" skips the rest of the test file
 		// Useful for debugging
-		_current_test_file.actions.length = 0;
+		_current_test.actions.length = 0;
 		nextAction();
 		return;
 	}
@@ -185,12 +187,12 @@ function passCurrentAction() {
 		//var duration = _current_action.end_time - _current_action.start_time;
 		//args.unshift(duration + 'ms');
 
-		var message = _logger.format(args, _current_test_file.columns);
+		var message = _logger.format(args, _current_test.columns);
 		_logger.log('  ✓ ' + message);
 		_total_actions++;
 	}
 
-	_current_test_file.passed.push(_current_action);
+	_current_test.passed.push(_current_action);
 
 	// If the previous action resulted in a page (re)load we need to give it
 	// some time to trigger the onNavigationRequested event. Until the next
@@ -200,16 +202,16 @@ function passCurrentAction() {
 
 
 function failCurrentAction() {
-	if (_cli_args.faildump) _screendump.dump('faildump' + _current_test_file.path.replace(/\.?\//g, '__'));
+	if (_cli_args.faildump) _screendump.dump('faildump' + _current_test.path.replace(/\.?\//g, '__'));
 
 	var args = [_current_action.type].concat(_current_action.args);
-	var message = _logger.format(args, _current_test_file.columns);
+	var message = _logger.format(args, _current_test.columns);
 
 	_logger.error('  ✗ ' + message);
 	_logger.error('    ' + _last_action_status);
 
 	_failed.push({
-		path: _current_test_file.path,
+		path: _current_test.path,
 		action: message,
 		error: _last_action_status
 	});
