@@ -70,10 +70,11 @@
 					</ul>
 				</li>
 				<li>
-					<a href="#debugging">Debugging</a>
+					<a href="#utilities">Utilities</a>
 					<ul>
-						<li><a href="#comment">#</a></li>
-						<li><a href="#log">##</a></li>
+						<li><a href="#comment"># (comment)</a></li>
+						<li><a href="#log">## (log)</a></li>
+						<li><a href="#optional">? (optional)</a></li>
 						<li><a href="#screendump">screendump</a></li>
 					</ul>
 				</li>
@@ -279,7 +280,7 @@
 				<div id="assertResembles" class="api-item">
 					<h3>assertResembles</h3>
 					<p>Makes a screendump and checks if it matches a previously made screendump. It takes two arguments: a mandatory file name (without extension) and an optional selector specifying which part of the screen should be dumped. If no selector is specified, the entire viewport will be dumped.</p>
-					<p>If there is no previously saved screendump, it will create it for future tests and pass the assert. Comparisons are made using <a href="http://huddle.github.io/Resemble.js/">Resemble.js</a>.</p>
+					<p>If there is no previously saved screendump, it will create it for future tests and pass the assert. <!-- Comparisons are made using <a href="http://huddle.github.io/Resemble.js/">Resemble.js</a>. --></p>
 					<!-- <p>Makes a screendump of the first element matching the selector and checks if it matches a previously saved screendump with the specified filename. If there is no previously saved screendump, it will create it for future tests. Comparisons are made using <a href="http://huddle.github.io/Resemble.js/">Resemble.js</a>.</p> -->
 					<pre>assertResembles    screendump-loginpage</pre>
 					<pre>assertResembles    screendump-loginform    form[action="/login"]</pre>
@@ -289,21 +290,30 @@
 		</div>
 
 
-		<div class="content content-api" id="debugging">
+		<div class="content content-api" id="utilities">
 			<div class="inner">
-				<h2>Debugging</h2>
+				<h2>Utilities</h2>
 
 				<div id="comment" class="api-item">
-					<h3>#</h3>
-					<p>A line starting with <code># </code> is commented and will be ignored.</p>
+					<h3># (comment)</h3>
+					<p>A line starting with <code>#</code> is commented and will be ignored.</p>
 					<pre># This is a comment</pre>
 				</div>
 
 
 				<div id="log" class="api-item">
-					<h3>##</h3>
+					<h3>## (log)</h3>
 					<p>Logs the text after the <code>##</code> to the terminal</p>
 					<pre>## This is a log statement</pre>
+				</div>
+
+
+				<div id="optional" class="api-item">
+					<h3>? (optional)</h3>
+					<p>Makes an action or assert optional. It will be tried once and skipped when it fails.</p>
+					<pre>
+## This will deal with the cookies dialog if it appears
+?click    "Accept cookies"</pre>
 				</div>
 
 
