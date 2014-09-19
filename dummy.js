@@ -11,7 +11,6 @@
 	[ ] Add "include" action to include other files
 */
 
-phantom.clearCookies();
 
 var _start_time         = new Date();
 var _cli_args           = require('./lib/arguments').parseArguments();
