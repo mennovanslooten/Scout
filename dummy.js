@@ -8,7 +8,6 @@
 	[ ] "Touch" flag that skips mousemove sequence
 	[?] .dummyjsrc file support with default options
 	[ ] JS function documentation
-	[ ] Add "include" action to include other files
 */
 
 
