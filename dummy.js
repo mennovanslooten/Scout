@@ -28,6 +28,7 @@ var _failed             = [];
 var _remembered         = {};
 var _last_action_status = '';
 
+		//phantom.exit(0);
 
 _logger.mute(_cli_args.quiet > 0);
 
