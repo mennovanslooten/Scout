@@ -76,10 +76,18 @@
 						<li><a href="#log">## (log)</a></li>
 						<li><a href="#optional">? (optional)</a></li>
 						<li><a href="#screendump">screendump</a></li>
+						<li><a href="#remember">remember</a></li>
+						<li><a href="#include">include</a></li>
 					</ul>
 				</li>
 				<li>
 					<a href="#arguments">Arguments</a>
+					<ul>
+						<li><a href="#selectors">CSS Selectors</a></li>
+						<li><a href="#targeting_by_text">Targeting by text</a></li>
+						<li><a href="#random_string_generators">Random string generators</a></li>
+						<li><a href="#variables">Variables</a></li>
+					</ul>
 				</li>
 				<li>
 					<a href="#cli">Command Line</a>
@@ -336,6 +344,15 @@ remember    :password    pwd</pre>
 remember    p:first    txt</pre>
 				</div>
 
+
+
+				<div id="include" class="api-item">
+					<h3>include</h3>
+					<p>Includes another <code>.dummy</code> file as part of the current test file. Useful for instructions that are required for more than one test file, e.g. submitting a login form. The include argument is a path relative to the including file.</p>
+					<pre>include    ../common/_login.dummy</pre>
+					<p class="note">Test files that are prefixed with an underscore are only run when included by another file.</p>
+				</div>
+
 			</div>
 		</div>
 
@@ -345,7 +362,7 @@ remember    p:first    txt</pre>
 				<h2>Arguments</h2>
 
 				<div id="selectors" class="api-item">
-					<h3>Selectors</h3>
+					<h3>CSS Selectors</h3>
 					<p>All standard CSS3 selectors can be used to target elements, as well as all the convenient <a href="http://api.jquery.com/category/selectors/jquery-selector-extensions/">jQuery extensions</a>, like <code>:checkbox</code>, <code>:has()</code> and <code>:odd</code>.</p>
 
 					<pre>click    :submit</pre>
@@ -362,8 +379,8 @@ remember    p:first    txt</pre>
 					<pre>assertHasClass    "Features"    .selected</pre>
 				</div>
 
-				<div id="random_string_generation" class="api-item">
-					<h3>Random string generation</h3>
+				<div id="random_string_generators" class="api-item">
+					<h3>Random string generators</h3>
 					<p>Sometimes, usually when testing a form, you need the ability to generate random strings. For example, when you test a registration form you might need a unique email address to prevent any "already registered" type errors.</p>
 					<p>DummyJS can generate random strings of any length with <code>{{xyz}}</code>, where xyz is a number specifying the length of the string. The {{xyz}} pattern can occur anywhere in any argument.</p>
 
@@ -372,8 +389,8 @@ remember    p:first    txt</pre>
 					<p class="note">The generated string will be visible in the console log.</p>
 				</div>
 
-				<div id="variable_replacement" class="api-item">
-					<h3>Variable replacement</h3>
+				<div id="variables" class="api-item">
+					<h3>Variables</h3>
 					<p>Variables that have been stored with the <a href="#remember"><code>remember</code></a> command can be reused with the <code>{varname}</code> pattern.</p>
 
 					<pre>

@@ -225,7 +225,7 @@ assertMinLength    h3.r                     10</pre>
 				<pre><span class="prompt">$</span> dummyjs <em>filename1.dummy</em> <em>filename2.dummy</em> <em>filename3.dummy</em></pre>
 
 				<p>
-					If you pass a directory name, it will run all of the tests in the directory (even if they are in sub-directories):
+				If you pass a directory name, it will run all of the tests in the directory (even if they are in sub-directories). Files whose names start with an underscore are considered <a href="api.html#include">includes</a> and are skipped:
 				</p>
 
 				<pre><span class="prompt">$</span> dummyjs <em>dirname</em></pre>
