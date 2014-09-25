@@ -217,7 +217,7 @@
 
 				<div id="assertHidden" class="api-item">
 					<h3>assertHidden</h3>
-					<p>Checks if there is a hidden element that matches the selector.</p>
+					<p>Checks if there is no visible element that matches the selector.</p>
 					<pre>assertHidden    .confirm-dialog</pre>
 				</div>
 
@@ -348,9 +348,9 @@ remember    p:first    txt</pre>
 
 				<div id="include" class="api-item">
 					<h3>include</h3>
-					<p>Includes another <code>.dummy</code> file as part of the current test file. Useful for instructions that are required for more than one test file, e.g. submitting a login form. The include argument is a path relative to the including file.</p>
+					<p>Includes another <code>.dummy</code> file as part of the current test file. Useful for instructions that are required for more than one test file, e.g. submitting a login form. The include argument is a path relative to the including file. Includes can include other files.</p>
 					<pre>include    ../common/_login.dummy</pre>
-					<p class="note">Test files that are prefixed with an underscore are only run when included by another file.</p>
+					<p class="note">Test files that are prefixed with an underscore are only run when included by another file or when explicitly passed via the command line.</p>
 				</div>
 
 			</div>

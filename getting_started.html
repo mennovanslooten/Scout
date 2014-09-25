@@ -168,7 +168,7 @@ assertMinLength    h3.r                     10</pre>
 
 				<p>
 					DummyJS will simulate a user typing the characters in quick sucession.
-					You may have guessed that the sequence <code>&lt;Enter&gt;</code> instructs DummyJS to simulate an enter key.
+					You may have guessed that <code>&lt;Enter&gt;</code> instructs DummyJS to simulate an enter key.
 					DummyJS supports a large number of special keys, like <code>&lt;Up&gt;</code>, <code>&lt;Escape&gt;</code> and <code>&lt;Delete&gt;</code>.
 				</p>
 
@@ -185,7 +185,7 @@ assertMinLength    h3.r                     10</pre>
 					In this case, DummyJS will check that there are at least 10 <code>&lt;h3 class="r"&gt;</code> elements visible on the page.
 				</p>
 
-				<p>
+				<p class="note">
 					Internally, actions are also assertions and can also fail.
 					For example, the <code>type</code> action will fail when no focusable element matching the selector can be found
 					and <code>open</code> will fail when the page cannot be loaded.
@@ -254,13 +254,16 @@ assertMinLength    h3.r                     10</pre>
 					<dd>Dump a screenshot to disk if an action or assertion passes. <em>Warning:</em> this makes running tests very slow. <br>Default off.</dd>
 
 					<dt><code>--color</code></dt>
-					<dd>Logs everything in pretty colors to the terminal. If your terminal does not support this it might end up ugly. <br>Default off.</dd>
+					<dd>Logs everything in pretty colors to the terminal. If your terminal does not support this things might get ugly. <br>Default off.</dd>
 
 					<dt><code>--timeout=<em>&lt;number&gt;</em></code></dt>
 					<dd>Set the time (in milliseconds) DummyJS will retry actions and assertions before giving up. <br>Default 5000.</dd>
 
 					<dt><code>--step=<em>&lt;number&gt;</em></code></dt>
 					<dd>Set the time (in milliseconds) between two retries. <br>Default 10.</dd>
+
+					<dt><code>--quiet=<em>&lt;number&gt;</em></code></dt>
+					<dd>Specifies how much detail is logged to the console. If <code>number</code> is 0, every instruction is logged as well as a final summary. If it is 1 only the final summary is logged. If it is 2 or more nothing is logged. <br>Default 0.</dd>
 
 					<!--<dt><code>--reformat</code></dt>-->
 					<!--<dd>Skips running any tests, but outputs neatly formatted tests file to the console. See <a href="#format">Formatting tests</a>.</dd>-->
