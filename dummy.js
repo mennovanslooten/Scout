@@ -27,8 +27,6 @@ var _failed             = [];
 var _remembered         = {};
 var _last_action_status = '';
 
-		//phantom.exit(0);
-
 _logger.mute(_cli_args.quiet > 0);
 
 
@@ -80,13 +78,13 @@ function waitFor(conditionCallback, passCallback, failCallback, remaining_time) 
 			// If it didn't pass but is optional we can skip it
 			nextAction();
 		} else {
+			// If it didn't pass we'll schedule another try
 			var d1 = new Date();
 			setTimeout(function() {
-				//if (!_page.is_loading) {
-					var d2 = new Date();
-					var elapsed = d2 - d1;
-					remaining_time -= elapsed;
-				//}
+				var d2 = new Date();
+				var elapsed = d2 - d1;
+				remaining_time -= elapsed;
+
 				waitFor(conditionCallback, passCallback, failCallback, remaining_time);
 			}, _cli_args.step);
 		}
@@ -133,7 +131,6 @@ function nextAction() {
 				var length = parseInt(length, 10);
 				var generated = '';
 				for (var i = 0; i < length; i++) {
-					//generated += String.fromCharCode(Math.floor(Math.random() * 255));
 					generated += chars[Math.floor(Math.random() * chars.length)];
 				}
 				return generated;
@@ -232,15 +229,8 @@ function done() {
 	var result = 'PASS';
 	var exit_code = 0;
 
-	//var result = 'PASS';
 	var total_time = Math.round((new Date().valueOf() - _start_time) / 1000);
-	//var message = 'Executed ' + _total_actions + ' actions';
-	//
 	var total_tests = _passed.length + _failed.length;
-
-	if (total_tests > 1) {
-		//_logger.title('Results');
-	}
 
 	if (_failed.length) {
 		result = 'FAIL';
@@ -259,17 +249,6 @@ function done() {
 			}
 		}
 	}
-
-	/*
-	if (_passed.length) {
-		if (total_tests > 1) {
-			_logger.comment('\n# Passed ' + _passed.length + ' of ' + total_tests + ':');
-			for (var i = 0; i < _passed.length; i++) {
-				_logger.log('  ✓ ' + _passed[i].path);
-			}
-		}
-	}
-	*/
 
 	_logger.mute(_cli_args.quiet > 2);
 	_logger[result.toLowerCase()]('\n[' + result + '] Executed ' + _total_actions + ' actions from ' + total_tests + ' tests in ' + total_time + 's.');
