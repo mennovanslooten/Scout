@@ -14,6 +14,7 @@
 var _start_time         = new Date();
 var _cli_args           = require('./lib/arguments').parseArguments();
 var _tests              = require('./lib/testreader').readTestFiles();
+var _parser             = require('./lib/testparser');
 var _screendump         = require('./lib/screendump');
 var _page               = require('./lib/page').page;
 var _actions            = require('./lib/actions').actions;
@@ -27,11 +28,22 @@ var _failed             = [];
 var _remembered         = {};
 var _last_action_status = '';
 
-_logger.mute(_cli_args.quiet > 0);
 
 
+/**
+ * Proceeds with the next test file in the queue
+ */
 function nextTestFile() {
 	_page.clearCookies();
+	_logger.mute(_cli_args.quiet > 0);
+
+	if (_current_test) {
+		// If there are no more actions in the current test file
+		// the test has passed...
+		_passed.push({
+			path: _current_test.path
+		});
+	}
 
 	_current_test = _tests.shift();
 	if (!_current_test) {
@@ -40,15 +52,18 @@ function nextTestFile() {
 
 	if (_cli_args.reformat) {
 		_formatter.reformat(_current_test);
+		// No actions are executed when reformatting
 		return nextTestFile();
 	}
 
+	// If this is not the first test, create some space in the log
 	if (_passed.length || _failed.length) {
 		_logger.log('');
 	}
 
-	var total = _passed.length + _failed.length + _tests.length + 1;
-	if (total > 1) _logger.title('Starting: ' + _current_test.path);
+	// If this is not the only test, create a heading for it in the log
+	var total = _passed.length + _failed.length + _tests.length;
+	if (total) _logger.title('Starting: ' + _current_test.path);
 
 	_page.is_loaded = false;
 	_page.is_loading = false;
@@ -57,6 +72,11 @@ function nextTestFile() {
 }
 
 
+/*
+ * Execute conditionCallback() repeatedly until it returns an empty string
+ * ("" = no error), then call passCallback. If conditionCallback does not
+ * return "" within a given time, call failCallback
+ */
 function waitFor(conditionCallback, passCallback, failCallback, remaining_time) {
 	if (remaining_time > 0) {
 		var is_passed = false;
@@ -94,6 +114,10 @@ function waitFor(conditionCallback, passCallback, failCallback, remaining_time) 
 }
 
 
+/*
+ * Execute the next action in the current test file. If no actions are left,
+ * continue with the next test file.
+ */
 function nextAction() {
 	_current_action = _current_test.actions.shift();
 
@@ -115,42 +139,10 @@ function nextAction() {
 		return;
 	}
 
-	var handler = _actions[_current_action.type];
-
 	// Replace special argument formats
-	_current_action.args = _current_action.args.map(function(arg) {
-		var random        = /{{(\d+)}}/g;
-		var variable      = /{([a-z_]+)}/g;
+	_current_action.args = _parser.parseArguments(_current_action.args);
 
-		if (random.test(arg)) {
-			// Strings of this form: 
-			// {{number}}
-			// will be replaced with a random string of length number
-			var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-.0123456789'.split('');
-			var result = arg.replace(random, function(match, length) {
-				var length = parseInt(length, 10);
-				var generated = '';
-				for (var i = 0; i < length; i++) {
-					generated += chars[Math.floor(Math.random() * chars.length)];
-				}
-				return generated;
-			});
-			return result;
-
-		} else if (variable.test(arg)) {
-			// Strings of this form:
-			// {variable_name}
-			// will be replaced with the value of _remembered.variable_name
-			// if it exists
-			var result = arg.replace(variable, function(match, variable_name) {
-				return _remembered[variable_name] || variable_name;
-			});
-			return result;
-		}
-
-		return arg;
-	});
-
+	var handler = _actions[_current_action.type];
 	if (handler) {
 		_current_action.start_time = new Date();
 
@@ -260,8 +252,4 @@ function done() {
 // Get the party started
 nextTestFile();
 
-function dir(obj) {
-	for (var p in obj) {
-		console.log(p, ':', obj[p]);
-	}
-}
+//_logger.dir(_page);
