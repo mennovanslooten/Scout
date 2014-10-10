@@ -29,12 +29,10 @@ var _remembered         = {};
 var _last_action_status = '';
 
 
-
 /**
  * Proceeds with the next test file in the queue
  */
 function nextTestFile() {
-	_page.clearCookies();
 	_logger.mute(_cli_args.quiet > 0);
 
 	if (_current_test) {
@@ -65,6 +63,7 @@ function nextTestFile() {
 	var total = _passed.length + _failed.length + _tests.length;
 	if (total) _logger.title('Starting: ' + _current_test.path);
 
+	_page.clearCookies();
 	_page.is_loaded = false;
 	_page.is_loading = false;
 
@@ -144,8 +143,6 @@ function nextAction() {
 
 	var handler = _actions[_current_action.type];
 	if (handler) {
-		_current_action.start_time = new Date();
-
 		waitFor(
 
 			// Keep executing until it returns true
@@ -168,15 +165,15 @@ function nextAction() {
 }
 
 
+/*
+ * Register the current action as passed and log it to the console
+ */
 function passCurrentAction() {
 	if (_current_action.type !== 'log') {
+		// If --passdump is passed make a screendump
 		if (_cli_args.passdump) _screendump.dump('passdump_' + new Date().valueOf());
 
-		_current_action.end_time = new Date();
 		var args = [_current_action.type].concat(_current_action.args)
-
-		//var duration = _current_action.end_time - _current_action.start_time;
-		//args.unshift(duration + 'ms');
 
 		var message = _logger.format(args, _current_test.columns);
 		_logger.log('  ✓ ' + message);
@@ -192,7 +189,11 @@ function passCurrentAction() {
 }
 
 
+/*
+ * Register the current action as failed and log it to the console
+ */
 function failCurrentAction() {
+		// If --faildump is passed make a screendump
 	if (_cli_args.faildump) _screendump.dump('faildump' + _current_test.path.replace(/\.?\//g, '__'));
 
 	var args = [_current_action.type].concat(_current_action.args);
@@ -211,6 +212,9 @@ function failCurrentAction() {
 }
 
 
+/*
+ * All tests have completed, log to the console and exit
+ */
 function done() {
 	if (_cli_args.reformat) {
 		return phantom.exit(0);
@@ -221,14 +225,15 @@ function done() {
 	var result = 'PASS';
 	var exit_code = 0;
 
-	var total_time = Math.round((new Date().valueOf() - _start_time) / 1000);
+	var total_time = ((new Date() - _start_time) / 1000).toFixed(2);
 	var total_tests = _passed.length + _failed.length;
 
+	// If any test has failed, the result is FAIL
 	if (_failed.length) {
 		result = 'FAIL';
 		exit_code = 1;
 
-		// If more than one test file is run, show a list of failures tests
+		// If more than one test file is run, show a list of failed tests
 		if (total_tests > 1) {
 			_logger.comment('\n----------------------------------------------------------------');
 			_logger.error('# Failed ' + _failed.length + ' of ' + total_tests + ':');
@@ -251,5 +256,3 @@ function done() {
 
 // Get the party started
 nextTestFile();
-
-//_logger.dir(_page);
