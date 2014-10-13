@@ -35,15 +35,8 @@ var _last_action_status = '';
 function nextTestFile() {
 	_logger.mute(_cli_args.quiet > 0);
 
-	if (_current_test) {
-		// If there are no more actions in the current test file
-		// the test has passed...
-		_passed.push({
-			path: _current_test.path
-		});
-	}
-
 	_current_test = _tests.shift();
+
 	if (!_current_test) {
 		return done();
 	}
@@ -67,6 +60,7 @@ function nextTestFile() {
 	_page.is_loaded = false;
 	_page.is_loading = false;
 
+	_current_test.start_time = new Date();
 	nextAction();
 }
 
@@ -123,8 +117,12 @@ function nextAction() {
 	if (!_current_action) {
 		// If there are no more actions in the current test file
 		// the test has passed...
+		// 
+		// 
+		
 		_passed.push({
-			path: _current_test.path
+			duration: new Date() - _current_test.start_time,
+			test: _current_test
 		});
 
 		// ...and we continue with the next
@@ -173,7 +171,7 @@ function passCurrentAction() {
 		// If --passdump is passed make a screendump
 		if (_cli_args.passdump) _screendump.dump('passdump_' + new Date().valueOf());
 
-		var args = [_current_action.type].concat(_current_action.args)
+		var args = [_current_action.type].concat(_current_action.args);
 
 		var message = _logger.format(args, _current_test.columns);
 		_logger.log('  ✓ ' + message);
@@ -202,8 +200,14 @@ function failCurrentAction() {
 	_logger.error('  ✗ ' + message);
 	_logger.error('    ' + _last_action_status);
 
+	// _failed.push({
+	// 	path: _current_test.path,
+	// 	action: message,
+	// 	error: _last_action_status
+	// });
 	_failed.push({
-		path: _current_test.path,
+		test: _current_test,
+		duration: new Date() - _current_test.start_time,
 		action: message,
 		error: _last_action_status
 	});
@@ -240,7 +244,7 @@ function done() {
 
 			for (var i = 0; i < _failed.length; i++) {
 				var fail = _failed[i];
-				_logger.error('  ✗ ' + fail.path);
+				_logger.error('  ✗ ' + fail.test.path);
 				_logger.error('    ' + fail.action);
 				_logger.error('    ' + fail.error);
 			}
