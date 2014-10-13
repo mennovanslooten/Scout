@@ -71,7 +71,7 @@ function nextTestFile() {
 }
 
 
-/*
+/**
  * Execute conditionCallback() repeatedly until it returns an empty string
  * ("" = no error), then call passCallback. If conditionCallback does not
  * return "" within a given time, call failCallback
@@ -113,7 +113,7 @@ function waitFor(conditionCallback, passCallback, failCallback, remaining_time) 
 }
 
 
-/*
+/**
  * Execute the next action in the current test file. If no actions are left,
  * continue with the next test file.
  */
@@ -165,7 +165,7 @@ function nextAction() {
 }
 
 
-/*
+/**
  * Register the current action as passed and log it to the console
  */
 function passCurrentAction() {
@@ -189,7 +189,7 @@ function passCurrentAction() {
 }
 
 
-/*
+/**
  * Register the current action as failed and log it to the console
  */
 function failCurrentAction() {
@@ -212,7 +212,7 @@ function failCurrentAction() {
 }
 
 
-/*
+/**
  * All tests have completed, log to the console and exit
  */
 function done() {
