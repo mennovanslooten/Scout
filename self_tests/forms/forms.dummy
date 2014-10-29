@@ -9,7 +9,7 @@ type          input[type="text"]                       Hello, world.
 ## Strings of the form {{number}} are replaced with a random string of length number
 type          input[type="password"]                   {{4}}___{{4}}---{{4}}
 
-## remember stores the value or text of an element in a variable
+## "remember" stores the value or text of an element in a variable
 remember      input[type="password"]                   password
 
 ## Remembered values can be logged: {{password}}
