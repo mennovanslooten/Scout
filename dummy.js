@@ -97,7 +97,12 @@ function Dummy() {
 		//_xunit.log(_suite);
 		var is_passed = _suite.failed.length === 0;
 		var exit_code = is_passed ? 0 : 1;
-		return phantom.exit(exit_code);
+
+		// Temporary fix for https://github.com/ariya/phantomjs/issues/12697
+		setTimeout(function(){ phantom.exit(exit_code); }, 0);
+		phantom.onError = function(){};
+		throw new Error('');
+		//return phantom.exit(exit_code);
 	}
 
 	// Get the party started
