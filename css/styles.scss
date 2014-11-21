@@ -1,8 +1,10 @@
+@charset "UTF-8";
 $link-color: #03F;
 $unit: 8px;
 
 @import "Fira/fira.css";
 /*@import "font-awesome.css";*/
+@import "source-sans-pro/source-sans-pro.css";
 @import "reset";
 @import "utils";
 
@@ -17,7 +19,7 @@ body {
 	font-family: 'Myriad Pro', 'Lucida Grande', sans-serif;
 	font-family: 'Lucida Grande', sans-serif;
 	*/
-	font-family: 'Fira Sans', 'Lucida Grande', sans-serif;
+	font-family: 'Source Sans Pro', 'Lucida Grande', sans-serif;
 	font-weight: 300;
 	-webkit-font-smoothing: antialiased;
     font-size: 2 * $unit;
@@ -82,8 +84,9 @@ h1, h2, h3, h4 {
 	//font-weight: bold;
 	//font-weight: normal;
 	//font-family: 'Myriad Pro', 'Lucida Grande', sans-serif;
-	font-family: 'Fira Sans', 'Lucida Grande', sans-serif;
-	font-weight: 600;
+	/*font-family: 'Fira Sans', 'Lucida Grande', sans-serif;*/
+	font-family: 'Source Sans Pro', 'Lucida Grande', sans-serif;
+	font-weight: 700;
 }
 
 h1 {
