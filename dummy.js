@@ -1,25 +1,23 @@
 /*
 	TODO:
-	[ ] Passdump/faildump
-	[ ] External logger
+	[ ] Iterate assert over $elts to find match
+	[ ] choose shoull return error msg if option not available
 	[ ] XML logger
-	[ ] --parallel parameter
 */
 
-var _cli_args           = require('./lib/arguments').parseArguments();
-var _testrunner         = require('./lib/testrunner');
-var _parser             = require('./lib/testparser');
-var _logger             = require('./lib/logger');
-var _xunit              = require('./lib/xunit');
-var _remembered         = {};
+var _cli_args   = require('./lib/arguments').parseArguments();
+var _testrunner = require('./lib/testrunner');
+var _parser     = require('./lib/testparser');
+var _logger     = require('./lib/logger');
+var _xunit      = require('./lib/xunit');
+var _remembered = {};
 
 var _suite = {
 	tests: require('./lib/testreader').readTestFiles(),
 	start_time: new Date(),
 	passed: [],
 	failed: []
-}
-
+};
 
 
 function Dummy() {
@@ -106,8 +104,8 @@ function Dummy() {
 	}
 
 	// Get the party started
-	nextTest()
-};
+	nextTest();
+}
 
 
 Dummy();
