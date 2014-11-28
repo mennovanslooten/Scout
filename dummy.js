@@ -97,7 +97,10 @@ function Dummy() {
 		var exit_code = is_passed ? 0 : 1;
 
 		// Temporary fix for https://github.com/ariya/phantomjs/issues/12697
-		setTimeout(function(){ phantom.exit(exit_code); }, 0);
+		setTimeout(function() {
+			phantom.exit(exit_code);
+		}, 0);
+
 		phantom.onError = function(){};
 		throw new Error('');
 		//return phantom.exit(exit_code);
