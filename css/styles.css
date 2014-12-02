@@ -1,4 +1,6 @@
 @charset "UTF-8";
+/*$lightgrey: mix($color1, white, 20%);*/
+/*$lightgrey: lighten($color1, 80%);*/
 @import url(Fira/fira.css);
 /*@import "font-awesome.css";*/
 @import url(source-sans-pro/source-sans-pro.css);
@@ -89,14 +91,8 @@ input {
 */
 /* mixin for retina background images */
 body {
-  background: #CCC;
-  background: #eee;
-  color: #444;
-  /*
-  font-family: 'Myiad Pro', 'Lucida Grande', sans-serif;
-  font-family: 'Myriad Pro', 'Lucida Grande', sans-serif;
-  font-family: 'Lucida Grande', sans-serif;
-  */
+  background: #f2f2f2;
+  color: #333;
   font-family: 'Source Sans Pro', 'Lucida Grande', sans-serif;
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
@@ -143,40 +139,42 @@ hr {
   border-bottom: 1px solid rgba(255, 255, 255, 0.25);
   margin: 24px 0; }
 
-a:link {
-  color: #03F;
+a {
+  color: #E97F02;
   text-decoration: none; }
-a:visited {
-  color: #0024b3; }
-a:hover {
-  color: #000; }
+  a:visited {
+    color: #e93675; }
+  a:hover {
+    color: #780d33; }
 
 h1, h2, h3, h4 {
-  color: #333;
-  color: #222;
   margin: 0;
   padding: 8px 0;
-  /*font-family: 'Fira Sans', 'Lucida Grande', sans-serif;*/
   font-family: 'Source Sans Pro', 'Lucida Grande', sans-serif;
   font-weight: 700; }
 
 h1 {
+  color: #490A3D;
   font-size: 48px;
   line-height: 56px;
   /*font-size: 2 * 1.5 * 1.5 * 1.5 * $unit;*/ }
 
 h2 {
+  color: #BD1550;
   font-size: 32px;
   line-height: 40px;
   /*font-size: 2 * 1.5 * 1.5 * $unit;*/ }
 
 h3 {
+  color: #333;
+  color: #24051e;
   font-size: 24px;
   line-height: 32px;
   /*font-size: 2 * 1.5 * $unit;*/
   padding-bottom: 0; }
 
 h4 {
+  color: #333;
   font-size: 16px;
   line-height: 24px;
   /*font-size: 2 * $unit;*/
@@ -187,10 +185,8 @@ p {
   padding: 8px 0; }
 
 pre, code {
-  background: white;
-  /*font-family: monospace;*/
-  /*font-family: 'monaco', 'source code pro', 'menlo', 'andale mono', monospace;*/
-  font-family: 'Fira Mono', 'monaco', 'source code pro', 'menlo', 'andale mono', monospace;
+  background: #f2f2f2;
+  font-family: 'menlo', 'monaco', 'andale mono', monospace;
   letter-spacing: 0;
   font-size: 14px;
   font-size: 0.8em; }
@@ -199,21 +195,59 @@ code {
   white-space: nowrap;
   padding: 0 8px; }
 
+small {
+  font-size: .5em; }
+
 .prompt {
   color: #999; }
 
 pre {
   padding: 16px; }
 
+.pre-dark {
+  background: rgba(0, 0, 0, 0.25);
+  color: #f2f2f2; }
+
 .inner {
   width: 960px;
   margin: 0 auto; }
 
+.button {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #E97F02;
+  color: #f2f2f2;
+  text-decoration: none;
+  border-radius: 4px; }
+  .button:visited {
+    color: #f2f2f2; }
+  .button:hover {
+    background: #BD1550;
+    color: white;
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+
+.button-cta {
+  background: #8A9B0F;
+  color: white;
+  font-weight: bold; }
+  .button-cta:visited {
+    color: white; }
+  .button-cta:hover {
+    background: #c8e116;
+    /*color: white;*/
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+
 .main-nav {
-  background: #CCC;
-  background: #333; }
+  background: #BD1550;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10; }
   .main-nav .inner {
     position: relative; }
+  .main-nav + * {
+    margin-top: 56px; }
 
 .main-nav-menu {
   list-style: none;
@@ -245,21 +279,21 @@ pre {
         padding-bottom: 8px;
         border-bottom-width: 8px; }
   .main-nav-menu > .main-nav-menu-selected {
-    background: black; }
+    background: #490A3D; }
     .main-nav-menu > .main-nav-menu-selected > a:hover {
       padding: 16px 24px;
       border: none; }
   .main-nav-menu > .main-nav-github {
     position: absolute;
-    left: 0;
-    background: #666; }
+    left: 0; }
 
 .sub-nav {
-  background: #CCC;
+  background: #e7e7e7;
   position: absolute;
   left: 50%;
   width: 300px;
-  margin-left: -480px; }
+  margin-left: -480px;
+  z-index: 2; }
 
 .sub-nav-menu {
   list-style: none;
@@ -267,10 +301,9 @@ pre {
   padding: 0;
   text-align: left; }
   .sub-nav-menu > li {
-    margin: 0;
-    border-bottom: 1px solid #EFEFEF; }
+    margin: 0; }
     .sub-nav-menu > li > a {
-      color: black;
+      color: #E97F02;
       font-weight: bold;
       display: block;
       padding: 16px 32px;
@@ -308,8 +341,7 @@ pre {
    */
   padding: 24px 0;
   background: white;
-  background: black;
-  color: white; }
+  background: #490A3D; }
   .home-head:before, .home-head:after {
     content: " ";
     /* 1 */
@@ -323,16 +355,29 @@ pre {
     float: left;
     font-size: 64px;
     line-height: 80px;
-    color: white; }
-  .home-head p {
+    color: #E7E7E7; }
+  .home-head h2 {
+    font-weight: normal;
+    color: #E7E7E7;
     width: 632px;
     float: right;
     font-size: 32px;
     line-height: 80px;
     font-style: italic; }
 
+.home-explanation {
+  padding: 24px 0;
+  color: #f2f2f2;
+  background: #24051e; }
+  .home-explanation p {
+    clear: both;
+    font-size: 24px;
+    line-height: 32px;
+    text-align: left; }
+
 .home-intro {
-  background: #CCC;
+  background: #490A3D;
+  color: #f2f2f2;
   overflow: auto;
   padding: 32px 0; }
 
@@ -340,19 +385,30 @@ pre {
   width: 464px;
   float: left; }
   .home-intro-item h2 {
+    color: #E7E7E7;
     padding-bottom: 16px; }
+  .home-intro-item pre {
+    background: #24051e;
+    color: #f2f2f2; }
   .home-intro-item + .home-intro-item {
     float: right; }
 
 .home-usps {
-  background: #E7E7E7; }
+  background: #e7e7e7; }
   .home-usps .inner {
     overflow: auto;
     padding: 32px 0; }
   .home-usps h2 {
     text-align: center; }
   .home-usps + .home-usps {
-    border-top: 1px solid #CCC; }
+    /*border-top: 1px solid #CCC;*/ }
+
+.home-getstarted {
+  /*background: $white;*/ }
+  .home-getstarted .inner {
+    overflow: auto;
+    padding: 32px 0;
+    text-align: center; }
 
 .usp-list {
   list-style: none;
@@ -368,14 +424,22 @@ pre {
     float: left;
     font-size: 20px;
     line-height: 24px;
-    /*
-    */ }
+    padding: 16px;
+    padding-left: 64px;
+    color: #8A9B0F;
+    /*background: mix($color5, white, 25%);*/
+    border: 1px solid #8A9B0F;
+    min-height: 104px;
+    border-radius: 8px; }
     .usp-list li:before {
+      /*color: $color5;*/
+      /*color: $white;*/
       content: "✓";
       position: absolute;
-      left: 0;
-      top: 0;
-      font-size: 32px; }
+      left: 16px;
+      top: 32px;
+      font-size: 48px;
+      font-weight: bold; }
     .usp-list li .fa {
       position: absolute;
       left: 0;
@@ -457,92 +521,103 @@ pre {
 .content-head {
   padding: 24px 0;
   background: white;
-  /*text-align: center;*/ }
-  .content-head .inner {
-    padding-left: 320px; }
+  text-align: center;
+  background: #490A3D;
+  color: #f2f2f2; }
+  .content-head .inner h1 {
+    color: #f2f2f2; }
 
-.content .inner {
-  /*width: 80 * $unit;*/
-  border-left: 300px solid #DDD;
-  padding-left: 20px;
-  padding-bottom: 16px; }
-.content h2 {
-  padding-top: 32px; }
-.content h3 {
-  padding-top: 16px; }
-.content pre {
-  /*width: 100 * $unit;*/
-  margin: 16px 0;
-  /*margin-left: -10 * $unit;*/ }
-  .content pre + pre {
-    margin-top: -15px; }
-.content ul {
-  padding: 8px 0; }
-  .content ul li {
-    list-style: square; }
-    .content ul li + li {
-      margin-top: 8px; }
-.content dl {
-  /*
-   * Clearfix: contain floats
-   *
-   * For modern browsers
-   * 1. The space content is one way to avoid an Opera bug when the
-   *    `contenteditable` attribute is included anywhere else in the document.
-   *    Otherwise it causes space to appear at the top and bottom of elements
-   *    that receive the `clearfix` class.
-   * 2. The use of `table` rather than `block` is only necessary if using
-   *    `:before` to contain the top-margins of child elements.
-   */
-  padding: 8px 0; }
-  .content dl:before, .content dl:after {
-    content: " ";
-    /* 1 */
-    display: table;
-    /* 2 */ }
-  .content dl:after {
-    clear: both; }
-  .content dl dt {
-    width: 192px;
-    text-align: right;
-    float: left;
-    clear: both;
-    padding: 0 16px; }
-    .content dl dt ~ dt {
-      margin-top: 8px; }
-  .content dl dd {
-    width: 448px;
-    float: right;
-    clear: right;
-    padding: 0 16px; }
-    .content dl dd ~ dd {
-      margin-top: 8px; }
-.content .intro {
-  padding: 32px 0;
-  font-size: 24px;
-  line-height: 32px;
-  font-style: italic; }
-  .content .intro em {
-    font-weight: bold; }
-.content .note {
-  padding: 16px;
-  margin: 16px 0;
-  border-left: 8px solid #CCC;
-  border-right: 8px solid #CCC;
-  font-style: italic;
-  position: relative; }
-  .content .note:before, .content .note:after {
-    content: '';
-    border-top: 8px solid #CCC;
-    border-bottom: 8px solid #CCC;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 16px; }
-  .content .note:before {
-    left: 0; }
-  .content .note:after {
-    right: 0; }
+.content {
+  background: #f2f2f2; }
+  .content .inner {
+    /*width: 80 * $unit;*/
+    border-left: 300px solid #e7e7e7;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 16px;
+    background: white; }
+  .content h2 {
+    padding-top: 32px; }
+  .content h3 {
+    padding-top: 16px; }
+  .content pre {
+    /*width: 100 * $unit;*/
+    margin: 16px 0;
+    /*margin-left: -10 * $unit;*/ }
+    .content pre + pre {
+      margin-top: -15px; }
+  .content ul {
+    padding: 8px 0; }
+    .content ul li {
+      list-style: square; }
+      .content ul li + li {
+        margin-top: 8px; }
+  .content dl {
+    /*
+     * Clearfix: contain floats
+     *
+     * For modern browsers
+     * 1. The space content is one way to avoid an Opera bug when the
+     *    `contenteditable` attribute is included anywhere else in the document.
+     *    Otherwise it causes space to appear at the top and bottom of elements
+     *    that receive the `clearfix` class.
+     * 2. The use of `table` rather than `block` is only necessary if using
+     *    `:before` to contain the top-margins of child elements.
+     */
+    padding: 8px 0; }
+    .content dl:before, .content dl:after {
+      content: " ";
+      /* 1 */
+      display: table;
+      /* 2 */ }
+    .content dl:after {
+      clear: both; }
+    .content dl dt {
+      width: 192px;
+      text-align: right;
+      float: left;
+      clear: both;
+      padding: 0 16px; }
+      .content dl dt ~ dt {
+        margin-top: 8px; }
+    .content dl dd {
+      width: 448px;
+      float: right;
+      clear: right;
+      padding: 0 16px; }
+      .content dl dd ~ dd {
+        margin-top: 8px; }
+  .content .intro {
+    padding: 32px 0;
+    font-size: 24px;
+    line-height: 32px;
+    font-style: italic; }
+    .content .intro em {
+      font-weight: bold; }
+  .content .note {
+    padding: 16px;
+    margin: 16px 0;
+    border-left: 8px solid #CCC;
+    border-right: 8px solid #CCC;
+    font-style: italic;
+    position: relative; }
+    .content .note:before, .content .note:after {
+      content: '';
+      border-top: 8px solid #CCC;
+      border-bottom: 8px solid #CCC;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 16px; }
+    .content .note:before {
+      left: 0; }
+    .content .note:after {
+      right: 0; }
+
+.content-nosidebar .inner {
+  border-left: none;
+  padding-left: 160px;
+  padding-right: 160px; }
 
 /*
 .content-api {
@@ -588,9 +663,9 @@ pre {
   position: relative; }
 
 footer {
-  background: #666;
-  color: #CCC;
-  line-height: 64px;
+  background: #8A9B0F;
+  color: #f2f2f2;
+  line-height: 32px;
   text-align: center; }
   footer a:link {
     color: #FFF; }
@@ -638,15 +713,11 @@ footer {
   padding: 8px 16px 8px 176px;
   /*border: 1px solid white;*/
   background: rgba(255, 255, 255, 0.5);
-  background: #DDD;
+  background: #f2f2f2;
   position: relative; }
   .main-feature h3 {
     position: absolute;
-    /*width: 18 * $unit;*/
-    /*left: -20 * $unit;*/
     left: 16px;
-    /*background: white;*/
-    /*text-align: right;*/
     width: 144px; }
 
 .feature-events,

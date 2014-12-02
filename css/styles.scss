@@ -1,6 +1,24 @@
 @charset "UTF-8";
 $link-color: #03F;
+$link-color: #26F;
 $unit: 8px;
+
+$color1: #490A3D;
+$color1dark: mix($color1, black);
+$color2: #BD1550;
+$color3: #E97F02;
+$color4: #F8CA00;
+$color5: #8A9B0F;
+
+$white: #f2f2f2;
+$lightgrey: #e7e7e7;
+/*$lightgrey: mix($color1, white, 20%);*/
+/*$lightgrey: lighten($color1, 80%);*/
+$midgrey: #CCC;
+$darkgrey: #666;
+$black: #333;
+
+$lightbg: lighten($color1, 50%);
 
 @import "Fira/fira.css";
 /*@import "font-awesome.css";*/
@@ -11,14 +29,8 @@ $unit: 8px;
 
 
 body {
-    background: #CCC;
-	background: #eee;
-    color: #444;
-	/*
-	font-family: 'Myiad Pro', 'Lucida Grande', sans-serif;
-	font-family: 'Myriad Pro', 'Lucida Grande', sans-serif;
-	font-family: 'Lucida Grande', sans-serif;
-	*/
+	background: $white;
+    color: $black;
 	font-family: 'Source Sans Pro', 'Lucida Grande', sans-serif;
 	font-weight: 300;
 	-webkit-font-smoothing: antialiased;
@@ -70,38 +82,42 @@ hr {
 }
 
 a {
-    &:link { color: $link-color; text-decoration: none; }
-    &:visited { color: darken($link-color, 15%); }
-    &:hover { color: #000; }
+    color: $color3;
+	text-decoration: none;
 
+    &:visited {
+		color: lighten($color2, 15%);
+	}
+
+    &:hover {
+		color: darken($color2, 15%);
+	}
 }
 
 h1, h2, h3, h4 {
-    color: #333;
-	color: #222;
     margin: 0;
     padding: $unit 0;
-	//font-weight: bold;
-	//font-weight: normal;
-	//font-family: 'Myriad Pro', 'Lucida Grande', sans-serif;
-	/*font-family: 'Fira Sans', 'Lucida Grande', sans-serif;*/
 	font-family: 'Source Sans Pro', 'Lucida Grande', sans-serif;
 	font-weight: 700;
 }
 
 h1 {
+	color: $color1;
 	font-size: 6 * $unit;
 	line-height: 7 * $unit;
 	/*font-size: 2 * 1.5 * 1.5 * 1.5 * $unit;*/
 }
 
 h2 {
+	color: $color2;
 	font-size: 4 * $unit;
 	line-height: 5 * $unit;
 	/*font-size: 2 * 1.5 * 1.5 * $unit;*/
 }
 
 h3 {
+	color: $black;
+	color: $color1dark;
 	font-size: 3 * $unit;
 	line-height: 4 * $unit;
 	/*font-size: 2 * 1.5 * $unit;*/
@@ -109,6 +125,7 @@ h3 {
 }
 
 h4 {
+	color: $black;
 	font-size: 2 * $unit;
 	line-height: 3 * $unit;
 	/*font-size: 2 * $unit;*/
@@ -121,10 +138,8 @@ p {
 }
 
 pre, code {
-	background: white;
-	/*font-family: monospace;*/
-	/*font-family: 'monaco', 'source code pro', 'menlo', 'andale mono', monospace;*/
-	font-family: 'Fira Mono', 'monaco', 'source code pro', 'menlo', 'andale mono', monospace;
+	background: $white;
+	font-family:  'menlo', 'monaco', 'andale mono', monospace;
 	letter-spacing: 0;
 	font-size: 14px;
 	font-size: 0.8em;
@@ -135,6 +150,10 @@ code {
 	padding: 0 $unit;
 }
 
+small {
+	font-size: .5em;
+}
+
 .prompt {
 	color: #999;
 }
@@ -143,18 +162,67 @@ pre {
 	padding: 2 * $unit;
 }
 
+.pre-dark {
+	background: rgba(0,0,0,0.25);
+	color: $white;
+}
+
 .inner {
 	width: 120 * $unit;
 	margin: 0 auto;
 }
 
+.button {
+	display: inline-block;
+	padding: $unit 2 * $unit;
+	background: $color3;
+	color: $white;
+	text-decoration: none;
+	border-radius: .5 * $unit;
+
+	&:visited {
+		color: $white;
+	}
+
+	&:hover {
+		background: $color2;
+		color: white;
+		box-shadow: 0 0 2 * $unit rgba(255, 255, 255, 0.5);
+	}
+}
+
+
+.button-cta {
+	background: $color5;
+	color: white;
+	font-weight: bold;
+
+	&:visited {
+		color: white;
+	}
+
+	&:hover {
+		background: lighten($color5, 15%);
+		/*color: white;*/
+		box-shadow: 0 0 2 * $unit rgba(255, 255, 255, 0.5);
+	}
+}
 
 .main-nav {
-	background: #CCC;
-	background: #333;
+	background: $color2;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 10;
+	// background: mix($color1, black);
 
 	.inner {
 		position: relative;
+	}
+
+	+ * {
+		margin-top: 7 * $unit;
 	}
 }
 
@@ -184,7 +252,8 @@ pre {
 	}
 
 	> .main-nav-menu-selected {
-		background: black;
+		background: $color1;
+
 		> a:hover {
 			padding: 2 * $unit 3 * $unit;
 			border: none;
@@ -194,16 +263,19 @@ pre {
 	> .main-nav-github {
 		position: absolute;
 		left: 0;
-		background: #666;
+		// background: $color3;
+		// background: rgba(0, 0, 0, 0.5);
 	}
 }
 
 .sub-nav {
-	background: #CCC;
+	// background: $color4;
+	background: $lightgrey;
 	position: absolute;
 	left: 50%;
 	width: 37.5 * $unit;
 	margin-left: -60 * $unit;
+	z-index: 2;
 }
 
 .sub-nav-menu {
@@ -214,10 +286,11 @@ pre {
 
 	> li {
 		margin: 0;
-		border-bottom: 1px solid #EFEFEF;
+		// border-bottom: 1px solid $color4;
 
 		> a {
-			color: black;
+			// color: black;
+			color: $color3;
 			font-weight: bold;
 			display: block;
 			padding: 2 * $unit 4 * $unit;
@@ -258,8 +331,7 @@ pre {
 	@include clearfix;
 	padding: 3 * $unit 0;
 	background: white;
-	background: black;
-	color: white;
+	background: $color1;
 
 	h1 {
 		width: 39 * $unit;
@@ -267,10 +339,12 @@ pre {
 		float: left;
 		font-size: 8 * $unit;
 		line-height: 10 * $unit;
-		color: white;
+		color: #E7E7E7;
 	}
 
-	p {
+	h2 {
+		font-weight: normal;
+		color: #E7E7E7;
 		width: 79 * $unit;
 		float: right;
 		font-size: 4 * $unit;
@@ -279,8 +353,25 @@ pre {
 	}
 }
 
+.home-explanation {
+	padding: 3 * $unit 0;
+	color: $white;
+	background: $color1dark;
+
+	p {
+		// color: #CC9;
+		clear: both;
+		font-size: 3 * $unit;
+		line-height: 4 * $unit;
+		text-align: left;
+	}
+}
+
 .home-intro {
-	background: #CCC;
+	// background: #333;
+	// background: mix($color2, black, 50%);
+	background: $color1;
+	color: $white;
 	overflow: auto;
 	padding: 4 * $unit 0;
 }
@@ -290,7 +381,13 @@ pre {
 	float: left;
 
 	h2 {
+		color: #E7E7E7;
 		padding-bottom: 2 * $unit;
+	}
+
+	pre {
+		background: $color1dark;
+		color: $white;
 	}
 
 	+ .home-intro-item {
@@ -299,7 +396,7 @@ pre {
 }
 
 .home-usps {
-	background: #E7E7E7;
+	background: $lightgrey;
 	
 	.inner {
 		overflow: auto;
@@ -311,7 +408,17 @@ pre {
 	}
 
 	& + .home-usps {
-		border-top: 1px solid #CCC;
+		/*border-top: 1px solid #CCC;*/
+	}
+}
+
+.home-getstarted {
+	/*background: $white;*/
+	
+	.inner {
+		overflow: auto;
+		padding: 4 * $unit 0;
+		text-align: center;
 	}
 }
 
@@ -324,22 +431,32 @@ pre {
 
 	li {
 		padding: 0 0 0 4 * $unit;
+		// padding: 0;
 		margin: 0 4 * $unit 0 0;
 		position: relative;
 		width: 37.333 * $unit;
 		float: left;
 		font-size: 2.5 * $unit;
 		line-height: 3 * $unit;
+		// text-align: center;
+		padding: 2 * $unit;
+		padding-left: 8 * $unit;
+		color: $color5;
+		/*background: mix($color5, white, 25%);*/
+		border: 1px solid $color5;
+		min-height: 13 * $unit;
+		border-radius: $unit;
 
 		&:before { 
+			/*color: $color5;*/
+			/*color: $white;*/
 			content: "✓";
 			position: absolute;
-			left: 0;
-			top: 0;
-			font-size: 4 * $unit;
+			left: 2 * $unit;
+			top: 4 * $unit;
+			font-size: 6 * $unit;
+			font-weight: bold;
 		}
-		/*
-		*/
 
 		.fa { 
 			position: absolute;
@@ -433,21 +550,35 @@ pre {
 .content-head {
 	padding: 3 * $unit 0;
 	background: white;
-	/*text-align: center;*/
+	text-align: center;
+	background: $color1;
+	color: $white;
 
 	.inner {
-		padding-left: 40 * $unit;
+		// padding-left: 40 * $unit;
+		h1 {
+			color: $white;
+		}
+	}
+}
+
+.content-head-nosidebar {
+	.inner {
+		// padding-left: 20 * $unit;
 	}
 }
 
 .content {
+	background: $white;
 	//padding: 2 * $unit 0;
 
 	.inner {
 		/*width: 80 * $unit;*/
-		border-left: 37.5 * $unit solid #DDD;
+		border-left: 37.5 * $unit solid $lightgrey;
 		padding-left: 2.5 * $unit;
+		padding-right: 2.5 * $unit;
 		padding-bottom: 2 * $unit;
+		background: white;
 	}
 
 	h2 {
@@ -551,6 +682,13 @@ pre {
 	}
 }
 
+.content-nosidebar {
+	.inner {
+		border-left: none;
+		padding-left: 20 * $unit;
+		padding-right: 20 * $unit;
+	}
+}
 /*
 .content-api {
 	.inner {
@@ -603,9 +741,9 @@ pre {
 }
 
 footer {
-	background: #666;
-	color: #CCC;
-	line-height: 8 * $unit;
+	background: $color5;
+	color: $white;
+	line-height: 4 * $unit;
 	text-align: center;
 
 	a:link {
@@ -665,16 +803,12 @@ footer {
 	padding: 1 * $unit 2 * $unit 1 * $unit 22 * $unit;
 	/*border: 1px solid white;*/
 	background: rgba(255, 255, 255, 0.5);
-	background: #DDD;
+	background: $white;
 	position: relative;
 
 	h3 {
 		position: absolute;
-		/*width: 18 * $unit;*/
-		/*left: -20 * $unit;*/
 		left: 2 * $unit;
-		/*background: white;*/
-		/*text-align: right;*/
 		width: 18 * $unit;
 	}
 }

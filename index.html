@@ -20,7 +20,7 @@
 					<li><a href="getting_started.html">Getting started</a></li>
 					<li><a href="api.html">API</a></li>
 					<li><a href="features.html">Features</a></li>
-					<!--<li><a href="examples.html">Examples</a></li>-->
+					<li><a href="examples.html">Examples</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -29,7 +29,19 @@
         <div class="home-head">
 			<div class="inner">
 				<h1>DummyJS</h1>
-				<p>Smart Functional Testing</p>
+				<h2>Smart Functional Testing</h2>
+				<!-- <p>The easiest way to write and run functional tests for web sites and web apps.</p> -->
+			</div>
+        </div>
+
+
+	        <div class="home-explanation">
+			<div class="inner">
+				<!-- <p>DummyJS was designed from the ground up to be the easiest way to write and run functional tests for web sites and web apps. </p> -->
+				<p>DummyJS makes writing <em>and</em> running automated functional tests for websites and webapps incredibly easy. Tests can be run in sequence or in parallel and accurately mimic human behavior for true user-like testing.</p>
+				<p>
+					<a class="button button-cta" href="getting-started.html">Get started!</a>
+				</p>
 			</div>
         </div>
 
@@ -38,21 +50,26 @@
 			<div class="inner">
 
 				<div class="home-intro-item">
-					<h2>Write E2E tests in English:</h2>
-					<pre>open            http://my.test.site
-type            :text                 John
-click           "Say hi!"
-assertText      .greeting             Hi, John!</div>
+					<h2>Write tests in <small>(almost)</small> plain English:</h2>
+					<pre>open          http://my.test.site
+type          :text                  John
+click         "Say hi!"
+assertText    .greeting              Hi, John!
+
+
+
+
+</div>
 
 
 				<div class="home-intro-item">
 					<h2>Run from a command line:</h2>
-					<pre>$ dummyjs mytest.dummy
+					<pre><span class="prompt">$</span> dummyjs mytest.dummy
 
-✓ open                http://my.test.site
-✓ type                :text                 John
-✓ click               "Say hi!"
-✓ assertText          .greeting             Hi, John!
+✓ open          http://my.test.site
+✓ type          :text                  John
+✓ click         "Say hi!"
+✓ assertText    .greeting              Hi, John!
 
 PASS: Executed 4 actions in 1s.</pre>
 				</div>
@@ -67,9 +84,10 @@ PASS: Executed 4 actions in 1s.</pre>
 				<h2>DummyJS will automatically:</h2>
 
 				<ul class="usp-list">
-					<li><!-- <i class="fa fa-fw fa-2x fa-laptop"></i> --> Run the tests in a real (invisible) browser.</li>
-					<li><!-- <i class="fa fa-fw fa-2x fa-user"></i> --> Trigger all mouse, keyboard and scroll events a user would.</li>
-					<li><!-- <i class="fa fa-fw fa-2x fa-clock-o"></i> --> Deal with delays like page loads, Ajax requests and animations.</li>
+					<li>Run the tests in a real browser.</li>
+					<!-- <li>Trigger all mouse, keyboard and scroll events a user would.</li> -->
+					<li>Accurately simulate user behavior.</li>
+					<li>Deal with delays like page loads, Ajax requests and animations.</li>
 				</ul>
 
 			</div>
@@ -81,18 +99,18 @@ PASS: Executed 4 actions in 1s.</pre>
 				<h2>DummyJS tests are:</h2>
 
 				<div class="usp-item">
-					<h3>Robust</h3>
-					<p>Tests are very resilient to changes in the page. Elements can change, move or disappear and DummyJS will adapt.</p>
-				</div>
-
-				<div class="usp-item">
 					<h3>Easy to write</h3>
-					<p>Instructions are plain English. Target elements by their text content or with CSS selectors.</p>
+					<p>Instructions are plain English. Elements are easily targeted by their text content or with CSS selectors.</p>
 				</div>
 
 				<div class="usp-item">
 					<h3>Easy to run</h3>
 					<p>DummyJS is a command line tool with various options to make your life easier. </p>
+				</div>
+
+				<div class="usp-item">
+					<h3>Robust</h3>
+					<p>Tests are very resilient to changes in the page. Elements can change, move or disappear and DummyJS will adapt.</p>
 				</div>
 
 				<div class="usp-item">
@@ -103,6 +121,12 @@ PASS: Executed 4 actions in 1s.</pre>
 			</div>
         </div>
 
+
+		<!--<div class="home-getstarted">-->
+			<!--<div class="inner">-->
+				<!--<a class="button button-cta" href="getting-started.html">Get started!</a>-->
+			<!--</div>-->
+		<!--</div>-->
     
         <footer>
 			<div class="inner">
@@ -112,8 +136,8 @@ PASS: Executed 4 actions in 1s.</pre>
 
 
 
-        <script src="js/jquery.min.js"></script>
-        <script src="js/main.js"></script>
+        <!--<script src="js/jquery-2.0.3.js"></script>-->
+        <!--<script src="js/main.js"></script>-->
 
 
     </body>

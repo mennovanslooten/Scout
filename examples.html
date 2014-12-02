@@ -20,8 +20,8 @@
 				<ul class="main-nav-menu">
 					<li class="main-nav-github"><a href="https://github.com/mennovanslooten/DummyJS">GitHub</a></li>
 					<li><a href="index.html">Home</a></li>
-					<li><a href="api.html">API</a></li>
 					<li><a href="getting_started.html">Getting started</a></li>
+					<li><a href="api.html">API</a></li>
 					<li><a href="features.html">Features</a></li>
 					<li class="main-nav-menu-selected"><a href="examples.html">Examples</a></li>
 				</ul>
@@ -36,13 +36,11 @@
         </div>
 
 		<nav class="sub-nav">
-			<div class="inner">
-				<ul class="sub-nav-menu">
-					<li><a href="#navigation">Navigation examples</a></li>
-					<li><a href="#form">Form examples</a></li>
-					<li><a href="#assertion">Assertion examples</a></li>
-				</ul>
-			</div>
+			<ul class="sub-nav-menu">
+				<li><a href="#navigation">Navigation examples</a></li>
+				<li><a href="#form">Form examples</a></li>
+				<li><a href="#assertion">Assertion examples</a></li>
+			</ul>
 		</nav>
 
 
@@ -56,10 +54,17 @@
 				<pre>open    http://google.com</pre>
 
 				<h3>Clicking a link</h3>
-				<p>There are several ways to identify and click a link in a page. The most convenient one is by text content. This example clicks a link with the text "Hello, world."</p>
-				<pre>click    "Hello, world."</pre>
+				<p>There are several ways to identify and click a link in a page. The most convenient one is by text content. This example clicks a link with the text "Register now"</p>
+				<pre>&lt;a href="/register"&gt;Register now&lt;/a&gt;</pre>
+				<pre>click    "Register now"</pre>
+
 				<p>Alternatively, you can use the CSS attribute selector to target the link with the correct destination:</p>
-				<pre>click    [href="/home"]</pre>
+				<pre>click    [href="/register"]</pre>
+
+				<p>Finally, you can always use any other CSS selector to target elements:</p>
+				<pre>click    .main-nav-home</pre>
+				<pre>click    #logo</pre>
+				<pre>click    .main-menu li:first-child &gt; a</pre>
 
 				<h3>Going back or forward in history</h3>
 				<p>The <code>back</code> and <code>forward</code> actions go back or forward one step in history.</p>
@@ -92,17 +97,28 @@ assertPage    /new</pre>
 
 				<h3>Entering text</h3>
 				<p>The <code>type</code> command will enter the specified text in the first element that matches the specified selector.</p>
+				<pre>&lt;input name="q"&gt;</pre>
 				<pre>type    [name="q"]    Hello, world</pre>
 				<!--<p>DummyJS will simulate every event and every keystroke that would be triggered if a real user would enter the text.</p>-->
 
 				<h3>Clicking checkboxes and radiobuttons</h3>
 				<p>To select a particular checkbox or radiobutton, you can often target them by their unique name/value combination.</p>
-				<pre>click    [name="terms"][value="1"]</pre>
-				<p>Additionally, if the page uses <code>&lt;label&gt;</code> elements correctly, you can target those by their text content:</p>
+				<pre>&lt;input type="radio" name="gender" value="m"&gt; Male
+&lt;input type="radio" name="gender" value="f"&gt; Female
+				</pre>
+				<pre>click    [name="gender"][value="m"]</pre>
+				<p>However, if the page uses <code>&lt;label&gt;</code> elements correctly, you can target input elements with their label's text content:</p>
+				<pre>&lt;label&gt;
+    I agree with the terms &amp; conditions
+    &lt;input type="checkbox" name="terms"&gt;
+&lt;/label&gt;</pre>
 				<pre>click    "I agree with the terms &amp; conditions"</pre>
 
 				<h3>Choosing an option in a select</h3>
 				<p>With the <code>choose</code> action, you can choose a <code>&lt;select&gt;</code>'s option by text:</p>
+				<pre>&lt;select name="country"&gt;
+    &lt;option value="NL"&gt;The Netherlands&lt;/option&gt;
+&lt;/select&gt;</pre>
 				<pre>choose    [name="country"]    "The Netherlands"</pre>
 
 				<h3>Submitting a form</h3>
@@ -173,8 +189,8 @@ assertPage    /new</pre>
 
 
 
-        <script src="js/jquery.min.js"></script>
-        <script src="js/main.js"></script>
+        <!--<script src="js/jquery.min.js"></script>-->
+        <!--<script src="js/main.js"></script>-->
 
 
     </body>

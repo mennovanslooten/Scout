@@ -20,7 +20,7 @@
 					<li><a href="getting_started.html">Getting started</a></li>
 					<li class="main-nav-menu-selected"><a href="api.html">API</a></li>
 					<li><a href="features.html">Features</a></li>
-					<!--<li><a href="examples.html">Examples</a></li>-->
+					<li><a href="examples.html">Examples</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -153,7 +153,7 @@
 
 				<div id="type" class="api-item">
 					<h3>type</h3>
-					<p>Executes sequential typing of keys into an element. It takes two mandatory arguments: a CSS selector and a string representing the characters that should be typed. This string can contain special instructions in the form of <code>&lt;KeyName&gt;</code> that will simulate keys that don't result in a character, like Tab, Enter, Up and Down.</p>
+					<p>Executes sequential typing of keys into an element. It takes two mandatory arguments: a CSS selector and a string representing the characters that should be typed. This string can contain special instructions in the form of <code>&lt;KeyName&gt;</code> that will simulate special keys<!-- that don't result in a character-->, like Tab, Enter, Up and Down.</p>
 					<pre>type    input[name="q"]    This is a test&lt;Enter&gt;</pre>
 					<pre>type    .autocomplete      dummy&lt;Down&gt;&lt;Down&gt;&lt;Enter&gt;</pre>
 					<p class="note">Before typing, DummyJS will first perform a <code>click</code> on the specified element. This includes waiting for the element to become visible, the <code>moveMouseTo</code>, etc.</p>
@@ -337,7 +337,7 @@ screendump    partial    .some-selector</pre>
 
 				<div id="remember" class="api-item">
 					<h3>remember</h3>
-					<p>Stores the text or value (in case of an <code>&lt;input&gt;</code> or <code>&lt;select&gt;</code>) of an element in a temporary variable. Stored variables can be used as <code>{varname}</code>. Stored variables are remembered as long as DummyJS is running and can be used in other tests.</p>
+					<p>Stores the text or value (in case of an <code>&lt;input&gt;</code> or <code>&lt;select&gt;</code>) of an element in a temporary variable. Stored variables can be used as <code>{varname}</code>.<!-- Stored variables are remembered as long as DummyJS is running and can be used in other tests. --></p>
 					<pre># Store the value of a password field in a variable called pwd
 remember    :password    pwd</pre>
 					<pre># Store the text content of a paragraph in a variable called txt
@@ -418,8 +418,8 @@ assertText    .info                {username} is still available</pre>
 
 
 
-        <script src="js/jquery.min.js"></script>
-        <script src="js/main.js"></script>
+        <!--<script src="js/jquery.min.js"></script>-->
+        <!--<script src="js/main.js"></script>-->
 
 
     </body>
