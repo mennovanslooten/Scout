@@ -10,8 +10,6 @@
     "dummyjs": "./bin/dummyjs"
   },
   "dependencies": {
-    "phantomjs": ">=1.8.2",
-    "resemblejs": "^1.0.1"
   },
   "keywords": [
     "functional",

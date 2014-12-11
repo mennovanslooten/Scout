@@ -1,1 +1,2 @@
-## This is an included file
+## This is an included file with an optional assertion
+?assertExists    #doesnotexist
