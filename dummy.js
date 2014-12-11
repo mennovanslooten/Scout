@@ -111,4 +111,9 @@ function Dummy() {
 }
 
 
-Dummy();
+if (_cli_args.reformat) {
+	_logger.reformat(_suite);
+	phantom.exit(0);
+} else {
+	Dummy();
+}
