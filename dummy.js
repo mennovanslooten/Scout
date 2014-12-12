@@ -55,7 +55,6 @@ function Dummy() {
 		test_data.end_time = new Date();
 		_suite.passed.push(test_data);
 
-		//_logger.passTest(test_data, _suite);
 		checkDone();
 	}
 
@@ -68,7 +67,6 @@ function Dummy() {
 		test_data.end_time = new Date();
 		_suite.failed.push(test_data);
 
-		//_logger.failTest(test_data, _suite);
 		checkDone();
 	}
 
@@ -92,7 +90,6 @@ function Dummy() {
 	function done() {
 		_suite.end_time = new Date();
 		_logger.done(_suite);
-		//_xunit.log(_suite);
 		var is_passed = _suite.failed.length === 0;
 		var exit_code = is_passed ? 0 : 1;
 
@@ -103,7 +100,6 @@ function Dummy() {
 
 		phantom.onError = function(){};
 		throw new Error('');
-		//return phantom.exit(exit_code);
 	}
 
 	// Get the party started
@@ -112,8 +108,10 @@ function Dummy() {
 
 
 if (_cli_args.reformat) {
+	// if --reformat is passed, reformat and exit
 	_logger.reformat(_suite);
 	phantom.exit(0);
 } else {
+	// otherwise, kick off the tests
 	Dummy();
 }
