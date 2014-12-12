@@ -1,5 +1,4 @@
 /*
- * 
 	TODO:
 	[ ] Iterate assert over $elts to find match
 	[ ] choose shoull return error msg if option not available
