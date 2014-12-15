@@ -1,15 +1,15 @@
 {
   "name": "DummyJS",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "DummyJS is a Functional Testing extension for PhantomJS",
-  "main": "dummy.js",
   "scripts": {
-    "test": "phantomjs ./dummy.js ./self_tests --step=5 --timeout=2000 --parallel=3"
+    "test": "./bin/dummyjs ./self_tests --step=5 --timeout=2000 --parallel=3"
   },
   "bin": {
     "dummyjs": "./bin/dummyjs"
   },
   "dependencies": {
+    "phantomjs": "^1.9.12"
   },
   "keywords": [
     "functional",
@@ -28,5 +28,5 @@
     "type": "git",
     "url": "git://github.com/mennovanslooten/DummyJS.git"
   },
-  "homepage": "https://github.com/mennovanslooten/DummyJS"
+  "homepage": "http://mennovanslooten.github.io/DummyJS/"
 }
