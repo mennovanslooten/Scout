@@ -20,7 +20,7 @@ var _suite = {
 };
 
 
-function Dummy() {
+function Scout() {
 	var _test_index = -1;
 	var _running    = 0;
 
@@ -113,5 +113,5 @@ if (_cli_args.reformat) {
 	phantom.exit(0);
 } else {
 	// otherwise, kick off the tests
-	Dummy();
+	Scout();
 }

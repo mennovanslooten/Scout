@@ -24,7 +24,7 @@ assertHasClass         .mouse_target_1    .mouseleave
 ## After a click the target should have had a mouseenter/down/up and a click event
 assertHasClass         .mouse_target_2    .mouseenter.mousedown.mouseup.dblclick
 
-## These targets are all outside of the viewport. To click them requires DummyJS to simulate scrolling the page
+## These targets are all outside of the viewport. To click them requires Scout to simulate scrolling the page
 assertNotInViewport    .mouse_target_3
 click                  .mouse_target_3
 assertInViewport       .mouse_target_3

@@ -2,7 +2,7 @@
 open               http://www.google.nl/
 assertTitle        Google
 assertExists       form[action="/search"]
-type               input[name="q"]              DummyJS<Enter>
-assertTitle        DummyJS - Google zoeken
-assertUrl          q=DummyJS
+type               input[name="q"]              Scout<Enter>
+assertTitle        Scout - Google zoeken
+assertUrl          q=Scout
 assertMinLength    h3.r                         9

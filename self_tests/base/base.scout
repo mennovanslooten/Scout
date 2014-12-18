@@ -2,10 +2,10 @@
 open                   ./index.html
 
 ## assertTitle and assertPage should match substrings as well
-assertTitle            DUMMY SELF TEST
+assertTitle            SCOUT SELF TEST
 assertPage             base/index.html
 
-include                _include.dummy
+include                _include.scout
 
 ## assertUrl converts the argument into a regular expression
 assertUrl              [abse]/\w+.html

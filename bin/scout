@@ -7,5 +7,5 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
-#phantomjs $DIR/../dummy.js $@ 2> >(grep -v CoreText 1>&2)
-$DIR/../node_modules/phantomjs/bin/phantomjs $DIR/../dummy.js $@ 2> >(grep -v CoreText 1>&2)
+#phantomjs $DIR/../scout.js $@ 2> >(grep -v CoreText 1>&2)
+$DIR/../node_modules/phantomjs/bin/phantomjs $DIR/../scout.js $@ 2> >(grep -v CoreText 1>&2)

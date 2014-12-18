@@ -1,12 +1,12 @@
 {
-  "name": "DummyJS",
+  "name": "Scout",
   "version": "1.0.0",
-  "description": "DummyJS is a Functional Testing extension for PhantomJS",
+  "description": "Scout is a Functional Testing extension for PhantomJS",
   "scripts": {
-    "test": "./bin/dummyjs ./self_tests --step=5 --timeout=2000 --parallel=3"
+    "test": "./bin/scout ./self_tests --step=5 --timeout=2000 --parallel=3"
   },
   "bin": {
-    "dummyjs": "./bin/dummyjs"
+    "scout": "./bin/scout"
   },
   "dependencies": {
     "phantomjs": "^1.9.12"
@@ -26,7 +26,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mennovanslooten/DummyJS.git"
+    "url": "git://github.com/mennovanslooten/Scout.git"
   },
-  "homepage": "http://mennovanslooten.github.io/DummyJS/"
+  "homepage": "http://mennovanslooten.github.io/Scout/"
 }
