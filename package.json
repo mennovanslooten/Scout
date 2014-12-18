@@ -1,5 +1,5 @@
 {
-  "name": "Scout",
+  "name": "scoutjs",
   "version": "1.0.0",
   "description": "Scout is a Functional Testing extension for PhantomJS",
   "scripts": {

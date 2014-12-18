@@ -111,7 +111,11 @@ if (_cli_args.reformat) {
 	// if --reformat is passed, reformat and exit
 	_logger.reformat(_suite);
 	phantom.exit(0);
-} else {
+} else if (_suite.tests.length) {
 	// otherwise, kick off the tests
 	Scout();
+} else {
+	console.log('Scout v1.0.1');
+	console.log('http://mennovanslooten.github.io/Scout/');
+	phantom.exit(0);
 }
