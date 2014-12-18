@@ -1,7 +1,7 @@
-# DummyJS
+# Scout
 
 **Smart Functional Testing**
 
-DummyJS is a functional testing tool designed to make tests easy to write, easy
+Scout is a functional testing tool designed to make tests easy to write, easy
 to run and resilient to change. Please read the 
-[home page](http://mennovanslooten.github.io/DummyJS) for more information.
+[home page](http://mennovanslooten.github.io/Scout) for more information.
