@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Getting Started - DummyJS</title>
+        <title>Getting Started - Scout</title>
 
         <meta name="author" content="@mennovanslooten">
         <meta name="keywords" content="">
@@ -15,7 +15,7 @@
 		<nav class="main-nav">
 			<div class="inner">
 				<ul class="main-nav-menu">
-					<li class="main-nav-github"><a href="https://github.com/mennovanslooten/DummyJS">GitHub</a></li>
+					<li class="main-nav-github"><a href="https://github.com/mennovanslooten/Scout">GitHub</a></li>
 					<li><a href="index.html">Home</a></li>
 					<li class="main-nav-menu-selected"><a href="getting_started.html">Getting started</a></li>
 					<li><a href="api.html">API</a></li>
@@ -35,7 +35,7 @@
 
 		<nav class="sub-nav">
 			<ul class="sub-nav-menu">
-				<li><a href="#install">Installing DummyJS</a></li>
+				<li><a href="#install">Installing Scout</a></li>
 				<li><a href="#write">Writing tests</a></li>
 				<li><a href="#run">Running tests</a></li>
 				<!--<li><a href="#format">Formatting</a></li>-->
@@ -45,23 +45,23 @@
 
 		<div class="content" id="install">
 			<div class="inner">
-				<h2>Installing DummyJS</h2>
+				<h2>Installing Scout</h2>
 				<p>
-					Installing DummyJS is easiest with <a href="https://npmjs.org/">npm</a> and <a href="https://npmjs.org/">git</a>.
-					To install DummyJS, open your terminal and clone the repository from GitHub:
+					Installing Scout is easiest with <a href="https://npmjs.org/">npm</a> and <a href="https://npmjs.org/">git</a>.
+					To install Scout, open your terminal and clone the repository from GitHub:
 				</p>
 
-				<pre><span class="prompt">$</span> git clone https://github.com/mennovanslooten/DummyJS.git</pre>
+				<pre><span class="prompt">$</span> git clone https://github.com/mennovanslooten/Scout.git</pre>
 
 				<p>
 					Then, <code>cd</code> into the newly created directory, and run <code>npm install</code>:
 				</p>
 
-				<pre><span class="prompt">$</span> cd DummyJS
+				<pre><span class="prompt">$</span> cd Scout
 <span class="prompt">$</span> npm install . -g</pre>
 
 				<p>
-					This will install <code>dummyjs</code> as a global command line tool.
+					This will install <code>Scout</code> as a global command line tool.
 				</p>
 
 				<p>
@@ -75,18 +75,18 @@
 				<h3>PhantomJS</h3>
 
 				<p>
-					DummyJS runs all test in <a href="http://phantomjs.org/">PhantomJS</a>, a scriptable headless browser.
+					Scout runs all test in <a href="http://phantomjs.org/">PhantomJS</a>, a scriptable headless browser.
 					To install PhantomJS, follow <a href="http://phantomjs.org/download.html">the instructions on their download page</a>.
 				</p>
 
-				<h3>Testing DummyJS</h3>
+				<h3>Testing Scout</h3>
 
 				<p>
-					After the installation completed, you can test if DummyJS works by running the included <code>self_tests</code>, 
-					which test if DummyJS is behaving as expected:
+					After the installation completed, you can test if Scout works by running the included <code>self_tests</code>, 
+					which test if Scout is behaving as expected:
 				</p>
 
-				<pre><span class="prompt">$</span> dummyjs self_tests</pre>
+				<pre><span class="prompt">$</span> scout self_tests</pre>
 
 				<p>
 					Logs should start flying by in your terminal, ending with the following message:
@@ -100,13 +100,13 @@
 				<h2>Writing tests</h2>
 
 				<h3>Creating a test file</h3>
-				<!--<p class="note">DummyJS test files are plain text files, with a <em>.dummy</em> extension.</p>-->
+				<!--<p class="note">Scout test files are plain text files, with a <em>.scout</em> extension.</p>-->
 				<p>
 					Create a new file with your favorite text editor and add the following lines:
 				</p>
 
 				<!--
-				<pre>$ touch example.dummy</pre>
+				<pre>$ touch example.scout</pre>
 
 				<p>
 					Now open this file with your favorite text editor and add the following lines:
@@ -119,17 +119,17 @@ type               input[name="q"]          this is a test&lt;Enter&gt;
 assertMinLength    h3.r                     10</pre>
 
 				<p>
-					Now save this file as <code>mytest.dummy</code>.
+					Now save this file as <code>mytest.scout</code>.
 					Enter the following command in your terminal to run this test:
 				</p>
 
-				<pre><span class="prompt">$</span> dummyjs mytest.dummy</pre>
+				<pre><span class="prompt">$</span> scout mytest.scout</pre>
 
 				<p>
 					You should see something like this:
 				</p>
 
-				<pre><span class="prompt">$</span> dummyjs mytest.dummy
+				<pre><span class="prompt">$</span> scout mytest.scout
 
   ✓ open              http://www.google.com/                           [271ms]
   ✓ type              input[name="q"]          this is a test&lt;Enter&gt;   [205ms]
@@ -142,14 +142,14 @@ PASS: Executed 1 tests in 1119ms</pre>
 				<p>
 					Let's go over this line-by-line.
 					Every line is an <em>instruction</em>.
-					The first line is an instruction for DummyJS to open a page with the Google homepage:
+					The first line is an instruction for Scout to open a page with the Google homepage:
 				</p>
 
 				<pre>open    http://www.google.com/</pre>
 
 				<p>
 					<code>open</code> is an <em>action</em> and the Google URL is the <em>argument</em>.
-					Not surprisingly, this line instructs DummyJS to open the URL.
+					Not surprisingly, this line instructs Scout to open the URL.
 				</p>
 				<p class="note">
 					Actions and arguments must be on the same line and must be separated by two or more spaces.
@@ -167,9 +167,9 @@ PASS: Executed 1 tests in 1119ms</pre>
 				</p>
 
 				<p>
-					DummyJS will simulate a user typing the characters in quick sucession.
-					You may have guessed that <code>&lt;Enter&gt;</code> instructs DummyJS to simulate an enter key.
-					DummyJS supports a large number of special keys, like <code>&lt;Up&gt;</code>, <code>&lt;Escape&gt;</code> and <code>&lt;Delete&gt;</code>.
+					Scout will simulate a user typing the characters in quick sucession.
+					You may have guessed that <code>&lt;Enter&gt;</code> instructs Scout to simulate an enter key.
+					Scout supports a large number of special keys, like <code>&lt;Up&gt;</code>, <code>&lt;Escape&gt;</code> and <code>&lt;Delete&gt;</code>.
 				</p>
 
 				<!--<p>-->
@@ -182,7 +182,7 @@ PASS: Executed 1 tests in 1119ms</pre>
 
 				<p>
 					Instructions starting with "assert" are <em>assertions</em>: tests that verify that a certain statement about the page is true.
-					In this case, DummyJS will check that there are at least 10 <code>&lt;h3 class="r"&gt;</code> elements visible on the page.
+					In this case, Scout will check that there are at least 10 <code>&lt;h3 class="r"&gt;</code> elements visible on the page.
 				</p>
 
 				<p class="note">
@@ -194,14 +194,14 @@ PASS: Executed 1 tests in 1119ms</pre>
 				<!--<h3>Waiting for truth</h3>-->
 
 				<p>
-					If an assertion or action doesn't immediately pass, DummyJS will keep on trying until a timeout is reached.
-					Only after an instruction has succeeded will DummyJS continue with the next.
+					If an assertion or action doesn't immediately pass, Scout will keep on trying until a timeout is reached.
+					Only after an instruction has succeeded will Scout continue with the next.
 					If the timeout is reached, the test fails.
 				</p>
 
 
 				<!--<p>-->
-					<!--Note that <strong>DummyJS always waits for the previous instruction to succeed before continuing with the next</strong>, so it will only start typing when the page has been fully loaded.-->
+					<!--Note that <strong>Scout always waits for the previous instruction to succeed before continuing with the next</strong>, so it will only start typing when the page has been fully loaded.-->
 				<!--</p>-->
 				
 			</div>
@@ -215,31 +215,31 @@ PASS: Executed 1 tests in 1119ms</pre>
 					Tests are run from the command line:
 				</p>
 
-				<pre><span class="prompt">$</span> dummyjs <em>filename.dummy</em></pre>
+				<pre><span class="prompt">$</span> scout <em>filename.scout</em></pre>
 
 				<p>
-					Note that test files must have a <code>.dummy</code> extension.
+					Note that test files must have a <code>.scout</code> extension.
 					You can specify as many tests as you like:
 				</p>
 
-				<pre><span class="prompt">$</span> dummyjs <em>filename1.dummy</em> <em>filename2.dummy</em> <em>filename3.dummy</em></pre>
+				<pre><span class="prompt">$</span> scout <em>filename1.scout</em> <em>filename2.scout</em> <em>filename3.scout</em></pre>
 
 				<p>
 				If you pass a directory name, it will run all of the tests in the directory (even if they are in sub-directories). Files whose names start with an underscore are considered <a href="api.html#include">includes</a> and are skipped:
 				</p>
 
-				<pre><span class="prompt">$</span> dummyjs <em>dirname</em></pre>
+				<pre><span class="prompt">$</span> scout <em>dirname</em></pre>
 
 				<p>
 					You can pass directory names and file names together:
 				</p>
 
-				<pre><span class="prompt">$</span> dummyjs <em>dirname1</em> <em>filename1.dummy</em> <em>dirname2</em></pre>
+				<pre><span class="prompt">$</span> scout <em>dirname1</em> <em>filename1.scout</em> <em>dirname2</em></pre>
 
 				<h3>Command line options</h3>
 
 				<p>
-					Besides test names and directory names you can pass a number of options that will alter DummyJS' default behavior.
+					Besides test names and directory names you can pass a number of options that will alter Scout' default behavior.
 					<!-- There are two types of options; there's <code>--optionname</code> which will turn a certain feature on, and <code>--optionname=value</code> which will alter a default -->
 				</p>
 
@@ -260,7 +260,7 @@ PASS: Executed 1 tests in 1119ms</pre>
 					<dd>Set the number of tests that will be run in parallel. <br>Default 1.</dd>
 
 					<dt><code>--timeout=<em>&lt;number&gt;</em></code></dt>
-					<dd>Set the time (in milliseconds) DummyJS will retry actions and assertions before giving up. <br>Default 5000.</dd>
+					<dd>Set the time (in milliseconds) Scout will retry actions and assertions before giving up. <br>Default 5000.</dd>
 
 					<dt><code>--step=<em>&lt;number&gt;</em></code></dt>
 					<dd>Set the time (in milliseconds) between two retries. <br>Default 10.</dd>
@@ -279,7 +279,7 @@ PASS: Executed 1 tests in 1119ms</pre>
 				</p>
 
 
-				<pre><span class="prompt">$</span> dummyjs <em>filename.dummy</em> --debug --color --timeout=1000</pre>
+				<pre><span class="prompt">$</span> scout <em>filename.scout</em> --debug --color --timeout=1000</pre>
 
 				<p>
 				</p>
@@ -292,17 +292,17 @@ PASS: Executed 1 tests in 1119ms</pre>
 				<!--<h2>Formatting tests</h2>-->
 
 				<!--<p>-->
-					<!--While writing tests is pretty easy, it can be a pain to keep the <code>.dummy</code> files nicely formatted and the columns lined up.-->
-					<!--For that reason, DummyJS has a <code>--reformat</code> command line option that will read the specified test files and output them in reformatted to the console.-->
+					<!--While writing tests is pretty easy, it can be a pain to keep the <code>.scout</code> files nicely formatted and the columns lined up.-->
+					<!--For that reason, Scout has a <code>--reformat</code> command line option that will read the specified test files and output them in reformatted to the console.-->
 				<!--</p>-->
 
-				<!--<pre><span class="prompt">$</span> dummyjs --reformat <em>filename.dummy</em></pre>-->
+				<!--<pre><span class="prompt">$</span> scout --reformat <em>filename.scout</em></pre>-->
 
 				<!--<p>-->
 					<!--You can use the <code>&gt;</code> symbol to write the formatted output to disk:-->
 				<!--</p>-->
 
-				<!--<pre><span class="prompt">$</span> dummyjs --reformat <em>filename.dummy</em> &gt; <em>newfilename.dummy</em></pre>-->
+				<!--<pre><span class="prompt">$</span> scout --reformat <em>filename.scout</em> &gt; <em>newfilename.scout</em></pre>-->
 			<!--</div>-->
 		<!--</div>-->
 

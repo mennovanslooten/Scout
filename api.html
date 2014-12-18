@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>API - DummyJS</title>
+        <title>API - Scout</title>
 
         <meta name="author" content="@mennovanslooten">
         <meta name="keywords" content="">
@@ -15,7 +15,7 @@
 		<nav class="main-nav">
 			<div class="inner">
 				<ul class="main-nav-menu">
-					<li class="main-nav-github"><a href="https://github.com/mennovanslooten/DummyJS">GitHub</a></li>
+					<li class="main-nav-github"><a href="https://github.com/mennovanslooten/Scout">GitHub</a></li>
 					<li><a href="index.html">Home</a></li>
 					<li><a href="getting_started.html">Getting started</a></li>
 					<li class="main-nav-menu-selected"><a href="api.html">API</a></li>
@@ -28,7 +28,7 @@
 
         <div class="content-head">
 			<div class="inner">
-				<h1>DummyJS API</h1>
+				<h1>Scout API</h1>
 			</div>
         </div>
 
@@ -132,7 +132,7 @@
 					<p>Moves the mouse pointer. It takes one mandatory arguments which can be either <a href="#selectors">a CSS selector</a> or a set of coordinates on the page. The pointer is not moved to the destination instantly but follows a path across the page.</p>
 					<pre>moveMouseTo    .hideDialog</pre>
 					<pre>moveMouseTo    519, 1204</pre>
-					<p class="note">If a selector is specified, DummyJS will first wait for at least one element matching the selector to become visible. It will then scroll the element into view (if necessary) and then move the mouse to it.</p>
+					<p class="note">If a selector is specified, Scout will first wait for at least one element matching the selector to become visible. It will then scroll the element into view (if necessary) and then move the mouse to it.</p>
 				</div>
 
 
@@ -155,8 +155,8 @@
 					<h3>type</h3>
 					<p>Executes sequential typing of keys into an element. It takes two mandatory arguments: a CSS selector and a string representing the characters that should be typed. This string can contain special instructions in the form of <code>&lt;KeyName&gt;</code> that will simulate special keys<!-- that don't result in a character-->, like Tab, Enter, Up and Down.</p>
 					<pre>type    input[name="q"]    This is a test&lt;Enter&gt;</pre>
-					<pre>type    .autocomplete      dummy&lt;Down&gt;&lt;Down&gt;&lt;Enter&gt;</pre>
-					<p class="note">Before typing, DummyJS will first perform a <code>click</code> on the specified element. This includes waiting for the element to become visible, the <code>moveMouseTo</code>, etc.</p>
+					<pre>type    .autocomplete      scout&lt;Down&gt;&lt;Down&gt;&lt;Enter&gt;</pre>
+					<p class="note">Before typing, Scout will first perform a <code>click</code> on the specified element. This includes waiting for the element to become visible, the <code>moveMouseTo</code>, etc.</p>
 				</div>
 
 
@@ -327,7 +327,7 @@
 
 				<div id="screendump" class="api-item">
 					<h3>screendump</h3>
-					<p>Saves a screendump to disk. It takes two arguments: a mandatory file name (without extension) and an optional selector specifying which part of the screen should be dumped. If no selector is specified, the entire viewport will be dumped. Screendumps are saved as <code>.png</code> in the directory where DummyJS was called.</p>
+					<p>Saves a screendump to disk. It takes two arguments: a mandatory file name (without extension) and an optional selector specifying which part of the screen should be dumped. If no selector is specified, the entire viewport will be dumped. Screendumps are saved as <code>.png</code> in the directory where Scout was called.</p>
 					<pre># Saves "entire_viewport.png"
 screendump    entire_viewport</pre>
 					<pre># Saves "partial.png"
@@ -337,7 +337,7 @@ screendump    partial    .some-selector</pre>
 
 				<div id="remember" class="api-item">
 					<h3>remember</h3>
-					<p>Stores the text or value (in case of an <code>&lt;input&gt;</code> or <code>&lt;select&gt;</code>) of an element in a temporary variable. Stored variables can be used as <code>{varname}</code>.<!-- Stored variables are remembered as long as DummyJS is running and can be used in other tests. --></p>
+					<p>Stores the text or value (in case of an <code>&lt;input&gt;</code> or <code>&lt;select&gt;</code>) of an element in a temporary variable. Stored variables can be used as <code>{varname}</code>.<!-- Stored variables are remembered as long as Scout is running and can be used in other tests. --></p>
 					<pre># Store the value of a password field in a variable called pwd
 remember    :password    pwd</pre>
 					<pre># Store the text content of a paragraph in a variable called txt
@@ -348,8 +348,8 @@ remember    p:first    txt</pre>
 
 				<div id="include" class="api-item">
 					<h3>include</h3>
-					<p>Includes another <code>.dummy</code> file as part of the current test file. Useful for instructions that are required for more than one test file, e.g. submitting a login form. The include argument is a path relative to the including file. Includes can include other files.</p>
-					<pre>include    ../common/_login.dummy</pre>
+					<p>Includes another <code>.scout</code> file as part of the current test file. Useful for instructions that are required for more than one test file, e.g. submitting a login form. The include argument is a path relative to the including file. Includes can include other files.</p>
+					<pre>include    ../common/_login.scout</pre>
 					<p class="note">Test files that are prefixed with an underscore are only run when included by another file or when explicitly passed via the command line.</p>
 				</div>
 
@@ -372,7 +372,7 @@ remember    p:first    txt</pre>
 
 				<div id="targeting_by_text" class="api-item">
 					<h3>Targeting by text</h3>
-					<p>Besides the standard jQuery selectors, DummyJS supports a shortcut for <strong>selecting by text content:</strong> if a text in double quotes is passed, it will look for elements matching that text exactly. This can be used in place of any argument that expects a selector.</p>
+					<p>Besides the standard jQuery selectors, Scout supports a shortcut for <strong>selecting by text content:</strong> if a text in double quotes is passed, it will look for elements matching that text exactly. This can be used in place of any argument that expects a selector.</p>
 
 					<pre>click    "Next page"</pre>
 					<pre>assertVisible    "Welcome, John Connor"</pre>
@@ -382,7 +382,7 @@ remember    p:first    txt</pre>
 				<div id="random_string_generators" class="api-item">
 					<h3>Random string generators</h3>
 					<p>Sometimes, usually when testing a form, you need the ability to generate random strings. For example, when you test a registration form you might need a unique email address to prevent any "already registered" type errors.</p>
-					<p>DummyJS can generate random strings of any length with <code>{{xyz}}</code>, where xyz is a number specifying the length of the string. The {{xyz}} pattern can occur anywhere in any argument.</p>
+					<p>Scout can generate random strings of any length with <code>{{xyz}}</code>, where xyz is a number specifying the length of the string. The {{xyz}} pattern can occur anywhere in any argument.</p>
 
 					<pre>type    [name="password"]    {{8}}</pre>
 					<pre>type    [name="email"]    {{4}}@{{6}}.com</pre>
