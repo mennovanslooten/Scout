@@ -104,12 +104,11 @@ assertPage    /new</pre>
 				<h3>Clicking checkboxes and radiobuttons</h3>
 				<p>To select a particular checkbox or radiobutton, you can often target them by their unique name/value combination.</p>
 				<pre>&lt;input type="radio" name="gender" value="m"&gt; Male
-&lt;input type="radio" name="gender" value="f"&gt; Female
-				</pre>
+&lt;input type="radio" name="gender" value="f"&gt; Female</pre>
 				<pre>click    [name="gender"][value="m"]</pre>
 				<p>However, if the page uses <code>&lt;label&gt;</code> elements correctly, you can target input elements with their label's text content:</p>
 				<pre>&lt;label&gt;
-    I agree with the terms &amp; conditions
+    I agree with the terms &amp;amp; conditions
     &lt;input type="checkbox" name="terms"&gt;
 &lt;/label&gt;</pre>
 				<pre>click    "I agree with the terms &amp; conditions"</pre>
@@ -178,9 +177,6 @@ assertPage    /new</pre>
         </div>
 
 
-
-        <hr>
-    
         <footer>
 			<div class="inner">
 				<p>&copy; 2013 <a href="https://twitter.com/mennovanslooten">@mennovanslooten</a></p>

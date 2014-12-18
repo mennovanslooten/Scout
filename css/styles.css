@@ -239,15 +239,16 @@ pre {
 
 .main-nav {
   background: #BD1550;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10; }
+  /*position: fixed;*/
+  /*top: -7 * $unit;;*/
+  /*top: 0;*/
+  /*left: 0;*/
+  /*right: 0;*/
+  /*z-index: 10;*/ }
   .main-nav .inner {
     position: relative; }
   .main-nav + * {
-    margin-top: 56px; }
+    /*margin-top: 7 * $unit;*/ }
 
 .main-nav-menu {
   list-style: none;
@@ -430,7 +431,8 @@ pre {
     /*background: mix($color5, white, 25%);*/
     border: 1px solid #8A9B0F;
     min-height: 104px;
-    border-radius: 8px; }
+    border-radius: 8px;
+    font-weight: 400; }
     .usp-list li:before {
       /*color: $color5;*/
       /*color: $white;*/
@@ -577,16 +579,18 @@ pre {
       text-align: right;
       float: left;
       clear: both;
-      padding: 0 16px; }
+      /*padding: 0 2 * $unit;*/
+      padding: 0; }
       .content dl dt ~ dt {
         margin-top: 8px; }
     .content dl dd {
-      width: 448px;
+      width: 416px;
       float: right;
-      clear: right;
-      padding: 0 16px; }
+      clear: right; }
       .content dl dd ~ dd {
         margin-top: 8px; }
+  .content a {
+    font-weight: 400; }
   .content .intro {
     padding: 32px 0;
     font-size: 24px;
@@ -619,56 +623,23 @@ pre {
   padding-left: 160px;
   padding-right: 160px; }
 
-/*
-.content-api {
-	.inner {
-		position: relative;
-	}
-
-	h4 {
-		position: absolute;
-		width: 18 * $unit;
-		left: -20 * $unit;
-		text-align: right;
-	}
-
-	p {
-		code:first-child {
-			display: none;
-		}
-	}
-}
-*/
-.xapi-item {
-  margin: 16px 0;
-  padding: 8px 16px 8px 160px;
-  /*border: 1px solid white;*/
-  background: rgba(255, 255, 255, 0.5);
-  background: #DDD;
-  position: relative; }
-  .xapi-item h4 {
-    position: absolute;
-    /*width: 18 * $unit;*/
-    /*left: -20 * $unit;*/
-    left: 16px;
-    /*background: white;*/
-    /*text-align: right;*/ }
-
 .api-item {
   margin: 16px 0 0;
   padding: 8px 16px;
   /*border: 1px solid white;*/
-  background: rgba(255, 255, 255, 0.5);
-  background: #DDD;
+  /*background: rgba(255, 255, 255, 0.5);*/
+  background: #f2f2f2;
   position: relative; }
+  .api-item pre {
+    background: #e7e7e7; }
 
 footer {
-  background: #8A9B0F;
-  color: #f2f2f2;
-  line-height: 32px;
+  background: #f2f2f2;
+  color: #666;
+  line-height: 48px;
   text-align: center; }
   footer a:link {
-    color: #FFF; }
+    color: #E97F02; }
     footer a:link:hover {
       text-decoration: underline; }
 

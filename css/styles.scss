@@ -27,7 +27,6 @@ $lightbg: lighten($color1, 50%);
 @import "utils";
 
 
-
 body {
 	background: $white;
     color: $black;
@@ -210,11 +209,12 @@ pre {
 
 .main-nav {
 	background: $color2;
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	z-index: 10;
+	/*position: fixed;*/
+	/*top: -7 * $unit;;*/
+	/*top: 0;*/
+	/*left: 0;*/
+	/*right: 0;*/
+	/*z-index: 10;*/
 	// background: mix($color1, black);
 
 	.inner {
@@ -222,7 +222,7 @@ pre {
 	}
 
 	+ * {
-		margin-top: 7 * $unit;
+		/*margin-top: 7 * $unit;*/
 	}
 }
 
@@ -446,6 +446,7 @@ pre {
 		border: 1px solid $color5;
 		min-height: 13 * $unit;
 		border-radius: $unit;
+		font-weight: 400;
 
 		&:before { 
 			/*color: $color5;*/
@@ -621,7 +622,8 @@ pre {
 			text-align: right;
 			float: left;
 			clear: both;
-			padding: 0 2 * $unit;
+			/*padding: 0 2 * $unit;*/
+			padding: 0;
 			
 			~ dt {
 				margin-top: $unit;
@@ -629,10 +631,9 @@ pre {
 		}
 
 		dd {
-			width: $unit * 56;
+			width: $unit * 52;
 			float: right;
 			clear: right;
-			padding: 0 2 * $unit;
 
 			~ dd {
 				margin-top: $unit;
@@ -641,6 +642,9 @@ pre {
 
 	}
 
+	a {
+		font-weight: 400;
+	}
 	.intro {
 		padding: 4 * $unit 0;
 		font-size: 3 * $unit;
@@ -689,65 +693,30 @@ pre {
 		padding-right: 20 * $unit;
 	}
 }
-/*
-.content-api {
-	.inner {
-		position: relative;
-	}
-
-	h4 {
-		position: absolute;
-		width: 18 * $unit;
-		left: -20 * $unit;
-		text-align: right;
-	}
-
-	p {
-		code:first-child {
-			display: none;
-		}
-	}
-}
-*/
-
-.xapi-item {
-	margin: 2 * $unit 0;
-	padding: 1 * $unit 2 * $unit 1 * $unit 20 * $unit;
-	/*border: 1px solid white;*/
-	background: rgba(255, 255, 255, 0.5);
-	background: #DDD;
-	position: relative;
-
-	h4 {
-		position: absolute;
-		/*width: 18 * $unit;*/
-		/*left: -20 * $unit;*/
-		left: 2 * $unit;
-		/*background: white;*/
-		/*text-align: right;*/
-	}
-}
 
 .api-item {
 	margin: 2 * $unit 0 0;
 	padding: 1 * $unit 2 * $unit;
 	/*border: 1px solid white;*/
-	background: rgba(255, 255, 255, 0.5);
-	background: #DDD;
+	/*background: rgba(255, 255, 255, 0.5);*/
+	background: $white;
 	position: relative;
 
+	pre {
+		background: $lightgrey;
+	}
 	h4 {
 	}
 }
 
 footer {
-	background: $color5;
-	color: $white;
-	line-height: 4 * $unit;
+	background: $white;
+	color: $darkgrey;
+	line-height: 6 * $unit;
 	text-align: center;
 
 	a:link {
-		color: #FFF;
+		color: $color3;
 
 		&:hover {
 			text-decoration: underline;
