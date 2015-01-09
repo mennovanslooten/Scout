@@ -24,7 +24,7 @@ assertText             .assertText                     dolor sit amet
 ## assertExists just checks if the selector matches anything in the DOM
 assertExists           .assertExists
 
-## assertVisible tests for visibility as well. 
+## assertVisible tests for visibility as well.
 ## Non-zero size, CSS display, visibility and opacity are all tested
 ## This element is visible and inside the viewport
 assertVisible          .assertVisible-1
