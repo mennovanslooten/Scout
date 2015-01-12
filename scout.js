@@ -107,7 +107,11 @@ function Scout() {
 }
 
 
-if (_cli_args.reformat) {
+if (_cli_args.version) {
+	console.log('Scout v1.1.0');
+	console.log('http://mennovanslooten.github.io/Scout/');
+	phantom.exit(0);
+} else if (_cli_args.reformat) {
 	// if --reformat is passed, reformat and exit
 	_logger.reformat(_suite);
 	phantom.exit(0);
@@ -115,7 +119,6 @@ if (_cli_args.reformat) {
 	// otherwise, kick off the tests
 	Scout();
 } else {
-	console.log('Scout v1.0.1');
-	console.log('http://mennovanslooten.github.io/Scout/');
+	console.log('No .scout files to run');
 	phantom.exit(0);
 }
