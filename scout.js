@@ -9,7 +9,6 @@ var _cli_args   = require('./lib/arguments').parseArguments();
 var _testrunner = require('./lib/testrunner');
 var _parser     = require('./lib/testparser');
 var _logger     = require('./lib/logger');
-
 var _suite = {
 	tests: require('./lib/testreader').readTestFiles(),
 	start_time: new Date(),
@@ -106,8 +105,13 @@ function Scout() {
 
 
 if (_cli_args.version) {
-	console.log('Scout v1.1.0');
+	// if --version is passed, print version and exit
+	var package = require('./package.json');
+	var version = package.version;
+
+	console.log('Scout v' + version);
 	console.log('http://mennovanslooten.github.io/Scout/');
+
 	phantom.exit(0);
 } else if (_cli_args.reformat) {
 	// if --reformat is passed, reformat and exit
