@@ -29,18 +29,13 @@
         <div class="home-head">
 			<div class="inner">
 				<h1>Scout</h1>
-				<h2>Smart Functional Testing</h2>
-				<!-- <p>The easiest way to write and run functional tests for web sites and web apps.</p> -->
-			</div>
-        </div>
-
-
-	        <div class="home-explanation">
-			<div class="inner">
-				<!-- <p>Scout was designed from the ground up to be the easiest way to write and run functional tests for web sites and web apps. </p> -->
-				<p>Scout makes writing <em>and</em> running automated functional tests for websites and webapps incredibly easy. Tests can be run in sequence or in parallel and accurately mimic human behavior for true user-like testing.</p>
 				<p>
-					<a class="button button-cta" href="getting-started.html">Get started!</a>
+                <strong>Scout is a command line tool that helps you automate an invisible browser.</strong>
+                    You can open URLs, follow links, take screenshots and fill in forms.
+                    With the custom designed language and built-in assertions writing functional tests has never been easier.
+                </p>
+				<p>
+					<a class="button button-cta" href="getting_started.html">Get started!</a>
 				</p>
 			</div>
         </div>
@@ -48,31 +43,80 @@
 
 		<div class="home-intro">
 			<div class="inner">
+                <h2>Use Scout to:</h2>
 
 				<div class="home-intro-item">
-					<h2>Write tests in <small>(almost)</small> plain English:</h2>
-					<pre>open          http://my.test.site
-type          :text                  John
-click         "Say hi!"
-assertText    .greeting              Hi, John!
+					<h3>Open URLs and follow links</h3>
+					<pre>open     http://github.com
+
+<span class="code-comment"># Elements can be targeted by text</span>
+click    "terms of service"
+
+<span class="code-comment"># Or any standard CSS selector</span>
+click    .site-logo
 
 
 
-
-</div>
+</pre>
+                    <p>
+                        <a href="examples.html#navigation">More about navigation</a>
+                    </p>
+                </div>
 
 
 				<div class="home-intro-item">
-					<h2>Run from a command line:</h2>
-					<pre><span class="prompt">$</span> scout mytest.scout
+					<h3>Take screenshots</h3>
+					<pre>open          http://github.com
 
-✓ open          http://my.test.site
-✓ type          :text                  John
-✓ click         "Say hi!"
-✓ assertText    .greeting              Hi, John!
+<span class="code-comment"># Take a screenshot of the whole page</span>
+screendump    page.png
 
-PASS: Executed 4 actions in 1s.</pre>
-				</div>
+<span class="code-comment"># Or of single element</span>
+screendump    page_header.png    .header
+
+<span class="code-comment"># Compare a previously made screenshot to an element</span>
+resemble      page_footer.png    .site-footer
+</pre>
+                    <p>
+                        <a href="examples.html#screenshots">More about screenshots</a>
+                    </p>
+                </div>
+
+
+				<div class="home-intro-item">
+					<h3>Fill in forms</h3>
+					<pre>open      https://twitter.com/search-advanced
+
+<span class="code-comment"># Elements can be targeted by text</span>
+type      "All of these words"    functional testing
+
+<span class="code-comment"># Or any standard CSS selector</span>
+choose    [name="lang"]           English (English)
+
+
+</pre>
+                    <p>
+                        <a href="examples.html#forms">More about forms</a>
+                    </p>
+                </div>
+
+
+				<div class="home-intro-item">
+					<h3>Test assertions</h3>
+					<pre>open             http://github.com
+
+<span class="code-comment"># Click the signup button without entering any data</span>
+click            "Signup for GitHub"
+
+<span class="code-comment"># Make sure the right things happen</span>
+assertTitle      Join GitHub
+assertVisible    .flash-error
+assertText       .error          Login can't be blank
+</pre>
+                    <p>
+                        <a href="examples.html#assertion">More about assertions</a>
+                    </p>
+                </div>
 
 			</div>
         </div>
@@ -126,7 +170,7 @@ PASS: Executed 4 actions in 1s.</pre>
 				<!--<a class="button button-cta" href="getting-started.html">Get started!</a>-->
 			<!--</div>-->
 		<!--</div>-->
-    
+
         <footer>
 			<div class="inner">
 				<p>&copy; 2013 <a href="https://twitter.com/mennovanslooten">@mennovanslooten</a></p>

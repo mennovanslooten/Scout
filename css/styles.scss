@@ -158,12 +158,40 @@ small {
 }
 
 pre {
+    position: relative;
 	padding: 2 * $unit;
+
+    &[data-filename]:before {
+        content: "file: " attr(data-filename);
+        background: black;
+        color: $white;
+        display: block;
+        opacity: 0.25;
+        margin: -2 * $unit;
+        margin-bottom: 1.5 * $unit;
+        padding: 0 $unit;
+        line-height: 3 * $unit;
+        /*position: absolute;*/
+        /*left: 0;*/
+        /*right: 0;*/
+        /*top: 0;*/
+        text-align: center;
+        /*margin: 0;*/
+
+    }
+
+    &.pre-terminal {
+        background: $black;
+    }
 }
 
 .pre-dark {
 	background: rgba(0,0,0,0.25);
 	color: $white;
+}
+
+.code-comment {
+    opacity: 0.4;
 }
 
 .inner {
@@ -252,7 +280,7 @@ pre {
 	}
 
 	> .main-nav-menu-selected {
-		background: $color1;
+		background: $color1dark;
 
 		> a:hover {
 			padding: 2 * $unit 3 * $unit;
@@ -331,12 +359,12 @@ pre {
 	@include clearfix;
 	padding: 3 * $unit 0;
 	background: white;
-	background: $color1;
+	background: $color1dark;
 
 	h1 {
-		width: 39 * $unit;
+		/*width: 39 * $unit;*/
 		/*padding: 2 * $unit 0;*/
-		float: left;
+		/*float: left;*/
 		font-size: 8 * $unit;
 		line-height: 10 * $unit;
 		color: #E7E7E7;
@@ -350,6 +378,14 @@ pre {
 		font-size: 4 * $unit;
 		line-height: 10 * $unit;
 		font-style: italic;
+	}
+
+	p {
+        color: $white;
+		/*width: 79 * $unit;*/
+		/*float: right;*/
+		font-size: 3 * $unit;
+		line-height: 4 * $unit;
 	}
 }
 
@@ -374,30 +410,49 @@ pre {
 	color: $white;
 	overflow: auto;
 	padding: 4 * $unit 0;
+
+	h2 {
+        text-align: center;
+        color: $white;
+	}
+
 }
 
 .home-intro-item {
 	width: 58 * $unit;
+    clear: right;
 	float: left;
+    margin: 0 0 4 * $unit;
 
-	h2 {
-		color: #E7E7E7;
+    &:nth-child(odd) {
+        float: right;
+        /*background: red;*/
+    }
+
+	h3 {
+        color: $color5;
+        color: $white;
 		padding-bottom: 2 * $unit;
+        text-align: center;
+
+        small {
+            vertical-align: bottom;
+        }
 	}
 
 	pre {
-		background: $color1dark;
+        background: $color1dark;
 		color: $white;
 	}
 
 	+ .home-intro-item {
-		float: right;
+		/*float: right;*/
 	}
 }
 
 .home-usps {
 	background: $lightgrey;
-	
+
 	.inner {
 		overflow: auto;
 		padding: 4 * $unit 0;
@@ -414,7 +469,7 @@ pre {
 
 .home-getstarted {
 	/*background: $white;*/
-	
+
 	.inner {
 		overflow: auto;
 		padding: 4 * $unit 0;
@@ -448,7 +503,7 @@ pre {
 		border-radius: $unit;
 		font-weight: 400;
 
-		&:before { 
+		&:before {
 			/*color: $color5;*/
 			/*color: $white;*/
 			content: "✓";
@@ -459,7 +514,7 @@ pre {
 			font-weight: bold;
 		}
 
-		.fa { 
+		.fa {
 			position: absolute;
 			left: 0;
 			top: 0;
@@ -624,7 +679,7 @@ pre {
 			clear: both;
 			/*padding: 0 2 * $unit;*/
 			padding: 0;
-			
+
 			~ dt {
 				margin-top: $unit;
 			}

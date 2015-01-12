@@ -47,51 +47,25 @@
 			<div class="inner">
 				<h2>Installing Scout</h2>
 				<p>
-					Installing Scout is easiest with <a href="https://npmjs.org/">npm</a> and <a href="https://npmjs.org/">git</a>.
-					To install Scout, open your terminal and clone the repository from GitHub:
+					Installing Scout is easiest with <a href="https://npmjs.org/">npm</a>.
+					To install Scout, open your terminal and run the following command:
 				</p>
 
-				<pre><span class="prompt">$</span> git clone https://github.com/mennovanslooten/Scout.git</pre>
+				<pre><span class="prompt">$</span> npm install -g scoutjs</pre>
 
 				<p>
-					Then, <code>cd</code> into the newly created directory, and run <code>npm install</code>:
-				</p>
-
-				<pre><span class="prompt">$</span> cd Scout
-<span class="prompt">$</span> npm install . -g</pre>
-
-				<p>
-					This will install <code>Scout</code> as a global command line tool.
-				</p>
-
-				<p>
+					This will install <code>scout</code> as a global command line tool.
 					If npm doesn't have the permission to run the install process you will get a long error with this message in the middle:
+                </p>
+				<p>
 					<code>Please try running this command again as root/Administrator.</code>
+                </p>
+				<p>
 					In that case, run the install command again with <code>sudo</code>:
 				</p>
 
-				<pre><span class="prompt">$</span> sudo npm install . -g</pre>
+				<pre><span class="prompt">$</span> sudo npm install -g scoutjs</pre>
 
-				<h3>PhantomJS</h3>
-
-				<p>
-					Scout runs all test in <a href="http://phantomjs.org/">PhantomJS</a>, a scriptable headless browser.
-					To install PhantomJS, follow <a href="http://phantomjs.org/download.html">the instructions on their download page</a>.
-				</p>
-
-				<h3>Testing Scout</h3>
-
-				<p>
-					After the installation completed, you can test if Scout works by running the included <code>self_tests</code>, 
-					which test if Scout is behaving as expected:
-				</p>
-
-				<pre><span class="prompt">$</span> scout self_tests</pre>
-
-				<p>
-					Logs should start flying by in your terminal, ending with the following message:
-				</p>
-				<pre>PASS: Executed 4 tests in 4114ms</pre>
 			</div>
 		</div>
 
@@ -203,7 +177,7 @@ PASS: Executed 1 tests in 1119ms</pre>
 				<!--<p>-->
 					<!--Note that <strong>Scout always waits for the previous instruction to succeed before continuing with the next</strong>, so it will only start typing when the page has been fully loaded.-->
 				<!--</p>-->
-				
+
 			</div>
 		</div>
 

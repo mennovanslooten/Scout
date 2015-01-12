@@ -202,11 +202,33 @@ small {
   color: #999; }
 
 pre {
+  position: relative;
   padding: 16px; }
+  pre[data-filename]:before {
+    content: "file: " attr(data-filename);
+    background: black;
+    color: #f2f2f2;
+    display: block;
+    opacity: 0.25;
+    margin: -16px;
+    margin-bottom: 12px;
+    padding: 0 8px;
+    line-height: 24px;
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*right: 0;*/
+    /*top: 0;*/
+    text-align: center;
+    /*margin: 0;*/ }
+  pre.pre-terminal {
+    background: #333; }
 
 .pre-dark {
   background: rgba(0, 0, 0, 0.25);
   color: #f2f2f2; }
+
+.code-comment {
+  opacity: 0.4; }
 
 .inner {
   width: 960px;
@@ -280,7 +302,7 @@ pre {
         padding-bottom: 8px;
         border-bottom-width: 8px; }
   .main-nav-menu > .main-nav-menu-selected {
-    background: #490A3D; }
+    background: #24051e; }
     .main-nav-menu > .main-nav-menu-selected > a:hover {
       padding: 16px 24px;
       border: none; }
@@ -342,7 +364,7 @@ pre {
    */
   padding: 24px 0;
   background: white;
-  background: #490A3D; }
+  background: #24051e; }
   .home-head:before, .home-head:after {
     content: " ";
     /* 1 */
@@ -351,9 +373,9 @@ pre {
   .home-head:after {
     clear: both; }
   .home-head h1 {
-    width: 312px;
+    /*width: 39 * $unit;*/
     /*padding: 2 * $unit 0;*/
-    float: left;
+    /*float: left;*/
     font-size: 64px;
     line-height: 80px;
     color: #E7E7E7; }
@@ -365,6 +387,12 @@ pre {
     font-size: 32px;
     line-height: 80px;
     font-style: italic; }
+  .home-head p {
+    color: #f2f2f2;
+    /*width: 79 * $unit;*/
+    /*float: right;*/
+    font-size: 24px;
+    line-height: 32px; }
 
 .home-explanation {
   padding: 24px 0;
@@ -381,18 +409,30 @@ pre {
   color: #f2f2f2;
   overflow: auto;
   padding: 32px 0; }
+  .home-intro h2 {
+    text-align: center;
+    color: #f2f2f2; }
 
 .home-intro-item {
   width: 464px;
-  float: left; }
-  .home-intro-item h2 {
-    color: #E7E7E7;
-    padding-bottom: 16px; }
+  clear: right;
+  float: left;
+  margin: 0 0 32px; }
+  .home-intro-item:nth-child(odd) {
+    float: right;
+    /*background: red;*/ }
+  .home-intro-item h3 {
+    color: #8A9B0F;
+    color: #f2f2f2;
+    padding-bottom: 16px;
+    text-align: center; }
+    .home-intro-item h3 small {
+      vertical-align: bottom; }
   .home-intro-item pre {
     background: #24051e;
     color: #f2f2f2; }
   .home-intro-item + .home-intro-item {
-    float: right; }
+    /*float: right;*/ }
 
 .home-usps {
   background: #e7e7e7; }

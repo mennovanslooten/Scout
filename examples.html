@@ -39,6 +39,7 @@
 			<ul class="sub-nav-menu">
 				<li><a href="#navigation">Navigation examples</a></li>
 				<li><a href="#form">Form examples</a></li>
+				<li><a href="#screenshots">Screenshot examples</a></li>
 				<li><a href="#assertion">Assertion examples</a></li>
 			</ul>
 		</nav>
@@ -134,6 +135,36 @@ choose    [name="lang"]        English (English)
 click     "Positive :)"
 click     "Include retweets"
 click     "Search"</pre>
+			</div>
+        </div>
+
+
+		<div id="screenshots" class="content">
+			<div class="inner">
+
+				<h2>Screenshot examples</h2>
+
+				<h3>Saving a screenshot</h3>
+                <p>The <code>screendump</code> command will save the current state of the page as a <code>png</code> file.</p>
+				<pre>screendump    entire_page.png</pre>
+
+                <p>When an additional selector is passed, the first visible element matching the selector will be saved.</p>
+				<pre>screendump    page_header.png    .header</pre>
+
+                <h3>Comparing screenshots</h3>
+                <p>
+                    The <code>assertResembles</code> command will compare a new screenshot to one that was previously made.
+                    This is useful to check the appearance of an element (or entire page) is consistent between different tests.
+                </p>
+                <p>
+                    The following code will compare the entire page to a previously saved screenshot with filename <code>page_base.png</code>.
+                    Only an exact pixel-by-pixel match will pass the assertion.
+                </p>
+                <pre>assertResembles    page_base.png</pre>
+                <p>If a selector is passed, the image is compared to the first visible element matching the selector.</p>
+                <pre>assertResembles    header_base.png    .header</pre>
+                <p>If the no image with the specified filename exists, the image will be created and the assertion will pass.</p>
+
 			</div>
         </div>
 
