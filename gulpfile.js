@@ -4,7 +4,7 @@ var gulp = require('gulp');
 var mocha = require('gulp-mocha');
 var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
-var jsfiles = ['./scout.js', './lib/**/*.js', '!./lib/jquery*.js'];
+var jsfiles = ['./scout.js', './lib/**/*.js'];
 
 
 /* ################################################################
