@@ -1,3 +1,5 @@
+'use strict';
+
 /*
 	TODO:
 	[ ] Iterate assert over $elts to find match
@@ -7,17 +9,11 @@
 
 var _cli        = require('./lib/arguments').parseArguments();
 var _testrunner = require('./lib/testrunner');
-var _parser     = require('./lib/testparser');
 var _logger     = require('./lib/logger');
-var _suite = {
-	tests: require('./lib/testreader').readTestFiles(),
-	start_time: new Date(),
-	passed: [],
-	failed: []
-};
+var _suite      = require('./lib/testsuite');
 
 
-function Scout() {
+function scout() {
 	var _test_index = -1;
 	var _running    = 0;
 
@@ -95,7 +91,7 @@ function Scout() {
 			phantom.exit(exit_code);
 		}, 0);
 
-		phantom.onError = function(){};
+		phantom.onError = function() {};
 		throw new Error('');
 	}
 
@@ -106,8 +102,8 @@ function Scout() {
 
 if (_cli.version) {
 	// if --version is passed, print version and exit
-	var package = require('./package.json');
-	var version = package.version;
+	var json = require('./package.json');
+	var version = json.version;
 
 	console.log('Scout v' + version);
 	console.log('http://mennovanslooten.github.io/Scout/');
@@ -119,7 +115,7 @@ if (_cli.version) {
 	phantom.exit(0);
 } else if (_suite.tests.length) {
 	// otherwise, kick off the tests
-	Scout();
+	scout();
 } else {
 	console.log('No .scout files to run');
 	phantom.exit(0);
