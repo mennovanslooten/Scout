@@ -7,7 +7,7 @@
 	[ ] XML logger
 */
 
-var _cli        = require('./lib/arguments').parseArguments();
+var _cli        = require('./lib/arguments');
 var _testrunner = require('./lib/testrunner');
 var _logger     = require('./lib/logger');
 var _suite      = require('./lib/testsuite');

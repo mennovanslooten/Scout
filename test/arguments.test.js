@@ -1,21 +1,22 @@
 'use strict';
 
 var assert = require('assert');
-var proxyquire =  require('proxyquire').noCallThru();
-var system_stub = {
-	args: []
-};
+var proxyquire =  require('proxyquire').noPreserveCache().noCallThru();
 
-// Require arguments but proxy system inside of it
-var parser = proxyquire('../lib/arguments', {
-    'system': system_stub
-});
+
+function proxy(args) {
+	return proxyquire('../lib/arguments', {
+		'system': {
+			args: args
+		}
+	});
+}
+
 
 describe('arguments', function(){
 
     it('should parse --bool params', function(){
-		system_stub.args = ['', '--version', '--color', '--reformat', '--faildump'];
-		var args = parser.parseArguments();
+		var args = proxy(['', '--version', '--color', '--reformat', '--faildump']);
 
         assert.equal(args.version, true);
         assert.equal(args.color, true);
@@ -25,8 +26,7 @@ describe('arguments', function(){
 
 
     it('should parse --name=value params', function(){
-		system_stub.args = ['', '--timeout=1000', '--step=5'];
-		var args = parser.parseArguments();
+		var args = proxy(['', '--timeout=1000', '--step=5']);
 
         assert.equal(args.timeout, 1000);
         assert.equal(args.step, 5);
@@ -34,8 +34,7 @@ describe('arguments', function(){
 
 
     it('should parse other params as filenames', function(){
-		system_stub.args = ['', '--color', '--timeout=1000', 'filename1', 'filename2', '--step=5', 'dirname/filename'];
-		var args = parser.parseArguments();
+		var args = proxy(['', '--color', '--timeout=1000', 'filename1', 'filename2', '--step=5', 'dirname/filename']);
 
         assert.deepEqual(args.files, ['filename1', 'filename2', 'dirname/filename']);
     });

@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var proxyquire = require('proxyquire').noPreserveCache();
+var proxyquire = require('proxyquire').noPreserveCache().noCallThru();
 var sinon = require('sinon');
 
 var parse = sinon.stub();
@@ -14,11 +14,7 @@ describe('logstyle', function(){
 	describe('--color=false', function() {
 		var logstyle = proxyquire('../lib/logstyle', {
 			'./arguments': {
-				parseArguments: function() {
-					return {
-						color: false
-					};
-				}
+				color: false
 			}
 		});
 
@@ -36,11 +32,7 @@ describe('logstyle', function(){
 
 		var logstyle = proxyquire('../lib/logstyle', {
 			'./arguments': {
-				parseArguments: function() {
-					return {
-						color: true
-					};
-				}
+				color: true
 			}
 		});
 
