@@ -5,7 +5,7 @@
 	[ ] XML logger
 */
 
-var _cli_args   = require('./lib/arguments').parseArguments();
+var _cli        = require('./lib/arguments').parseArguments();
 var _testrunner = require('./lib/testrunner');
 var _parser     = require('./lib/testparser');
 var _logger     = require('./lib/logger');
@@ -26,7 +26,7 @@ function Scout() {
 	 */
 	function nextTest() {
 		// Maximum parallel tests running
-		if (_running >= _cli_args.parallel) return;
+		if (_running >= _cli.parallel) return;
 
 		_test_index++;
 
@@ -104,7 +104,7 @@ function Scout() {
 }
 
 
-if (_cli_args.version) {
+if (_cli.version) {
 	// if --version is passed, print version and exit
 	var package = require('./package.json');
 	var version = package.version;
@@ -113,7 +113,7 @@ if (_cli_args.version) {
 	console.log('http://mennovanslooten.github.io/Scout/');
 
 	phantom.exit(0);
-} else if (_cli_args.reformat) {
+} else if (_cli.reformat) {
 	// if --reformat is passed, reformat and exit
 	_logger.reformat(_suite);
 	phantom.exit(0);
