@@ -320,7 +320,7 @@
 					<h3>? (optional)</h3>
 					<p>Makes an action or assert optional. It will be tried once and skipped when it fails.</p>
 					<pre>
-## This will deal with the cookies dialog if it appears
+<span class="code-comment"># This will deal with the cookies dialog if it appears</span>
 ?click    "Accept cookies"</pre>
 				</div>
 
@@ -328,9 +328,9 @@
 				<div id="screendump" class="api-item">
 					<h3>screendump</h3>
 					<p>Saves a screendump to disk. It takes two arguments: a mandatory file name (without extension) and an optional selector specifying which part of the screen should be dumped. If no selector is specified, the entire viewport will be dumped. Screendumps are saved as <code>.png</code> in the directory where Scout was called.</p>
-					<pre># Saves "entire_viewport.png"
+                    <pre><span class="code-comment"># Saves "entire_viewport.png"</span>
 screendump    entire_viewport</pre>
-					<pre># Saves "partial.png"
+                    <pre><span class="code-comment"># Saves "partial.png"</span>
 screendump    partial    .some-selector</pre>
 				</div>
 
@@ -338,9 +338,9 @@ screendump    partial    .some-selector</pre>
 				<div id="remember" class="api-item">
 					<h3>remember</h3>
 					<p>Stores the text or value (in case of an <code>&lt;input&gt;</code> or <code>&lt;select&gt;</code>) of an element in a temporary variable. Stored variables can be used as <code>{varname}</code>.<!-- Stored variables are remembered as long as Scout is running and can be used in other tests. --></p>
-					<pre># Store the value of a password field in a variable called pwd
+                    <pre><span class="code-comment"># Store the value of a password field in a variable called pwd</span>
 remember    :password    pwd</pre>
-					<pre># Store the text content of a paragraph in a variable called txt
+                    <pre><span class="code-comment"># Store the text content of a paragraph in a variable called txt</span>
 remember    p:first    txt</pre>
 				</div>
 
@@ -382,11 +382,15 @@ remember    p:first    txt</pre>
 				<div id="random_string_generators" class="api-item">
 					<h3>Random string generators</h3>
 					<p>Sometimes, usually when testing a form, you need the ability to generate random strings. For example, when you test a registration form you might need a unique email address to prevent any "already registered" type errors.</p>
-					<p>Scout can generate random strings of any length with <code>{{xyz}}</code>, where xyz is a number specifying the length of the string. The {{xyz}} pattern can occur anywhere in any argument.</p>
+                    <p>Scout can generate random strings of any length with <code>{{n}}</code>, where <code>n</code> is a number specifying the length of the string. The {{n}} pattern can occur anywhere in any argument.</p>
 
-					<pre>type    [name="password"]    {{8}}</pre>
+                    <pre><span class="code-comment"># This will type a random password of 8 characters</span>
+type    [name="password"]    {{8}}</pre>
 					<pre>type    [name="email"]    {{4}}@{{6}}.com</pre>
-					<p class="note">The generated string will be visible in the console log.</p>
+					<p class="note">
+                        The generated string will be visible in the console log.
+                        If you want to reuse the generated string, you can retrieve it with the <a href="#remember">remember</a> command.
+                    </p>
 				</div>
 
 				<div id="variables" class="api-item">
