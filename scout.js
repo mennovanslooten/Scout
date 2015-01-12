@@ -9,8 +9,6 @@ var _cli_args   = require('./lib/arguments').parseArguments();
 var _testrunner = require('./lib/testrunner');
 var _parser     = require('./lib/testparser');
 var _logger     = require('./lib/logger');
-var _xunit      = require('./lib/xunit');
-var _remembered = {};
 
 var _suite = {
 	tests: require('./lib/testreader').readTestFiles(),
