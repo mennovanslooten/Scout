@@ -1,12 +1,5 @@
 'use strict';
 
-/*
-	TODO:
-	[ ] Iterate assert over $elts to find match
-	[ ] choose shoull return error msg if option not available
-	[ ] XML logger
-*/
-
 var _cli        = require('./lib/arguments');
 var _testrunner = require('./lib/testrunner');
 var _logger     = require('./lib/logger');

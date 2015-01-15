@@ -2,11 +2,8 @@
 
 var assert = require('assert');
 var proxyquire = require('proxyquire').noPreserveCache().noCallThru();
-var sinon = require('sinon');
 
-var parse = sinon.stub();
-
-describe('logstyle', function(){
+describe('logstyle', function() {
 
 	var s = 'Hello, world';
 
@@ -18,7 +15,7 @@ describe('logstyle', function(){
 			}
 		});
 
-		it('should return the same string when color is false', function(){
+		it('should return the same string when color is false', function() {
 			var result = logstyle.fg.black(s);
 			assert.equal(result, s);
 
@@ -36,7 +33,7 @@ describe('logstyle', function(){
 			}
 		});
 
-		it('should return a formatted string when color is true', function(){
+		it('should return a formatted string when color is true', function() {
 			var result = logstyle.fg.black(s);
 			assert.equal(result, '\u001b[30m' + s + '\u001b[0m');
 

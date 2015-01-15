@@ -2,15 +2,14 @@
 
 var assert = require('assert');
 var sinon = require('sinon');
-var proxyquire =  require('proxyquire').noCallThru();
 var timeout = 250;
 
 var page_stub = {
 	sendEvent: sinon.spy(),
 	event: {
 		key: {
-			'Enter': 1000,
-			'Up': 1001
+			Enter: 1000,
+			Up: 1001
 		}
 	}
 };
@@ -24,24 +23,24 @@ function getTyped() {
 	}, '');
 }
 
-describe('keyboard', function(){
+describe('keyboard', function() {
 
 	describe('#type', function() {
 		var chars = 'hello world';
 		var special = '<Enter><Up>';
 
-		it('should return not finished', function(){
+		it('should return not finished', function() {
 			var result = keyboard.type(chars);
 			assert.equal(result, 'Typing <' + chars + '> could not be finished.');
 		});
 
 
-		it('should have called sendEvent', function(){
+		it('should have called sendEvent', function() {
 			assert.equal(page_stub.sendEvent.called, true);
 		});
 
 
-		it('should have typed all characters', function(done){
+		it('should have typed all characters', function(done) {
 			setTimeout(function() {
 				var result = keyboard.type(chars);
 				var typed = getTyped();
@@ -53,7 +52,7 @@ describe('keyboard', function(){
 		});
 
 
-		it('should have typed special characters', function(done){
+		it('should have typed special characters', function(done) {
 			keyboard.type(special);
 
 			setTimeout(function() {
