@@ -163,7 +163,7 @@
 	"requireTrailingComma": null,
 	"requireYodaConditions": null,
 	"safeContextKeyword": null,
-	"validateIndentation": "\t",
+	"validateIndentation": 4,
 	"validateParameterSeparator": ", ",
 	"validateQuoteMarks": "'"
 }
