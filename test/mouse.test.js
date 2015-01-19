@@ -50,13 +50,10 @@ describe('mouse', function() {
             width: 600
         };
 
-        page_stub.evaluate.returns(base);
-
-
-        var moveTo = sinon.spy(mouse, 'moveTo');
-        it('should call mouse.moveTo', function() {
+        it('should call page.sendEvent', function() {
+            page_stub.evaluate.returns(base);
             mouse.sendEvent('click', 1000, 2000);
-            assert.equal(moveTo.calledWith(1000, 2000), true);
+            assert.equal(page_stub.sendEvent.calledWith('mousemove'), true);
         });
 
         it('should return false when not hovering', function() {
