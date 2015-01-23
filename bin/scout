@@ -8,4 +8,4 @@ done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 #phantomjs $DIR/../scout.js $@ 2> >(grep -v CoreText 1>&2)
-$DIR/../node_modules/phantomjs/bin/phantomjs $DIR/../scout.js $@ 2> >(grep -v CoreText 1>&2)
+$DIR/../node_modules/phantomjs/bin/phantomjs $DIR/../index.js $@ 2> >(grep -v CoreText 1>&2)

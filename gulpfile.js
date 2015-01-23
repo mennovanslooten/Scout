@@ -29,7 +29,7 @@ gulp.task('test', ['jshint', 'jscs', 'mocha']);
 
 gulp.task('mocha', function(cb) {
 	return gulp.src(test_js_files, {read: false})
-		.pipe(mocha({reporter: 'spec'}));
+		.pipe(mocha({reporter: 'mocha-silent-reporter'}));
 });
 
 
