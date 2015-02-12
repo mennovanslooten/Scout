@@ -7,6 +7,9 @@ assertPage             base/index.html
 
 include                _include.scout
 
+## This is an optional assertion that should fail but not fail the test
+?assertExists          #doesnotexist
+
 ## assertUrl converts the argument into a regular expression
 assertUrl              [abse]/\w+.html
 

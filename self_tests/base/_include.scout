@@ -1,2 +1,1 @@
-## This is an included file with an optional assertion
-?assertExists    #doesnotexist
+## Hello from _include.scout!
