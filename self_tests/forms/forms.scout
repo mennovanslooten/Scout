@@ -14,6 +14,10 @@ remember      input[type="password"]                   password
 
 ## Remembered values can be logged: {{password}}
 
+## Strings of the form {{number}} are replaced with a random string of length number
+uploadFile    input[type="file"]                       upload_me.txt
+screendump    page.png
+
 type          textarea                                 Lorem ipsum dolor sit amet
 
 ## Selects can be set with "choose"
@@ -38,6 +42,8 @@ assertText    #text + dd                               Hello, world.
 
 ## We can recall the previously stored variable here
 assertText    #password + dd                           {password}
+
+assertText    #file + dd                               upload_me.txt
 assertText    #select + dd                             option two
 
 assertText    #select_multiple + dd                    option two
