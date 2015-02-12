@@ -14,8 +14,7 @@ remember      input[type="password"]                   password
 
 ## Remembered values can be logged: {{password}}
 
-## Strings of the form {{number}} are replaced with a random string of length number
-uploadFile    input[type="file"]                       upload_me.txt
+uploadFile    input[name="file"]                       upload_me.txt
 screendump    page.png
 
 type          textarea                                 Lorem ipsum dolor sit amet
