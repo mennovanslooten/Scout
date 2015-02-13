@@ -15,7 +15,6 @@ remember      input[type="password"]                   password
 ## Remembered values can be logged: {{password}}
 
 uploadFile    input[name="file"]                       upload_me.txt
-screendump    page.png
 
 type          textarea                                 Lorem ipsum dolor sit amet
 
