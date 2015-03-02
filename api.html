@@ -45,6 +45,7 @@
 						<li><a href="#click">click</a></li>
 						<li><a href="#dblclick">dblclick</a></li>
 						<li><a href="#type">type</a></li>
+						<li><a href="#uploadFile">uploadFile</a></li>
 						<li><a href="#resize">resize</a></li>
 					</ul>
 				</li>
@@ -157,6 +158,13 @@
 					<pre>type    input[name="q"]    This is a test&lt;Enter&gt;</pre>
 					<pre>type    .autocomplete      scout&lt;Down&gt;&lt;Down&gt;&lt;Enter&gt;</pre>
 					<p class="note">Before typing, Scout will first perform a <code>click</code> on the specified element. This includes waiting for the element to become visible, the <code>moveMouseTo</code>, etc.</p>
+				</div>
+
+
+				<div id="uploadFile" class="api-item">
+					<h3>uploadFile</h3>
+					<p>Selects a file as value for a file input.</p>
+					<pre>uploadFile    input[name="avatar"]    my_avatar.png</pre>
 				</div>
 
 

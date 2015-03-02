@@ -406,16 +406,21 @@ pre {
 .home-intro {
 	// background: #333;
 	// background: mix($color2, black, 50%);
-	background: $color1;
-	color: $white;
+	background: $white;
+	color: $color1;
 	overflow: auto;
 	padding: 4 * $unit 0;
 
 	h2 {
         text-align: center;
-        color: $white;
+        color: inherit;
 	}
 
+}
+
+.home-intro-text {
+    margin: 0 0 4 * $unit;
+    font-size: 3 * $unit;
 }
 
 .home-intro-item {
@@ -430,8 +435,9 @@ pre {
     }
 
 	h3 {
-        color: $color5;
-        color: $white;
+        color: $color2;
+        /*color: $white;*/
+        /*color: $white;*/
 		padding-bottom: 2 * $unit;
         text-align: center;
 
@@ -442,7 +448,8 @@ pre {
 
 	pre {
         background: $color1dark;
-		color: $white;
+        background: $midgrey;
+		color: $black;
 	}
 
 	+ .home-intro-item {

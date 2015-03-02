@@ -405,13 +405,17 @@ pre {
     text-align: left; }
 
 .home-intro {
-  background: #490A3D;
-  color: #f2f2f2;
+  background: #f2f2f2;
+  color: #490A3D;
   overflow: auto;
   padding: 32px 0; }
   .home-intro h2 {
     text-align: center;
-    color: #f2f2f2; }
+    color: inherit; }
+
+.home-intro-text {
+  margin: 0 0 32px;
+  font-size: 24px; }
 
 .home-intro-item {
   width: 464px;
@@ -422,15 +426,17 @@ pre {
     float: right;
     /*background: red;*/ }
   .home-intro-item h3 {
-    color: #8A9B0F;
-    color: #f2f2f2;
+    color: #BD1550;
+    /*color: $white;*/
+    /*color: $white;*/
     padding-bottom: 16px;
     text-align: center; }
     .home-intro-item h3 small {
       vertical-align: bottom; }
   .home-intro-item pre {
     background: #24051e;
-    color: #f2f2f2; }
+    background: #CCC;
+    color: #333; }
   .home-intro-item + .home-intro-item {
     /*float: right;*/ }
 

@@ -31,8 +31,8 @@
 				<h1>Scout</h1>
 				<p>
                     <strong>Scout is a command line tool that helps you automate an invisible browser.</strong><br>
-                    You can open URLs, follow links, take screenshots and fill in forms.
-                    With the custom designed language and built-in assertions writing functional tests has never been easier.
+                    You can <a href="examples.html#navigation">open URLs, follow links</a>, <a href="examples.html#screenshots">take screenshots</a> and <a href="examples.html#form">fill in forms</a>.
+                    With the custom designed language and <a href="examples.html#assertion">built-in assertions</a> writing functional tests has never been easier.
                 </p>
 				<p>
 					<a class="button button-cta" href="getting_started.html">Get started!</a>
@@ -43,6 +43,17 @@
 
 		<div class="home-intro">
 			<div class="inner">
+                <h2>How does it work?</h2>
+                <div class="home-intro-text">
+                    <p>
+                        Scout finds, reads and executes <code>.scout</code> files: simple lists of instructions that describe a sequence of user actions and assertions on web pages.
+                        The instructions are executed one by one in <a href="http://phantomjs.org/">PhantomJS</a>.
+                        Because Scout automatically waits for each action to be successfully completed you will never have to write
+                        <code>waitFor</code> instructions or callbacks.
+
+                        <!--Scout can execute one at a time, many in a row or several in parallel.-->
+                    </p>
+                </div>
                 <h2>Use Scout to:</h2>
 
 				<div class="home-intro-item">
@@ -66,16 +77,16 @@ click    .site-logo
 
 				<div class="home-intro-item">
 					<h3>Take screenshots</h3>
-					<pre>open          http://github.com
+					<pre>open               http://github.com
 
 <span class="code-comment"># Take a screenshot of the whole page</span>
-screendump    page.png
+screendump         page.png
 
 <span class="code-comment"># Or of single element</span>
-screendump    page_header.png    .header
+screendump         page_header.png    .header
 
 <span class="code-comment"># Compare a previously made screenshot to an element</span>
-resemble      page_footer.png    .site-footer
+assertResembles    page_footer.png    .site-footer
 </pre>
                     <p>
                         <a href="examples.html#screenshots">More about screenshots</a>
@@ -87,16 +98,17 @@ resemble      page_footer.png    .site-footer
 					<h3>Fill in forms</h3>
 					<pre>open      https://twitter.com/search-advanced
 
-<span class="code-comment"># Elements can be targeted by text</span>
-type      "All of these words"    functional testing
+<span class="code-comment"># Type text into an input</span>
+type      [name="ands"]           functional testing
 
-<span class="code-comment"># Or any standard CSS selector</span>
+<span class="code-comment"># Choose options in a select</span>
 choose    [name="lang"]           English (English)
 
-
+<span class="code-comment"># Click radios and checkboxes</span>
+click     "Include retweets"
 </pre>
                     <p>
-                        <a href="examples.html#forms">More about forms</a>
+                        <a href="examples.html#form">More about forms</a>
                     </p>
                 </div>
 
@@ -112,6 +124,7 @@ click            "Signup for GitHub"
 assertTitle      Join GitHub
 assertVisible    .flash-error
 assertText       .error          Login can't be blank
+
 </pre>
                     <p>
                         <a href="examples.html#assertion">More about assertions</a>
