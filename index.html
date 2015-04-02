@@ -12,37 +12,37 @@
 
     <body class="home">
 
-		<nav class="main-nav">
-			<div class="inner">
-				<ul class="main-nav-menu">
-					<li class="main-nav-github"><a href="https://github.com/mennovanslooten/Scout">GitHub</a></li>
-					<li class="main-nav-menu-selected"><a href="index.html">Home</a></li>
-					<li><a href="getting_started.html">Getting started</a></li>
-					<li><a href="api.html">API</a></li>
-					<li><a href="features.html">Features</a></li>
-					<li><a href="examples.html">Examples</a></li>
-				</ul>
-			</div>
-		</nav>
+        <nav class="main-nav">
+            <div class="inner">
+                <ul class="main-nav-menu">
+                    <li class="main-nav-github"><a href="https://github.com/mennovanslooten/Scout">GitHub</a></li>
+                    <li class="main-nav-menu-selected"><a href="index.html">Home</a></li>
+                    <li><a href="getting_started.html">Getting started</a></li>
+                    <li><a href="api.html">API</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="examples.html">Examples</a></li>
+                </ul>
+            </div>
+        </nav>
 
 
         <div class="home-head">
-			<div class="inner">
-				<h1>Scout</h1>
-				<p>
+            <div class="inner">
+                <h1>Scout</h1>
+                <p>
                     <strong>Scout is a command line tool that helps you automate an invisible browser.</strong><br>
                     You can <a href="examples.html#navigation">open URLs, follow links</a>, <a href="examples.html#screenshots">take screenshots</a> and <a href="examples.html#form">fill in forms</a>.
                     With the custom designed language and <a href="examples.html#assertion">built-in assertions</a> writing functional tests has never been easier.
                 </p>
-				<p>
-					<a class="button button-cta" href="getting_started.html">Get started!</a>
-				</p>
-			</div>
+                <p>
+                    <a class="button button-cta" href="getting_started.html">Get started!</a>
+                </p>
+            </div>
         </div>
 
 
-		<div class="home-intro">
-			<div class="inner">
+        <div class="home-intro">
+            <div class="inner">
                 <h2>How does it work?</h2>
                 <div class="home-intro-text">
                     <p>
@@ -56,9 +56,9 @@
                 </div>
                 <h2>Use Scout to:</h2>
 
-				<div class="home-intro-item">
-					<h3>Open URLs and follow links</h3>
-					<pre>open     http://github.com
+                <div class="home-intro-item">
+                    <h3>Open URLs and follow links</h3>
+                    <pre>open     http://github.com
 
 <span class="code-comment"># Elements can be targeted by text</span>
 click    "terms of service"
@@ -70,14 +70,14 @@ click    .site-logo
 
 </pre>
                     <p>
-                        <a href="examples.html#navigation">More about navigation</a>
+                        <a href="examples.html#navigation" class="button button-small">More about navigation</a>
                     </p>
                 </div>
 
 
-				<div class="home-intro-item">
-					<h3>Take screenshots</h3>
-					<pre>open               http://github.com
+                <div class="home-intro-item">
+                    <h3>Take screenshots</h3>
+                    <pre>open               http://github.com
 
 <span class="code-comment"># Take a screenshot of the whole page</span>
 screendump         page.png
@@ -89,14 +89,14 @@ screendump         page_header.png    .header
 assertResembles    page_footer.png    .site-footer
 </pre>
                     <p>
-                        <a href="examples.html#screenshots">More about screenshots</a>
+                        <a href="examples.html#screenshots" class="button button-small">More about screenshots</a>
                     </p>
                 </div>
 
 
-				<div class="home-intro-item">
-					<h3>Fill in forms</h3>
-					<pre>open      https://twitter.com/search-advanced
+                <div class="home-intro-item">
+                    <h3>Fill in forms</h3>
+                    <pre>open      https://twitter.com/search-advanced
 
 <span class="code-comment"># Type text into an input</span>
 type      [name="ands"]           functional testing
@@ -108,14 +108,14 @@ choose    [name="lang"]           English (English)
 click     "Include retweets"
 </pre>
                     <p>
-                        <a href="examples.html#form">More about forms</a>
+                        <a href="examples.html#form" class="button button-small">More about forms</a>
                     </p>
                 </div>
 
 
-				<div class="home-intro-item">
-					<h3>Test assertions</h3>
-					<pre>open             http://github.com
+                <div class="home-intro-item">
+                    <h3>Test assertions</h3>
+                    <pre>open             http://github.com
 
 <span class="code-comment"># Click the signup button without entering any data</span>
 click            "Sign up for GitHub"
@@ -127,67 +127,67 @@ assertText       .error          Login can't be blank
 
 </pre>
                     <p>
-                        <a href="examples.html#assertion">More about assertions</a>
+                        <a href="examples.html#assertion" class="button">More about assertions</a>
                     </p>
                 </div>
 
-			</div>
+            </div>
         </div>
 
 
-		<div class="home-usps">
-			<div class="inner">
+        <div class="home-usps">
+            <div class="inner">
 
-				<h2>Scout will automatically:</h2>
+                <h2>Scout will automatically:</h2>
 
-				<ul class="usp-list">
-					<li>Run the tests in an invisible browser.</li>
-					<li>Accurately simulate user behavior.</li>
-					<li>Deal with delays like page loads, Ajax requests and animations.</li>
-				</ul>
+                <ul class="usp-list">
+                    <li>Run the tests in an invisible browser.</li>
+                    <li>Accurately simulate user behavior.</li>
+                    <li>Deal with delays like page loads, Ajax requests and animations.</li>
+                </ul>
 
-			</div>
+            </div>
         </div>
 
 
-		<div class="home-usps">
-			<div class="inner">
-				<h2>Scout tests are:</h2>
+        <div class="home-usps">
+            <div class="inner">
+                <h2>Scout tests are:</h2>
 
-				<div class="usp-item">
-					<h3>Easy to write</h3>
-					<p>Instructions are plain English. Elements are easily targeted by their text content or with CSS selectors.</p>
-				</div>
+                <div class="usp-item">
+                    <h3>Easy to write</h3>
+                    <p>Instructions are plain English. Elements are easily targeted by their text content or with CSS selectors.</p>
+                </div>
 
-				<div class="usp-item">
-					<h3>Easy to run</h3>
-					<p>Scout is a command line tool with various options to make your life easier. </p>
-				</div>
+                <div class="usp-item">
+                    <h3>Easy to run</h3>
+                    <p>Scout is a command line tool with various options to make your life easier. </p>
+                </div>
 
-				<div class="usp-item">
-					<h3>Robust</h3>
-					<p>Tests are very resilient to changes in the page. Elements can change, move or disappear and Scout will adapt.</p>
-				</div>
+                <div class="usp-item">
+                    <h3>Robust</h3>
+                    <p>Tests are very resilient to changes in the page. Elements can change, move or disappear and Scout will adapt.</p>
+                </div>
 
-				<div class="usp-item">
-					<h3>Fast</h3>
-					<p>Because Scout automatically deals with delays, tests don't need artificial <code>waitFor</code> instructions.</p>
-				</div>
+                <div class="usp-item">
+                    <h3>Fast</h3>
+                    <p>Because Scout automatically deals with delays, tests don't need artificial <code>waitFor</code> instructions.</p>
+                </div>
 
-			</div>
+            </div>
         </div>
 
 
-		<!--<div class="home-getstarted">-->
-			<!--<div class="inner">-->
-				<!--<a class="button button-cta" href="getting-started.html">Get started!</a>-->
-			<!--</div>-->
-		<!--</div>-->
+        <!--<div class="home-getstarted">-->
+            <!--<div class="inner">-->
+                <!--<a class="button button-cta" href="getting-started.html">Get started!</a>-->
+            <!--</div>-->
+        <!--</div>-->
 
         <footer>
-			<div class="inner">
-				<p>&copy; 2013 <a href="https://twitter.com/mennovanslooten">@mennovanslooten</a></p>
-			</div>
+            <div class="inner">
+                <p>&copy; 2013 <a href="https://twitter.com/mennovanslooten">@mennovanslooten</a></p>
+            </div>
         </footer>
 
 

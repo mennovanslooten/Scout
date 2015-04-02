@@ -248,6 +248,19 @@ pre {
     color: white;
     box-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
 
+.button-small {
+  padding: 4px 16px;
+  background: #E97F02;
+  color: #f2f2f2;
+  text-decoration: none;
+  border-radius: 4px; }
+  .button-small:visited {
+    color: #f2f2f2; }
+  .button-small:hover {
+    background: #BD1550;
+    color: white;
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.5); }
+
 .button-cta {
   background: #8A9B0F;
   color: white;
@@ -436,6 +449,7 @@ pre {
   .home-intro-item pre {
     background: #24051e;
     background: #CCC;
+    background: white;
     color: #333; }
   .home-intro-item + .home-intro-item {
     /*float: right;*/ }
