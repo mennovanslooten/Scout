@@ -1,12 +1,49 @@
 'use strict';
 
-var _cli = require('./arguments');
-var _testparser = require('./testparser');
+var _cli = require('../utils/arguments');
+var _remember = require('../utils/remember');
 
 exports.create = function(path) {
     var _page               = require('./page').create();
     var _handlers           = require('./handlers').create(_page, path);
     var _last_action_status = '';
+
+
+    function parseArguments(args) {
+        return args.map(function(arg) {
+            var random        = /{{(\d+)}}/g;
+            var variable      = /{([a-z_]+)}/g;
+            var result;
+
+            if (random.test(arg)) {
+                // Strings of this form:
+                // {{number}}
+                // will be replaced with a random string of length number
+                var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-.0123456789'.split('');
+                result = arg.replace(random, function(match, length) {
+                    length = parseInt(length, 10);
+                    var generated = '';
+                    for (var i = 0; i < length; i++) {
+                        generated += chars[Math.floor(Math.random() * chars.length)];
+                    }
+                    return generated;
+                });
+                return result;
+
+            } else if (variable.test(arg)) {
+                // Strings of this form:
+                // {variable_name}
+                // will be replaced with the value of _remember.get(variable_name)
+                // if it exists
+                result = arg.replace(variable, function(match, variable_name) {
+                    return _remember.get(variable_name) || variable_name;
+                });
+                return result;
+            }
+
+            return arg;
+        });
+    }
 
 
     /**
@@ -76,7 +113,7 @@ exports.create = function(path) {
 
         runAction: function(action_data, passCallback, skipCallback, failCallback) {
             var handler = _handlers.getHandler(action_data.type);
-            action_data.args = _testparser.parseArguments(action_data.args);
+            action_data.args = parseArguments(action_data.args);
             action_data.start_time = new Date();
 
             if (handler) {

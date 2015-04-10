@@ -1,6 +1,6 @@
 'use strict';
 
-var _logger = require('./logger');
+var _logger = require('../logger/logger');
 
 /**
  * Sequentially run all the actions in a test. Run passCallback if all
@@ -11,7 +11,7 @@ exports.run = function(test_data, passCallback, failCallback) {
 
     // testcontainer is the context in which a test is run, webpage, mouse,
     // keyboard, etc
-    var testcontainer = require('./testcontainer').create(test_data.path);
+    var testcontainer = require('../context/testcontainer').create(test_data.path);
     var action_index = -1;
 
     // Remember when we started this test

@@ -1,12 +1,12 @@
 'use strict';
 
 exports.create = function(_page, path) {
+    var _focused            = '';
     var _mouse              = require('./mouse').create(_page);
     var _keyboard           = require('./keyboard').create(_page);
-    var _resemble           = require('./resemble').create(_page);
     var _remote             = require('./remote').create(_page);
-    var _focused            = '';
-    var _remember           = require('./remember');
+    var _resemble           = require('../utils/resemble').create(_page);
+    var _remember           = require('../utils/remember');
     var _fs                 = require('fs');
 
     path = path.substr(0, path.lastIndexOf('/'));

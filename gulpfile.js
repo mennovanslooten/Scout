@@ -30,7 +30,7 @@ gulp.task('watch', ['default'], function() {
 gulp.task('test', ['jshint', 'jscs', 'mocha', 'self_test']);
 
 
-gulp.task('mocha', function(cb) {
+gulp.task('mocha', function() {
 	return gulp.src(test_js_files, {read: false})
 		.pipe(mocha({reporter: 'mocha-silent-reporter'}));
 });
@@ -56,7 +56,7 @@ gulp.task('self_test', function(done) {
 
     var log = '';
     scout.stdout.on('data', function(data) {
-        var str = data.toString()
+        var str = data.toString();
         log += str;
     });
 

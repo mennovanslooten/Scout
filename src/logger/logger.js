@@ -1,8 +1,8 @@
 'use strict';
 
 var _style = require('./logstyle');
-var _suite = require('./testsuite');
-var _cli = require('./arguments');
+var _suite = require('../scout/testsuite');
+var _cli = require('../utils/arguments');
 var fg = _style.fg;
 //var bg = _style.bg;
 var bold = _style.bold;

@@ -1,10 +1,56 @@
 'use strict';
 
 var _test_files = [];
-var _fs          = require('fs');
-var _parser      = require('./testparser');
-var _cli = require('./arguments');
+var _fs = require('fs');
+var _cli = require('../utils/arguments');
 
+
+function parseLine(line, line_nr, path) {
+    var result = {
+        type: '',
+        args: [],
+        parts: [],
+        // We store the line_nr and path for each action for logging purposes
+        line_nr: line_nr,
+        path: path,
+        optional: false
+    };
+
+    for (var name in _cli) {
+        if (_cli.hasOwnProperty(name)) {
+            var value = _cli[name];
+            line = line.replace('{' + name + '}', value);
+        }
+    }
+
+    // Empty lines and lines starting with # are ignored
+    var ignore = /^\s*$|^#[^#]/;
+
+    // A line starting with "##" is logged
+    var log = /^##\s*(.+)/;
+
+    if (ignore.test(line)) {
+        return null;
+    } else if (log.test(line)) {
+        result.type = 'log';
+        result.args.push(line.match(log)[1]);
+    } else {
+        var parts = line.split(/\s{2,}/g);
+        result.parts = parts.concat();
+        result.type = parts.shift();
+
+        // An action starting with "?" is optional
+        var optional = /^\?\s*(.+)/;
+        if (optional.test(result.type)) {
+            result.type = result.type.match(optional)[1];
+            result.optional = true;
+        }
+
+        result.args = parts;
+    }
+
+    return result;
+}
 
 
 function parseTestFile(path, item) {
@@ -25,7 +71,7 @@ function parseTestFile(path, item) {
         var line = stream.readLine();
         data.lines.push(line);
 
-        var actions = _parser.parseLine(line, line_nr, data.path, item);
+        var actions = parseLine(line, line_nr, data.path, item);
 
         if (!actions) {
             continue;
@@ -112,3 +158,6 @@ exports.readTestFiles = function() {
 
     return _test_files;
 };
+
+
+

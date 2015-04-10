@@ -1,10 +1,10 @@
 'use strict';
 
-var _cli = require('./lib/arguments');
+var _cli = require('./utils/arguments');
 
 if (_cli.version) {
     // if --version is passed, print version and exit
-    var json = require('./package.json');
+    var json = require('../package.json');
     var version = json.version;
 
     console.log('Scout v' + version);
@@ -13,9 +13,9 @@ if (_cli.version) {
     phantom.exit(0);
 } else if (_cli.reformat) {
     // if --reformat is passed, reformat and exit
-    require('./lib/logger').reformat();
+    require('./logger/logger').reformat();
     phantom.exit(0);
 } else {
     // otherwise, kick off the tests
-    require('./lib/scout').start();
+    require('./scout/scout').start();
 }

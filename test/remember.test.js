@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var remember = require('../lib/remember');
+var remember = require('../src/utils/remember');
 
 describe('remember', function() {
 

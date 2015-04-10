@@ -17,8 +17,8 @@ var page_stub = {
     }
 };
 
-var mouse = proxyquire('../lib/mouse', {
-    './arguments': {
+var mouse = proxyquire('../src/context/mouse', {
+    '../utils/arguments': {
         timeout: 1,
         delay: 1
     }

@@ -37,7 +37,7 @@ var remote_stub = {
     getValueOrText: sinon.stub()
 };
 
-var handlers = proxyquire('../lib/handlers', {
+var handlers = proxyquire('../src/context/handlers', {
     './mouse': {
         create: function() {
             return mouse_stub;
@@ -46,7 +46,7 @@ var handlers = proxyquire('../lib/handlers', {
     './keyboard': {
         create: sinon.stub()
     },
-    './resemble': {
+    '../utils/resemble': {
         create: function() {
             return resemble_stub;
         }
@@ -56,7 +56,7 @@ var handlers = proxyquire('../lib/handlers', {
             return remote_stub;
         }
     },
-    './remember': remember_stub
+    '../utils/remember': remember_stub
 }).create(page_stub, '');
 var selector = '.some > .selector';
 

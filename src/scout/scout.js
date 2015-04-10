@@ -1,8 +1,8 @@
 'use strict';
 
-var _cli        = require('./arguments');
+var _cli        = require('../utils/arguments');
 var _testrunner = require('./testrunner');
-var _logger     = require('./logger');
+var _logger     = require('../logger/logger');
 var _suite      = require('./testsuite');
 
 exports.start = function() {

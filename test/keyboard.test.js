@@ -14,7 +14,7 @@ var page_stub = {
     }
 };
 
-var keyboard = require('../lib/keyboard').create(page_stub);
+var keyboard = require('../src/context/keyboard').create(page_stub);
 
 
 function getTyped() {

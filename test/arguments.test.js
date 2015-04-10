@@ -5,7 +5,7 @@ var proxyquire = require('proxyquire').noPreserveCache().noCallThru();
 
 
 function proxy(args) {
-    return proxyquire('../lib/arguments', {
+    return proxyquire('../src/utils/arguments', {
         system: {
             args: args
         }

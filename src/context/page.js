@@ -1,8 +1,8 @@
 /* global jQuery */
 'use strict';
 
-var _logger = require('./logger');
-var _cli = require('./arguments');
+var _logger = require('../logger/logger');
+var _cli = require('../utils/arguments');
 
 exports.create = function() {
     var _page        = require('webpage').create();
@@ -121,14 +121,14 @@ exports.create = function() {
         });
 
         if (!has_jquery) {
-            _page.injectJs('./node_modules/jquery/dist/jquery.js');
+            _page.injectJs('../node_modules/jquery/dist/jquery.js');
 
             _page.evaluate(function() {
                 jQuery.noConflict();
             });
         }
 
-        _page.injectJs('./lib/client.js');
+        _page.injectJs('./context/client.js');
 
         // PhantomJS default bg color is transparent
         // This makes for strange screenshots
