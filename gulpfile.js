@@ -21,13 +21,13 @@ gulp.task('default', ['test']);
 
 gulp.task('watch', ['default'], function() {
 	gulp.watch('./.jscsrc', ['jscs']);
-	gulp.watch(scout_files, ['scout']);
+	gulp.watch(scout_files, ['self_test']);
 	gulp.watch(all_js_files, ['test']);
 	gulp.watch(test_js_files, ['mocha']);
 });
 
 
-gulp.task('test', ['jshint', 'jscs', 'mocha', 'scout']);
+gulp.task('test', ['jshint', 'jscs', 'mocha', 'self_test']);
 
 
 gulp.task('mocha', function(cb) {
@@ -50,7 +50,7 @@ gulp.task('jscs', function() {
 });
 
 
-gulp.task('scout', function(done) {
+gulp.task('self_test', function(done) {
     var scout = spawn('./bin/scout', ['self_tests', '--parallel=3', '--timeout=1000']);
     scout.stdout.setEncoding('utf8');
 
