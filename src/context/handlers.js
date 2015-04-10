@@ -152,13 +152,13 @@ exports.create = function(_page, path) {
             }
 
             if (_focused !== selector) {
-                local.click(selector);
+                if (local.click(selector)) {
+                    return 'Element not focused';
+                }
 
                 if (is_replace === 'true') {
                     _remote.clearFocused();
                 }
-
-                return 'Element not focused';
             }
 
             var result = _keyboard.type(text);
