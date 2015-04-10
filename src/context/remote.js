@@ -56,7 +56,8 @@ exports.create = function(_page) {
         'getBoundaries',
         'assertInViewport',
         'assertNotInViewport',
-        'getValueOrText'
+        'getValueOrText',
+        'clearFocused'
         //'getViewPort'
     ].forEach(function(type) {
         handlers[type] = getRemoteHandler(type);

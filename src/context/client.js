@@ -38,9 +38,17 @@ var ScoutClient = {};
         node = node || document.body;
         results = results || [];
 
-        if (node.textContent && node.textContent.trim() === text) {
-            results.push(node);
+        if (node.nodeType !== node.ELEMENT_NODE) {
             return results;
+        }
+
+        if (node.textContent && node.textContent.trim() === text) {
+            // Push new results to the front of the results to favor  deeper
+            // nodes
+            results.unshift(node);
+
+            // TODO: find a way to make assertions try different nodes if
+            // necessary
         }
 
         var child = node.firstChild;
@@ -215,6 +223,12 @@ var ScoutClient = {};
             return '';
         }
         return 'No elements matching <' + $elts.selector + '> found';
+    };
+
+
+    ScoutClient.clearFocused = function() {
+        var $focused = $(document.activeElement);
+        $focused.val('');
     };
 
 
@@ -438,8 +452,5 @@ var ScoutClient = {};
 
         return $elt.text();
     };
-
-
-
 
 })(jQuery);

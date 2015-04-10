@@ -152,11 +152,12 @@ exports.create = function(_page, path) {
             }
 
             if (_focused !== selector) {
+                local.click(selector);
+
                 if (is_replace === 'true') {
-                    local.dblclick(selector);
-                } else {
-                    local.click(selector);
+                    _remote.clearFocused();
                 }
+
                 return 'Element not focused';
             }
 

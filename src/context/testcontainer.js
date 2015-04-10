@@ -12,6 +12,7 @@ exports.create = function(path) {
     function parseArguments(args) {
         return args.map(function(arg) {
             var random        = /{{(\d+)}}/g;
+            var random_var    = /{{([a-z_]+):(\d+)}}/g;
             var variable      = /{([a-z_]+)}/g;
             var result;
 
@@ -19,17 +20,22 @@ exports.create = function(path) {
                 // Strings of this form:
                 // {{number}}
                 // will be replaced with a random string of length number
-                var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-.0123456789'.split('');
                 result = arg.replace(random, function(match, length) {
-                    length = parseInt(length, 10);
-                    var generated = '';
-                    for (var i = 0; i < length; i++) {
-                        generated += chars[Math.floor(Math.random() * chars.length)];
-                    }
-                    return generated;
+                    return generateRandomString(length);
                 });
                 return result;
 
+            } else if (random_var.test(arg)) {
+                // Strings of this form:
+                // {{variable_name:number}}
+                // will be replaced with a random string of length number and
+                // the string will be stored in variable_name
+                result = arg.replace(random_var, function(match, variable_name, length) {
+                    var random = generateRandomString(length);
+                    _remember.set(variable_name, random);
+                    return random;
+                });
+                return result;
             } else if (variable.test(arg)) {
                 // Strings of this form:
                 // {variable_name}
@@ -43,6 +49,17 @@ exports.create = function(path) {
 
             return arg;
         });
+    }
+
+
+    function generateRandomString(length) {
+        var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-.0123456789'.split('');
+        length = parseInt(length, 10);
+        var generated = '';
+        for (var i = 0; i < length; i++) {
+            generated += chars[Math.floor(Math.random() * chars.length)];
+        }
+        return generated;
     }
 
 
