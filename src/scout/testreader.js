@@ -5,6 +5,11 @@ var _fs = require('fs');
 var _cli = require('../utils/arguments');
 
 
+// This regular expression is used to separate arguments on a line.
+// Current match: at least 2 spaces or at least 1 tab (surrounded by any number
+// of spaces).
+var separator_rx = / {2,}| *\t+ */g;
+
 function parseLine(line, line_nr, path) {
     var result = {
         type: '',
@@ -35,7 +40,7 @@ function parseLine(line, line_nr, path) {
         result.type = 'log';
         result.args.push(line.match(log)[1]);
     } else {
-        var parts = line.split(/\s{2,}/g);
+        var parts = line.split(separator_rx);
         result.parts = parts.concat();
         result.type = parts.shift();
 
@@ -92,12 +97,12 @@ function parseTestFile(path, item) {
 /*
  * Store the max width of each column for later formatting use
  */
-function addFormatting(test_file) {
+function calculateColumns(test_file) {
     var columns = [];
 
     for (var i = 0; i < test_file.lines.length; i++) {
         var line = test_file.lines[i];
-        var parts = line.split(/\s{2,}/g);
+        var parts = line.split(separator_rx);
         if (parts.length < 2) continue;
 
         for (var ii = 0; ii < parts.length; ii++) {
@@ -133,7 +138,7 @@ function readFileOrDirectory(path, item) {
     if (is_test) {
         // If it's a test read and parse it
         var data = parseTestFile(path, item);
-        addFormatting(data);
+        calculateColumns(data);
         _test_files.push(data);
     } else if (_fs.isDirectory(full_path)) {
         // If it's a directory read its contents
