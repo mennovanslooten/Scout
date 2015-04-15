@@ -45,6 +45,7 @@
                         <li><a href="#click">click</a></li>
                         <li><a href="#dblclick">dblclick</a></li>
                         <li><a href="#type">type</a></li>
+                        <li><a href="#choose">choose</a></li>
                         <li><a href="#uploadFile">uploadFile</a></li>
                         <li><a href="#resize">resize</a></li>
                     </ul>
@@ -161,9 +162,18 @@
                 </div>
 
 
+                <div id="choose" class="api-item">
+                    <h3>choose</h3>
+                    <p>Chooses one or more options from a <code>&lt;select&gt;</code> based on the option's text content.</p>
+                    <pre>choose    [name="language"]    Nederlands</pre>
+                    <pre>choose    .input-skills    HTML    CSS    JavaScript    </pre>
+                    <p class="note">Choosing more than one value only works on <code>&lt;select multiple&gt;</code>.</p>
+                </div>
+
+
                 <div id="uploadFile" class="api-item">
                     <h3>uploadFile</h3>
-                    <p>Selects a file as value for a file input.</p>
+                    <p>Selects a file as value for a file input. The second parameter is the path to the file relative to the <code>.scout</code> file.</p>
                     <pre>uploadFile    input[name="avatar"]    my_avatar.png</pre>
                 </div>
 

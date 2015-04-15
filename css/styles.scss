@@ -472,6 +472,23 @@ pre {
         color: $black;
     }
 
+    a {
+        font-weight: bold;
+
+        &:before {
+            display: inline-block;
+            width: 3 * $unit;
+            line-height: 3 * $unit;
+            border-radius: 50%;
+            margin-right: $unit;
+            text-align: center;
+            background: $color1;
+            color: white;
+            content: "➤";
+            /*content: "›";*/
+        }
+    }
+
     + .home-intro-item {
         /*float: right;*/
     }

@@ -72,19 +72,19 @@ input {
 
     2. One argument:
         // only specify property
-        @include transition(background-color); 
+        @include transition(background-color);
 
     3. Two arguments:
         // specify property & easing function
-        @include transition(background-color, linear); 
+        @include transition(background-color, linear);
 
     4. Three arguments:
         // specify property, easing function & duration
-        @include transition(background-color, linear, 0.5s); 
+        @include transition(background-color, linear, 0.5s);
 
     5. Four arguments:
         // specify property, easing function, duration & delay
-        @include transition(background-color, linear, 0.5s, 3s); 
+        @include transition(background-color, linear, 0.5s, 3s);
 
     6. Named arguments: specify non-defaults
         @include transition($timing: linear, $delay: 3s);
@@ -99,37 +99,37 @@ body {
   font-size: 16px;
   line-height: 1.5;
   /*letter-spacing: -0.025em;*/
-  	/*
-  	&:after {
-  		width: 60 * $unit;
-  		background: yellow;
-  		position: fixed;
-  		left: 50%;
-  		top: 0;
-  		bottom: 0;
-  		margin-left: -30 * $unit;
-  		content: "";
-  		opacity: 0.1;
-  		border: 0 solid red;
-  		border-right-width: 2 * $unit;
-  		border-left-width: 2 * $unit;
-  	}
-  
-  	&:before {
-  		width: 120 * $unit;
-  		background: yellow;
-  		position: fixed;
-  		left: 50%;
-  		top: 0;
-  		bottom: 0;
-  		margin-left: -60 * $unit;
-  		content: "";
-  		opacity: 0.1;
-  		border: 0 solid red;
-  		border-right-width: 2 * $unit;
-  		border-left-width: 2 * $unit;
-  	}
-  	*/ }
+    /*
+    &:after {
+        width: 60 * $unit;
+        background: yellow;
+        position: fixed;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        margin-left: -30 * $unit;
+        content: "";
+        opacity: 0.1;
+        border: 0 solid red;
+        border-right-width: 2 * $unit;
+        border-left-width: 2 * $unit;
+    }
+
+    &:before {
+        width: 120 * $unit;
+        background: yellow;
+        position: fixed;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        margin-left: -60 * $unit;
+        content: "";
+        opacity: 0.1;
+        border: 0 solid red;
+        border-right-width: 2 * $unit;
+        border-left-width: 2 * $unit;
+    }
+    */ }
 
 hr {
   width: auto;
@@ -451,6 +451,19 @@ pre {
     background: #CCC;
     background: white;
     color: #333; }
+  .home-intro-item a {
+    font-weight: bold; }
+    .home-intro-item a:before {
+      display: inline-block;
+      width: 24px;
+      line-height: 24px;
+      border-radius: 50%;
+      margin-right: 8px;
+      text-align: center;
+      background: #490A3D;
+      color: white;
+      content: "➤";
+      /*content: "›";*/ }
   .home-intro-item + .home-intro-item {
     /*float: right;*/ }
 
@@ -557,9 +570,9 @@ pre {
     padding: 16px 0 16px 320px;
     /*
     small {
-    	display: block;
-    	font-size: 2 * $unit;
-    	line-height: 2 * $unit;
+        display: block;
+        font-size: 2 * $unit;
+        line-height: 2 * $unit;
     }
     */ }
   .home-example p {
@@ -709,31 +722,31 @@ footer {
 /*
 .feature-left,
 .feature-right {
-	width: 36 * $unit;
+    width: 36 * $unit;
 }
 
 .feature-left {
-	float: left;
-	position: relative;
+    float: left;
+    position: relative;
 
-	&:after {
-		content: "+";
-		position: absolute;
-		right: -6 * $unit;
-		top: 50%;
-		width: 6 * $unit;
-		height: 6 * $unit;
-		text-align: center;
-		font-size: 4 * $unit;
-	}
+    &:after {
+        content: "+";
+        position: absolute;
+        right: -6 * $unit;
+        top: 50%;
+        width: 6 * $unit;
+        height: 6 * $unit;
+        text-align: center;
+        font-size: 4 * $unit;
+    }
 }
 
 .feature-right {
-	float: right;
+    float: right;
 }
 
 .feature-sum {
-	clear: both;
+    clear: both;
 }
 */
 .content-features .inner {
