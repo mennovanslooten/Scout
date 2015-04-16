@@ -76,6 +76,7 @@
                     <ul>
                         <li><a href="#comment"># (comment)</a></li>
                         <li><a href="#log">## (log)</a></li>
+                        <li><a href="#set">@ (set)</a></li>
                         <li><a href="#optional">? (optional)</a></li>
                         <li><a href="#screendump">screendump</a></li>
                         <li><a href="#remember">remember</a></li>
@@ -331,6 +332,17 @@
                     <h3>## (log)</h3>
                     <p>Logs the text after the <code>##</code> to the terminal</p>
                     <pre>## This is a log statement</pre>
+                </div>
+
+
+                <div id="set" class="api-item">
+                    <h3>@ (set)</h3>
+                    <p>Sets a PhantomJS page setting to the specified value. See <a href="http://phantomjs.org/api/webpage/property/settings.html">the PhantomJS documentation</a> for a complete list of settings and their effects.</p>
+                    <pre>
+<span class="code-comment"># This sets basic HTTP auth</span>
+@userName    my_user_name
+@password    my_password</pre>
+                    <p class="note">Setting <code>@javascriptEnabled</code> to <code>false</code> will break Scout.</p>
                 </div>
 
 
