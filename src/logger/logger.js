@@ -85,7 +85,7 @@ exports.log = function() {
 
 
 exports.passAction = function(action_data, test_data) {
-    if (_cli.parallel > 1) return;
+    if (_cli.parallel > 1 || action_data.type === 'set') return;
 
     if (action_data.type === 'log') {
         log(fg.default('\n## ' + action_data.args));

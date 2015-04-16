@@ -1,5 +1,12 @@
+# PhantomJS page settings can be set with @settingName
+# These settings will only have effect before an "open" action
+@userAgent             ScoutJS
+
 ## This self test tests if all the basic assertions work
 open                   ./index.html
+
+## The userAgent setting should be written in the document
+assertText             .assertSetting                   ScoutJS
 
 ## assertTitle and assertPage should match substrings as well
 assertTitle            SCOUT SELF TEST

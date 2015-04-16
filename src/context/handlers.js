@@ -251,6 +251,11 @@ exports.create = function(_page, path) {
             return '';
         },
 
+        set: function(name, value) {
+            _page.set(name, value);
+            return '';
+        },
+
         remember: function(selector, variable_name) {
             var error = _remote.assertVisible(selector);
             if (error) return error;

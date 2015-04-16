@@ -46,7 +46,12 @@ function parseLine(line, line_nr, path) {
 
         // An action starting with "?" is optional
         var optional = /^\?\s*(.+)/;
-        if (optional.test(result.type)) {
+
+        if (result.type.indexOf('@') === 0) {
+            var setting = result.type.substr(1);
+            parts.unshift(setting);
+            result.type = 'set';
+        } else if (optional.test(result.type)) {
             result.type = result.type.match(optional)[1];
             result.optional = true;
         }

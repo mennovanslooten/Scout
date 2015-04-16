@@ -7,9 +7,9 @@ var jscs = require('gulp-jscs');
 var spawn = require('child_process').spawn;
 
 var scout_files = ['./self_tests/**/*.scout'];
-var lib_js_files = ['./index.js', './lib/**/*.js'];
+var src_js_files = ['./index.js', './src/**/*.js'];
 var test_js_files = ['./test/**/*.js'];
-var all_js_files = lib_js_files.concat(test_js_files);
+var all_js_files = src_js_files.concat(test_js_files);
 
 
 /* ################################################################

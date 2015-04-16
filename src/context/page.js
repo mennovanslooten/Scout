@@ -16,6 +16,15 @@ exports.create = function() {
 
 
     /**
+     * PhantomJS page settings.
+     * See: http://phantomjs.org/api/webpage/property/settings.html
+     */
+    _page.set = function(name, value) {
+        _page.settings[name] = value;
+    };
+
+
+    /**
      * PhantomJS thinks the page is done, start checking the resource request
      * queue
      */
