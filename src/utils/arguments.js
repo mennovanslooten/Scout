@@ -16,6 +16,7 @@ var options = {
     quiet: 0,
     muted: false,
     newdumps: false,
+    xunit: '',
     files: []
 };
 
@@ -24,7 +25,7 @@ var options = {
 var args = _system.args.slice(1);
 args.forEach(function(arg) {
     var bool_matches = arg.match(/^--(\w+)$/);
-    var value_matches = arg.match(/^--(\w+)=(\w+)$/);
+    var value_matches = arg.match(/^--(\w+)=([^ ]+)$/);
 
     if (value_matches && value_matches.length === 3) {
         // Translate --optionName=value args to options.optionName = value;

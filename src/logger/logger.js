@@ -3,6 +3,8 @@
 var _style = require('./logstyle');
 var _suite = require('../scout/testsuite');
 var _cli = require('../utils/arguments');
+var _xunit = require('./xunit');
+
 var fg = _style.fg;
 //var bg = _style.bg;
 var bold = _style.bold;
@@ -172,6 +174,10 @@ exports.done = function(suite) {
 
         log(bold(fg.red('\nFAIL: ' + exit_message)));
     }
+
+    if (_cli.xunit) {
+        _xunit.write(_cli.xunit, suite);
+    }
 };
 
 
@@ -185,3 +191,4 @@ exports.dir = function(obj) {
     log('---------\n');
 
 };
+
