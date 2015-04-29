@@ -11,32 +11,42 @@ exports.create = function(path) {
 
     function parseArguments(args) {
         return args.map(function(arg) {
-            var random        = /{{(\d+)}}/g;
-            var random_var    = /{{([a-z_]+):(\d+)}}/g;
-            var variable      = /{([a-z_]+)}/g;
             var result;
+            var variable = /{([a-z_]+)}/g;
+            var generator = /{{([^}]+)}}/g;
 
-            if (random.test(arg)) {
-                // Strings of this form:
-                // {{number}}
-                // will be replaced with a random string of length number
-                result = arg.replace(random, function(match, length) {
-                    return generateRandomString(length);
-                });
-                return result;
+            if (generator.test(arg)) {
+                result = arg.replace(generator, function(whatever, match) {
+                    var props = match.split(':');
+                    var variable_name = '';
+                    var length = 0;
+                    var chars = '';
 
-            } else if (random_var.test(arg)) {
-                // Strings of this form:
-                // {{variable_name:number}}
-                // will be replaced with a random string of length number and
-                // the string will be stored in variable_name
-                result = arg.replace(random_var, function(match, variable_name, length) {
-                    var random = generateRandomString(length);
-                    _remember.set(variable_name, random);
+                    props.forEach(function(prop) {
+                        if (/^[a-z_]+$/.test(prop)) {
+                            variable_name = prop;
+                        } else if (/^\d+$/.test(prop)) {
+                            length = parseInt(prop, 10);
+                        } else if (/^".+"$/.test(prop)) {
+                            chars = prop;
+                        }
+                    });
+
+                    if (!length) {
+                        return match;
+                    }
+
+                    var random = generateRandomString(length, chars);
+                    if (variable_name) {
+                        _remember.set(variable_name, random);
+                    }
                     return random;
                 });
+
                 return result;
-            } else if (variable.test(arg)) {
+            }
+
+            if (variable.test(arg)) {
                 // Strings of this form:
                 // {variable_name}
                 // will be replaced with the value of _remember.get(variable_name)
@@ -52,8 +62,8 @@ exports.create = function(path) {
     }
 
 
-    function generateRandomString(length) {
-        var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-.0123456789'.split('');
+    function generateRandomString(length, chars) {
+        chars = chars || 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-.0123456789'.split('');
         length = parseInt(length, 10);
         var generated = '';
         for (var i = 0; i < length; i++) {
