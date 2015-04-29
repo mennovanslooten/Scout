@@ -11,6 +11,7 @@ $color4: #F8CA00;
 $color5: #8A9B0F;
 
 $white: #f2f2f2;
+$offwhite: #eee;
 $lightgrey: #e7e7e7;
 /*$lightgrey: mix($color1, white, 20%);*/
 /*$lightgrey: lighten($color1, 80%);*/
@@ -327,7 +328,7 @@ pre {
 
 .sub-nav-menu {
     list-style: none;
-    margin: 0;
+    margin: 3 * $unit 0;
     padding: 0;
     text-align: left;
 
@@ -425,7 +426,7 @@ pre {
 .home-intro {
     // background: #333;
     // background: mix($color2, black, 50%);
-    background: $white;
+    background: $offwhite;
     color: $color1;
     overflow: auto;
     padding: 4 * $unit 0;
@@ -795,6 +796,7 @@ pre {
 
 .api-item {
     margin: 2 * $unit 0 0;
+    margin: .5 * $unit -2 * $unit 0;
     padding: 1 * $unit 2 * $unit;
     /*border: 1px solid white;*/
     /*background: rgba(255, 255, 255, 0.5);*/
@@ -804,7 +806,42 @@ pre {
     pre {
         background: $lightgrey;
     }
+
+    code {
+        background: rgba(255, 255, 255, 0.5);
+        padding: 0 .5 * $unit;
+    }
+
     h4 {
+    }
+
+    dl {
+        @include clearfix;
+        padding: $unit 0;
+
+        dt {
+            width: auto;
+            text-align: left;
+            float: none;
+            padding: 0;
+            margin: 0 0 0 0 * $unit;
+
+            ~ dt {
+                margin-top: 2 * $unit;
+            }
+        }
+
+        dd {
+            width: auto;
+            float: none;
+            clear: right;
+            margin: 0 4 * $unit;
+
+            ~ dd {
+                margin-top: 0;
+            }
+        }
+
     }
 }
 
@@ -903,4 +940,8 @@ footer {
 
 .feature-tolerance:after {
     content: "=";
+}
+.highlight {
+    background: #FF3;
+
 }

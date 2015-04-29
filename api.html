@@ -367,7 +367,7 @@ screendump    partial    .some-selector</pre>
 
                 <div id="remember" class="api-item">
                     <h3>remember</h3>
-                    <p>Stores the text or value (in case of an <code>&lt;input&gt;</code> or <code>&lt;select&gt;</code>) of an element in a temporary variable. Stored variables can be used as <code>{varname}</code>.<!-- Stored variables are remembered as long as Scout is running and can be used in other tests. --></p>
+                    <p>Stores the text or value (in case of an <code>&lt;input&gt;</code> or <code>&lt;select&gt;</code>) of an element in a temporary variable. Stored variables can be used as <code>{varname}</code>. <a href="#variables">More info on variables</a><!-- Stored variables are remembered as long as Scout is running and can be used in other tests. --></p>
                     <pre><span class="code-comment"># Store the value of a password field in a variable called pwd</span>
 remember    :password    pwd</pre>
                     <pre><span class="code-comment"># Store the text content of a paragraph in a variable called txt</span>
@@ -412,15 +412,36 @@ remember    p:first    txt</pre>
                 <div id="random_string_generators" class="api-item">
                     <h3>Random string generators</h3>
                     <p>Sometimes, usually when testing a form, you need the ability to generate random strings. For example, when you test a registration form you might need a unique email address to prevent any "already registered" type errors.</p>
-                    <p>Scout can generate random strings of any length with <code>{{n}}</code>, where <code>n</code> is a number specifying the length of the string. The {{n}} pattern can occur anywhere in any argument.</p>
+                    <p>Scout can generate random strings of any length with <code>{{...}}</code>, where <code>...</code> can have the following formats:</p>
 
-                    <pre><span class="code-comment"># This will type a random password of 8 characters</span>
-type    [name="password"]    {{8}}</pre>
-                    <pre>type    [name="email"]    {{4}}@{{6}}.com</pre>
+                    <dl >
+                        <dt><code>{{<em>length</em>}}</code></dt>
+                        <dd>Generates a random string of <code>length</code> characters.</dd>
+                        <dt><code>{{<em>variable_name</em>:<em>length</em>}}</code></dt>
+                        <dd>Generates a random string of <code>length</code> characters and stores it in <code>variable_name</code>.</dd>
+                        <dt><code>{{<em>length</em>:"<em>character_list</em>"}}</code></dt>
+                        <dd>Generates a random string of <code>length</code> characters from <code>character_list</code>.</dd>
+                        <dt><code>{{<em>variable_name</em>:<em>length</em>:"<em>character_list</em>"}}</code></dt>
+                        <dd>Generates a random string of <code>length</code> characters from <code>character_list</code> and stores it in <code>variable_name</code>.</dd>
+                    </dl>
+
                     <p class="note">
-                        The generated string will be visible in the console log.
-                        If you want to reuse the generated string, you can retrieve it with the <a href="#remember">remember</a> command.
+                        <code>length</code> must be an integer &gt; 0.
+                        <code>variable_name</code> can contain only lowercase a-z and underscores.
+                        <code>character_list</code> must be surrounded by <code>"</code> and must contain at least one character.
+                        The default character list is: <code>abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-.0123456789</code>.
                     </p>
+
+
+                    <h4>Examples</h4>
+                    <pre><span class="code-comment"># Type a random password of 8 characters</span>
+type    [name="password"]    {{8}}</pre>
+                    <pre><span class="code-comment"># Type a random username of 8 lowercase vowels</span>
+type    [name="username"]    {{8:"aeiou"}}</pre>
+                    <pre><span class="code-comment"># Type a random phone number of 10 numbers and store it in "telephone"</span>
+type    [name="phone"]    {{telephone:10:"0123456789"}}</pre>
+                    <pre><span class="code-comment"># The {{...}} pattern can occur multiple times in any argument.</span>
+type    [name="email"]    {{4}}@{{6}}.com</pre>
                 </div>
 
                 <div id="variables" class="api-item">

@@ -66,6 +66,24 @@
 
                 <pre><span class="prompt">$</span> sudo npm install -g scoutjs</pre>
 
+                <h3>Installing Scout as a project dependency</h3>
+                <p>
+                    Scout can also be installed as a local npm dependency.
+                    In the root directory of your project, run the following command:
+                </p>
+
+                <pre><span class="prompt">$</span> npm install scoutjs --save-dev</pre>
+
+                <p>
+                    This will install Scout in the project's <code>node_modules</code> directory.
+                    The Scout binary can run from <code>node_modules/.bin/scoutjs</code>.
+                </p>
+
+                <p class="note">
+                    Even though it is installed with npm, Scout is only a command line tool, not a true node module.
+                    In other words: you can't <code>require('scoutjs')</code>.
+                </p>
+
             </div>
         </div>
 
@@ -74,18 +92,10 @@
                 <h2>Writing tests</h2>
 
                 <h3>Creating a test file</h3>
-                <!--<p class="note">Scout test files are plain text files, with a <em>.scout</em> extension.</p>-->
                 <p>
+                    Scout test files are plain text files, with a <em>.scout</em> extension.
                     Create a new file with your favorite text editor and add the following lines:
                 </p>
-
-                <!--
-                <pre>$ touch example.scout</pre>
-
-                <p>
-                    Now open this file with your favorite text editor and add the following lines:
-                </p>
-                -->
 
                 <pre>
 open               http://www.google.com/
@@ -94,7 +104,7 @@ assertMinLength    h3.r                     10</pre>
 
                 <p>
                     Now save this file as <code>mytest.scout</code>.
-                    Enter the following command in your terminal to run this test:
+                    Enter the following command in your terminal in the directory containing the file to run this test:
                 </p>
 
                 <pre><span class="prompt">$</span> scout mytest.scout</pre>
@@ -126,7 +136,7 @@ PASS: Executed 1 tests in 1119ms</pre>
                     Not surprisingly, this line instructs Scout to open the URL.
                 </p>
                 <p class="note">
-                    Actions and arguments must be on the same line and must be separated by two or more spaces.
+                    Actions and arguments must be on the same line and must be separated by two or more spaces, or one or more tabs.
                     Aligning them in pretty columns is optional.
                 </p>
                 <p>
@@ -146,10 +156,6 @@ PASS: Executed 1 tests in 1119ms</pre>
                     Scout supports a large number of special keys, like <code>&lt;Up&gt;</code>, <code>&lt;Escape&gt;</code> and <code>&lt;Delete&gt;</code>.
                 </p>
 
-                <!--<p>-->
-                    <!--<a href="api.html#actions">Actions API</a>-->
-                <!--</p>-->
-
                 <h3>Asserts</h3>
 
                 <pre>assertMinLength    h3.r    10</pre>
@@ -160,23 +166,16 @@ PASS: Executed 1 tests in 1119ms</pre>
                 </p>
 
                 <p class="note">
-                    Internally, actions are also assertions and can also fail.
+                    Internally, <strong>actions are also assertions</strong> and can also fail.
                     For example, the <code>type</code> action will fail when no clickable element matching the selector can be found
                     and <code>open</code> will fail when the URL can't be loaded.
                 </p>
-
-                <!--<h3>Waiting for truth</h3>-->
 
                 <p>
                     If an assertion or action doesn't immediately pass, Scout will keep on trying until a timeout is reached.
                     Only after an instruction has succeeded will Scout continue with the next.
                     If the timeout is reached, the test fails.
                 </p>
-
-
-                <!--<p>-->
-                    <!--Note that <strong>Scout always waits for the previous instruction to succeed before continuing with the next</strong>, so it will only start typing when the page has been fully loaded.-->
-                <!--</p>-->
 
             </div>
         </div>
@@ -214,7 +213,6 @@ PASS: Executed 1 tests in 1119ms</pre>
 
                 <p>
                     Besides test names and directory names you can pass a number of options that will alter Scout' default behavior.
-                    <!-- There are two types of options; there's <code>--optionname</code> which will turn a certain feature on, and <code>--optionname=value</code> which will alter a default -->
                 </p>
 
                 <dl>
@@ -242,11 +240,6 @@ PASS: Executed 1 tests in 1119ms</pre>
                     <dt><code>--step=<em>&lt;number&gt;</em></code></dt>
                     <dd>Set the time (in milliseconds) between two retries. <br>Default 10.</dd>
 
-                    <!--
-                    <dt><code>--quiet=<em>&lt;number&gt;</em></code></dt>
-                    <dd>Specifies how much detail is logged to the console. If <code>number</code> is 0, every instruction is logged as well as a final summary. If it is 1 only the final summary is logged. If it is 2 or more nothing is logged. <br>Default 0.</dd>
-                    -->
-
                     <dt><code>--reformat</code></dt>
                     <dd>Skips running any tests, but outputs neatly formatted tests file to the console. See <a href="#format">Formatting tests</a>.</dd>
 
@@ -267,36 +260,11 @@ PASS: Executed 1 tests in 1119ms</pre>
         </div>
 
 
-        <!--<div class="content" id="format">-->
-            <!--<div class="inner">-->
-                <!--<h2>Formatting tests</h2>-->
-
-                <!--<p>-->
-                    <!--While writing tests is pretty easy, it can be a pain to keep the <code>.scout</code> files nicely formatted and the columns lined up.-->
-                    <!--For that reason, Scout has a <code>--reformat</code> command line option that will read the specified test files and output them in reformatted to the console.-->
-                <!--</p>-->
-
-                <!--<pre><span class="prompt">$</span> scout --reformat <em>filename.scout</em></pre>-->
-
-                <!--<p>-->
-                    <!--You can use the <code>&gt;</code> symbol to write the formatted output to disk:-->
-                <!--</p>-->
-
-                <!--<pre><span class="prompt">$</span> scout --reformat <em>filename.scout</em> &gt; <em>newfilename.scout</em></pre>-->
-            <!--</div>-->
-        <!--</div>-->
-
         <footer>
             <div class="inner">
                 <p>&copy; 2013 <a href="https://twitter.com/mennovanslooten">@mennovanslooten</a></p>
             </div>
         </footer>
-
-
-
-        <!--<script src="js/jquery.min.js"></script>-->
-        <!--<script src="js/main.js"></script>-->
-
 
     </body>
 </html>
