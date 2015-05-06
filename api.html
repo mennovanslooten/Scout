@@ -81,6 +81,8 @@
                         <li><a href="#screendump">screendump</a></li>
                         <li><a href="#remember">remember</a></li>
                         <li><a href="#include">include</a></li>
+                        <li><a href="#mockRequest">mockRequest</a></li>
+                        <li><a href="#unmockRequest">unmockRequest</a></li>
                     </ul>
                 </li>
                 <li>
@@ -375,12 +377,32 @@ remember    p:first    txt</pre>
                 </div>
 
 
-
                 <div id="include" class="api-item">
                     <h3>include</h3>
                     <p>Includes another <code>.scout</code> file as part of the current test file. Useful for instructions that are required for more than one test file, e.g. submitting a login form. The include argument is a path relative to the including file. Includes can include other files.</p>
                     <pre>include    ../common/_login.scout</pre>
                     <p class="note">Test files that are prefixed with an underscore are only run when included by another file or when explicitly passed via the command line.</p>
+                </div>
+
+
+                <div id="mockRequest" class="api-item">
+                    <h3>mockRequest</h3>
+                    <p>Intercepts requests matching the pattern (which is converted to a regular expression) and responds with the contents of the specified file. The path to the file is relative to the <code>.scout</code> file.</p>
+                    <p>If the request matches more than one registered pattern, the pattern/file combination that was registered first is used.</p>
+                    <pre>mockRequest    /api/users    mocks/users.json</pre>
+                    <p class="note">While the most common use case will be mocking Ajax requests, <code>mockRequest</code> can mock any request made by the page: CSS, JavaScript, images, etc.</p>
+                </div>
+
+
+                <div id="unmockRequest" class="api-item">
+                    <h3>unmockRequest</h3>
+                    <p>Removes registered request mocks and restores the original setup.</p>
+                    <pre><span class="code-comment"># Stop mocking this pattern with this file</span>
+unmockRequest    /api/users    mocks/users.json</pre>
+                    <pre><span class="code-comment"># Stop mocking this pattern with any file</span>
+unmockRequest    /api/users</pre>
+                    <pre><span class="code-comment"># Stop mocking entirely</span>
+unmockRequest</pre>
                 </div>
 
             </div>
