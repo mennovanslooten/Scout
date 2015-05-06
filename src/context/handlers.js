@@ -1,15 +1,17 @@
 'use strict';
 
-exports.create = function(_page, path) {
+exports.create = function(_page, test_path) {
+    var base_path = test_path.substr(0, test_path.lastIndexOf('/'));
+
     var _focused            = '';
     var _mouse              = require('./mouse').create(_page);
     var _keyboard           = require('./keyboard').create(_page);
     var _remote             = require('./remote').create(_page);
+    var _request            = require('./request').create(_page, base_path);
     var _resemble           = require('../utils/resemble').create(_page);
     var _remember           = require('../utils/remember');
     var _fs                 = require('fs');
 
-    path = path.substr(0, path.lastIndexOf('/'));
 
 
     function getCoordinates(destination) {
@@ -34,7 +36,7 @@ exports.create = function(_page, path) {
     var local = {
         open: function(url, dimensions) {
             if (url.indexOf('./') === 0) {
-                url = path + url.substr(1);
+                url = base_path + url.substr(1);
             }
 
             if (_page.is_loaded) {
@@ -177,7 +179,7 @@ exports.create = function(_page, path) {
                 return 'No filename specified for uploadFile';
             }
 
-            var filepath = path + _fs.separator + filename;
+            var filepath = base_path + _fs.separator + filename;
             var file_exists = _fs.isReadable(filepath) && _fs.isFile(filepath);
 
             if (!file_exists) {
@@ -264,6 +266,14 @@ exports.create = function(_page, path) {
             _remember.set(variable_name, value_or_text);
 
             return '';
+        },
+
+        mockRequest: function(pattern, mock_path) {
+            return _request.addMock(pattern, mock_path);
+        },
+
+        unmockRequest: function(/* pattern, mock_path */) {
+            return _request.removeMock.apply(_request, arguments);
         }
     };
 

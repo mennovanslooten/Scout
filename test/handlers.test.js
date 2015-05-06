@@ -46,6 +46,9 @@ var handlers = proxyquire('../src/context/handlers', {
     './keyboard': {
         create: sinon.stub()
     },
+    './request': {
+        create: sinon.stub()
+    },
     '../utils/resemble': {
         create: function() {
             return resemble_stub;

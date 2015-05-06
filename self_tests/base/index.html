@@ -35,6 +35,8 @@
     </head>
 
     <body>
+        <div id="ajaxTarget"></div>
+
         <p class="assertSetting">
             <script>
                 document.write(navigator.userAgent);
@@ -93,6 +95,17 @@
 
 		<p class="assertCSS"></p>
 
+        <!-- This Ajax request is mocked in the test -->
+        <script>
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function () {
+                if (this.readyState === 4){
+                    document.getElementById('ajaxTarget').innerHTML = this.responseText;
+                }
+            };
+            request.open('GET', '/mock/me/please', true);
+            request.send(null);
+        </script>
     </body>
 </html>
 

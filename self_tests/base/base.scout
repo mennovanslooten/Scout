@@ -2,8 +2,14 @@
 # These settings will only have effect before an "open" action
 @userAgent             ScoutJS
 
+## mockRequest intercepts requests and replaces them with a local resource
+mockRequest            /mock/me                         ajax.html
+
 ## This self test tests if all the basic assertions work
 open                   ./index.html
+
+## The content of this element is loaded via Ajax request
+assertText             #ajaxTarget                      I AM A MOCKED AJAX REQUEST
 
 ## The userAgent setting should be written in the document
 assertText             .assertSetting                   ScoutJS
@@ -81,5 +87,3 @@ assertHasClass         .assertHasClass-2               .assertHasClass-1
 
 assertHasClass         "Lorem ipsum"                   .textSelector-1
 assertHasClass         "dolor sit amet"                .textSelector-2
-
-
