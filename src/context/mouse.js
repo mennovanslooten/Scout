@@ -159,7 +159,7 @@ exports.create = function(_page) {
      * start moving the mouse in that direction
      */
     _mouse.sendEvent = function(type, x, y) {
-        if (_is_moving) return;
+        if (_is_moving) return false;
 
         if (isHovering(x, y)) {
             sendEvent(type);
