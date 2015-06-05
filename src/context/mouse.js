@@ -4,10 +4,20 @@
 
 exports.create = function(_page) {
     // Contains the current (x, y) position of the mouse pointer
+    var _is_moving = false;
     var _mouse_x = 0;
     var _mouse_y = 0;
+    var _timeout;
     var _mouse = {};
-    var _timeout = null;
+
+
+    function sendEvent(type) {
+        // _mouse_x and _mouse_y are relative to the top left of the document
+        // sendEvent() is relative to the top left corner of the viewport
+        var real_x = _mouse_x - _page.scrollPosition.left;
+        var real_y = _mouse_y - _page.scrollPosition.top;
+        _page.sendEvent(type, real_x, real_y);
+    }
 
 
     /**
@@ -59,22 +69,16 @@ exports.create = function(_page) {
      * x and y are relative to the document
      */
     function moveTo(x, y) {
-        moveTowards(x, y);
-
-        var top = _page.scrollPosition.top;
-        var left = _page.scrollPosition.left;
-
-        // _mouse_x and _mouse_y are relative to the top left of the document
-        // sendEvent() is relative to the top left corner of the viewport
-        _page.sendEvent('mousemove', _mouse_x - left, _mouse_y - top);
-
         if (isHovering(x, y)) {
-            _timeout = null;
-            return true;
+            _is_moving = false;
+            return;
         }
 
+        moveTowards(x, y);
+
+        // If another mousemove was scheduled, it should be canceled
+        clearTimeout(_timeout);
         _timeout = setTimeout(moveTo, 15, x, y);
-        return false;
     }
 
 
@@ -105,6 +109,8 @@ exports.create = function(_page) {
         } else {
             _mouse_y = y;
         }
+
+        sendEvent('mousemove');
     }
 
 
@@ -113,7 +119,7 @@ exports.create = function(_page) {
      */
     function isHovering(x, y) {
         var result = (x === _mouse_x && y === _mouse_y);
-        //console.log(' - isHovering', x, ',', y, ' -- ', _mouse_x, ', ', _mouse_y, result);
+        //console.log(' >> isHovering', x, ',', y, ' -- ', _mouse_x, ', ', _mouse_y, result);
         return result;
     }
 
@@ -141,21 +147,19 @@ exports.create = function(_page) {
 
     /**
      * Trigger event "type" at (x, y) if the mouse is there or
-     * move the mouse in that direction
+     * start moving the mouse in that direction
      */
     _mouse.sendEvent = function(type, x, y) {
+        if (_is_moving) return;
+
         if (isHovering(x, y)) {
-            // _mouse_x and _mouse_y are relative to the top left of the document
-            // sendEvent() is relative to the top left corner of the viewport
-            var real_x = _mouse_x - _page.scrollPosition.left;
-            var real_y = _mouse_y - _page.scrollPosition.top;
-            _page.sendEvent(type, real_x, real_y);
+            sendEvent(type);
             return true;
-        } else if (_timeout === null) {
-            scrollIntoView(x, y);
-            moveTo(x, y);
         }
 
+        _is_moving = true;
+        scrollIntoView(x, y);
+        moveTo(x, y);
         return false;
     };
 
