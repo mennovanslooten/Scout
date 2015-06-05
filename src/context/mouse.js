@@ -2,6 +2,12 @@
 
 //var _cli = require('./arguments');
 
+/**
+ * The mouse is a virtual construct in PhantomJS: you can send events to
+ * arbitrary coordinates on the page. This utility simulates a mouse pointer,
+ * keeps track of its (virtual) position and simulates movement between
+ * positions when triggering events.
+ */
 exports.create = function(_page) {
     // Contains the current (x, y) position of the mouse pointer
     var _is_moving = false;
@@ -11,6 +17,9 @@ exports.create = function(_page) {
     var _mouse = {};
 
 
+    /**
+     * Send the mouseevent "type" to the current mouse position
+     */
     function sendEvent(type) {
         // _mouse_x and _mouse_y are relative to the top left of the document
         // sendEvent() is relative to the top left corner of the viewport
