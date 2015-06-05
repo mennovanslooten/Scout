@@ -144,12 +144,6 @@ exports.create = function(_page) {
      * move the mouse in that direction
      */
     _mouse.sendEvent = function(type, x, y) {
-        if (!isHovering(x, y)) {
-            clearTimeout(_timeout);
-            scrollIntoView(x, y);
-            moveTo(x, y);
-        }
-
         if (isHovering(x, y)) {
             // _mouse_x and _mouse_y are relative to the top left of the document
             // sendEvent() is relative to the top left corner of the viewport
@@ -157,6 +151,9 @@ exports.create = function(_page) {
             var real_y = _mouse_y - _page.scrollPosition.top;
             _page.sendEvent(type, real_x, real_y);
             return true;
+        } else if (_timeout === null) {
+            scrollIntoView(x, y);
+            moveTo(x, y);
         }
 
         return false;
