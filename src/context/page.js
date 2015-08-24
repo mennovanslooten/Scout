@@ -72,6 +72,13 @@ exports.create = function() {
     };
 
 
+    _page.onUrlChanged = function(targetUrl) {
+        if (_cli.debug) {
+            _logger.comment('  ↳ ', targetUrl);
+        }
+    };
+
+
     _page.getURL = function() {
         return _page.evaluate(function() {
             return location.href;
