@@ -105,9 +105,8 @@ function parseTestFile(path, item) {
 function calculateColumns(test_file) {
     var columns = [];
 
-    for (var i = 0; i < test_file.lines.length; i++) {
-        var line = test_file.lines[i];
-        var parts = line.split(separator_rx);
+    for (var i = 0; i < test_file.actions.length; i++) {
+        var parts = test_file.actions[i].parts;
         if (parts.length < 2) continue;
 
         for (var ii = 0; ii < parts.length; ii++) {
