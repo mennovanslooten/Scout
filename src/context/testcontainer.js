@@ -84,6 +84,13 @@ exports.create = function(path) {
             var is_passed = false;
 
             if (!_page.is_loading) {
+
+                if (action_data.type === 'open' && _last_action_status === ''
+                    && _page.is_loaded) {
+                    _page.is_loaded = false;
+                    _page.is_loading = false;
+                }
+
                 // A test or action has passed when it returns an empty string,
                 // which means there were no errors to report
                 _last_action_status = conditionCallback();
