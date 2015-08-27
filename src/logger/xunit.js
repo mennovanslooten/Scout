@@ -74,6 +74,9 @@ function getXML(suite) {
 
 exports.write = function(filename, suite) {
     var xml = getXML(suite);
-    _fs.write(filename, xml, 'w');
+    if (filename === true) {
+        console.log(xml);
+    } else {
+        _fs.write(filename, xml, 'w');
+    }
 };
-

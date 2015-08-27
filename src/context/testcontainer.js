@@ -85,8 +85,8 @@ exports.create = function(path) {
 
             if (!_page.is_loading) {
 
-                if (action_data.type === 'open' && _last_action_status === ''
-                    && _page.is_loaded) {
+                // Reset page state explicitly for new OPEN actions
+                if (action_data.type === 'open' && _last_action_status === '') {
                     _page.is_loaded = false;
                     _page.is_loading = false;
                 }

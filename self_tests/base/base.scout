@@ -87,3 +87,7 @@ assertHasClass         .assertHasClass-2               .assertHasClass-1
 
 assertHasClass         "Lorem ipsum"                   .textSelector-1
 assertHasClass         "dolor sit amet"                .textSelector-2
+
+## Test if new OPEN actions work correctly
+open                   ./index-2.html
+assertPage             base/index-2.html

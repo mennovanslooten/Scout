@@ -13,8 +13,7 @@ var options = {
     timeout: 5000,
     step: 10,
     parallel: 1,
-    quiet: 0,
-    muted: false,
+    silent: false,
     newdumps: false,
     xunit: '',
     files: []
@@ -42,4 +41,3 @@ args.forEach(function(arg) {
 });
 
 module.exports = options;
-

@@ -12,6 +12,9 @@ var inverted = _style.inverted;
 
 
 function log() {
+    if (_cli.silent) {
+        return;
+    }
     console.log.apply(console, arguments);
 }
 
@@ -191,4 +194,3 @@ exports.dir = function(obj) {
     log('---------\n');
 
 };
-
