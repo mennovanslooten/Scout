@@ -1,7 +1,7 @@
 'use strict';
 
 var _fs  = require('fs');
-var _cli = require('./arguments');
+var _cli = require('./cli');
 
 function resemble(file1, file2, callback) {
     var images_data = [];
@@ -120,6 +120,3 @@ exports.create = function(page) {
         }
     };
 };
-
-
-

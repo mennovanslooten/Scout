@@ -2,7 +2,7 @@
 
 var _style = require('./logstyle');
 var _suite = require('../scout/testsuite');
-var _cli = require('../utils/arguments');
+var _cli = require('../utils/cli');
 var _xunit = require('./xunit');
 
 var fg = _style.fg;

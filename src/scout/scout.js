@@ -1,6 +1,6 @@
 'use strict';
 
-var _cli        = require('../utils/arguments');
+var _cli        = require('../utils/cli');
 var _testrunner = require('./testrunner');
 var _logger     = require('../logger/logger');
 var _suite      = require('./testsuite');

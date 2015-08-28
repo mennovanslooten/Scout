@@ -10,7 +10,7 @@ describe('logstyle', function() {
 
     describe('--color=false', function() {
         var logstyle = proxyquire('../src/logger/logstyle', {
-            '../utils/arguments': {
+            '../utils/cli': {
                 color: false
             }
         });
@@ -28,7 +28,7 @@ describe('logstyle', function() {
     describe('--color=true', function() {
 
         var logstyle = proxyquire('../src/logger/logstyle', {
-            '../utils/arguments': {
+            '../utils/cli': {
                 color: true
             }
         });
@@ -44,6 +44,3 @@ describe('logstyle', function() {
     });
 
 });
-
-
-

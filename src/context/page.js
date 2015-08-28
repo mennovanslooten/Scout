@@ -2,7 +2,7 @@
 'use strict';
 
 var _logger = require('../logger/logger');
-var _cli = require('../utils/arguments');
+var _cli = require('../utils/cli');
 
 exports.create = function() {
     var _page        = require('webpage').create();

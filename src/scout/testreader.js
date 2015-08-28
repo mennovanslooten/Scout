@@ -2,7 +2,7 @@
 
 var _test_files = [];
 var _fs = require('fs');
-var _cli = require('../utils/arguments');
+var _cli = require('../utils/cli');
 
 
 // This regular expression is used to separate arguments on a line.
@@ -167,6 +167,3 @@ exports.readTestFiles = function() {
 
     return _test_files;
 };
-
-
-

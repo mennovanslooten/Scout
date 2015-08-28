@@ -15,7 +15,7 @@ var request = proxyquire('../src/context/request', {
     '../logger/logger': {
         comment: sinon.spy()
     },
-    '../utils/arguments': {
+    '../utils/cli': {
         debug: false
     },
     fs: {
@@ -74,5 +74,3 @@ describe('request', function() {
     });
 
 });
-
-

@@ -1,7 +1,5 @@
 'use strict';
 
-//var _cli = require('./arguments');
-
 /**
  * The mouse is a virtual construct in PhantomJS: you can send events to
  * arbitrary coordinates on the page. This utility simulates a mouse pointer,

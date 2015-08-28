@@ -1,6 +1,6 @@
 'use strict';
 
-var _cli = require('../utils/arguments');
+var _cli = require('../utils/cli');
 var _remember = require('../utils/remember');
 
 exports.create = function(path) {

@@ -5,7 +5,7 @@ var proxyquire = require('proxyquire').noPreserveCache().noCallThru();
 
 
 function proxy(args) {
-    return proxyquire('../src/utils/arguments', {
+    return proxyquire('../src/utils/cli', {
         system: {
             args: args
         }
@@ -13,7 +13,7 @@ function proxy(args) {
 }
 
 
-describe('arguments', function() {
+describe('cli', function() {
 
     it('should parse --bool params', function() {
         var args = proxy(['', '--version', '--color', '--reformat', '--faildump']);
@@ -40,4 +40,3 @@ describe('arguments', function() {
     });
 
 });
-

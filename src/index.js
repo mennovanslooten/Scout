@@ -1,6 +1,6 @@
 'use strict';
 
-var _cli = require('./utils/arguments');
+var _cli = require('./utils/cli');
 
 if (_cli.version) {
     // if --version is passed, print version and exit

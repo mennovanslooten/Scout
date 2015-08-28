@@ -1,7 +1,7 @@
 'use strict';
 
 // http://misc.flogisoft.com/bash/tip_colors_and_formatting
-var _cli = require('../utils/arguments');
+var _cli = require('../utils/cli');
 
 var postfix = '\u001b[0m';
 var prefix = '\u001b[';

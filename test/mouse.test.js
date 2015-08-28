@@ -18,7 +18,7 @@ var page_stub = {
 };
 
 var mouse = proxyquire('../src/context/mouse', {
-    '../utils/arguments': {
+    '../utils/cli': {
         timeout: 1,
         delay: 1
     }
@@ -72,5 +72,3 @@ describe('mouse', function() {
     });
 
 });
-
-
