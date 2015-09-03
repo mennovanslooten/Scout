@@ -37,6 +37,7 @@ exports.create = function(_page) {
     // All these asserts and actions are defined in lib/client.js and executed
     // in the context of the webpage
     [
+        // 'displayActionData',
         'assertText',
         'assertExists',
         'assertIsA',
@@ -65,4 +66,3 @@ exports.create = function(_page) {
 
     return handlers;
 };
-

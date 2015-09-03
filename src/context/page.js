@@ -98,7 +98,10 @@ exports.create = function() {
     };
 
 
-    _page.dump = function(title, boundaries) {
+    /**
+     * Dumps the current viewport to .png
+     */
+    _page.dump = function(title, boundaries, action_data) {
         _page.clipRect = boundaries ? boundaries : {
             top: _page.scrollPosition.top,
             left: _page.scrollPosition.left,
@@ -108,15 +111,49 @@ exports.create = function() {
 
         title = _page.getDumpName(title);
 
-        /*
-        console.dir('clipRect:',
-            _page.clipRect.top,
-            _page.clipRect.left,
-            _page.clipRect.width,
-            _page.clipRect.height
-        );
-        */
+        if (action_data) {
+            _page.displayActionData(action_data);
+        }
+
         _page.render(title);
+        _page.hideActionData();
+    };
+
+
+    /**
+     * Creates a <div> with the action data for use in screendumps
+     */
+    _page.displayActionData = function(action_data) {
+        if (!_cli.debug) return;
+
+        _page.evaluate(function(action_data) {
+            var $action_data = jQuery('<div id="scout_action_data"/>');
+            // Needed because https://github.com/ariya/phantomjs/issues/10619
+            var top = jQuery(window).scrollTop() + jQuery(window).height() - 16;
+            $action_data.css({
+                background: 'black',
+                color: 'white',
+                opacity: 0.75,
+                font: '14px/16px monospace',
+                position: 'fixed',
+                right: 0,
+                top: top,
+                zIndex: 1000
+            });
+            // \xa0 is a non-breaking space
+            $action_data.text(action_data.parts.join('\xa0\xa0\xa0\xa0'));
+            $action_data.prependTo('body');
+        }, action_data);
+    };
+
+
+    /**
+     * Creates a <div> with the action data for use in screendumps
+     */
+    _page.hideActionData = function() {
+        _page.evaluate(function() {
+            jQuery('#scout_action_data').remove();
+        });
     };
 
 

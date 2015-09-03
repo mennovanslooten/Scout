@@ -7,6 +7,7 @@ exports.create = function(path) {
     var _page               = require('./page').create();
     var _handlers           = require('./handlers').create(_page, path);
     var _last_action_status = '';
+    var _ignore_list        = ['log', 'htmldump', 'screendump', 'mockRequest', 'unmockRequest'];
 
 
     function parseArguments(args) {
@@ -117,7 +118,7 @@ exports.create = function(path) {
                 }, _cli.step);
             }
         } else {
-            failCallback(_last_action_status);
+            failCallback(_last_action_status || 'Could not execute because page failed to load.');
         }
     }
 
@@ -131,16 +132,17 @@ exports.create = function(path) {
         failDump: function(action_data, test_data) {
             if (_cli.faildump) {
                 var title = 'faildump__' + test_data.path.replace(/\.?\//g, '_');
-                _page.dump(title);
+                _page.dump(title, null, action_data);
             }
         },
 
 
         passDump: function(action_data, test_data) {
-            if (_cli.passdump) {
+            var ignore = _ignore_list.indexOf(action_data.type) > -1;
+            if (_cli.passdump && !ignore) {
                 var title = 'passdump__' + test_data.path.replace(/\.?\//g, '_');
                 title += '__' + new Date().valueOf();
-                _page.dump(title);
+                _page.dump(title, null, action_data);
             }
         },
 

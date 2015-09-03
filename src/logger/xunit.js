@@ -46,7 +46,7 @@ function getTestCaseXML(action, test) {
 
 
 function getTestSuiteXML(test) {
-    var timestamp = test.start_time.toISOString();
+    // var timestamp = test.start_time.toISOString();
     var duration = getDuration(test);
     var last_index = test.path.lastIndexOf(_fs.separator);
     var name = test.path.substr(last_index + 1);
