@@ -26,10 +26,11 @@ describe('cli', function() {
 
 
     it('should parse --name=value params', function() {
-        var args = proxy(['', '--timeout=1000', '--step=5']);
+        var args = proxy(['', '--timeout=1000', '--step=5', '--passdump=path/to/files']);
 
         assert.equal(args.timeout, 1000);
         assert.equal(args.step, 5);
+        assert.equal(args.passdump, 'path/to/files');
     });
 
 

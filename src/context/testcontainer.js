@@ -1,5 +1,6 @@
 'use strict';
 
+var _fs = require('fs');
 var _cli = require('../utils/cli');
 var _remember = require('../utils/remember');
 
@@ -132,6 +133,9 @@ exports.create = function(path) {
         failDump: function(action_data, test_data) {
             if (_cli.faildump) {
                 var title = 'faildump__' + test_data.path.replace(/\.?\//g, '_');
+                if (typeof _cli.faildump === 'string') {
+                    title = _cli.faildump + _fs.separator + title;
+                }
                 _page.dump(title, null, action_data);
             }
         },
@@ -142,6 +146,9 @@ exports.create = function(path) {
             if (_cli.passdump && !ignore) {
                 var title = 'passdump__' + test_data.path.replace(/\.?\//g, '_');
                 title += '__' + new Date().valueOf();
+                if (typeof _cli.passdump === 'string') {
+                    title = _cli.passdump + _fs.separator + title;
+                }
                 _page.dump(title, null, action_data);
             }
         },
