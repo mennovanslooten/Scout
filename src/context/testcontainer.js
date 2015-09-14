@@ -54,7 +54,7 @@ exports.create = function(path) {
                 // will be replaced with the value of _remember.get(variable_name)
                 // if it exists
                 result = arg.replace(variable, function(match, variable_name) {
-                    return _remember.get(variable_name) || variable_name;
+                    return _remember.get(variable_name) || _cli[variable_name] || variable_name;
                 });
                 return result;
             }
