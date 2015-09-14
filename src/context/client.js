@@ -87,17 +87,31 @@ var ScoutClient = {};
     }
 
 
+    function isIntersection(a, b) {
+        // Only if any of the following tests are true, there can not be an intersection
+        // between the 2 rectangles
+        var is_separate = a.right < b.left ||
+                a.left > b.right ||
+                a.top > b.bottom ||
+                a.bottom < b.top;
+
+        return !is_separate;
+    }
+
+
     function isInViewport($elt) {
         var $win = $(window);
         var elt = $elt[0];
-        var rect = elt.getBoundingClientRect();
+        var elt_rect = elt.getBoundingClientRect();
+        var win_rect = {
+            left: 0,
+            right: $win.width(),
+            top: 0,
+            bottom: $win.height()
+        };
 
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= $win.height() &&
-            rect.right <= $win.width()
-        );
+        // The element is in the viewport if its rectangle intersects with the viewport rectangle
+        return isIntersection(elt_rect, win_rect);
     }
 
 
@@ -319,7 +333,25 @@ var ScoutClient = {};
 
     ScoutClient.assertValue = function($elts, value) {
         value = value.trim();
-        var actual = $elts.val().trim();
+        var actual;
+        // If the targeted element is a label, find the associated
+        // input element
+        if ($elts.is('label')) {
+            var $target;
+            if ($elts.attr('for')) {
+                $target = $('#' + $elts.attr('for'));
+            } else {
+                $target = $elts.find(':input').first();
+            }
+
+            if ($target && $target.length) {
+                actual = $target.val().trim();
+            } else {
+                return 'No input elements matching <' + $elts.selector + '> found';
+            }
+        } else {
+            actual = $elts.val().trim();
+        }
         if (actual === value) {
             return '';
         }
