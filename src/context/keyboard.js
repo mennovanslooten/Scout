@@ -30,6 +30,7 @@ exports.create = function(_page) {
 
         // Typing has finished
         _timeout = null;
+        _current_text = null;
         return '';
     };
 
