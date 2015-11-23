@@ -218,19 +218,19 @@ describe('handlers', function() {
         });
 
         //it('should return the return value of keyboard.type()', function() {
-            //remote_stub.assertVisible.returns('');
-            //remote_stub.getCoordinate.returns({left: 10, top: 100});
+        //remote_stub.assertVisible.returns('');
+        //remote_stub.getCoordinate.returns({left: 10, top: 100});
 
-            //// The first time sets the focus
-            //mouse_stub.sendEvent.returns('');
-            //var result = type(selector, 'Lorem ipsum');
-            //console.log('xxx' + result);
-            //assert.notEqual(result, '');
+        //// The first time sets the focus
+        //mouse_stub.sendEvent.returns('');
+        //var result = type(selector, 'Lorem ipsum');
+        //console.log('xxx' + result);
+        //assert.notEqual(result, '');
 
-            //// The first time sets the focus
-            //result = type(selector, 'Lorem ipsum');
-            //console.log('yyy' + result);
-            //assert.notEqual(result, '');
+        //// The first time sets the focus
+        //result = type(selector, 'Lorem ipsum');
+        //console.log('yyy' + result);
+        //assert.notEqual(result, '');
         //});
     });
 

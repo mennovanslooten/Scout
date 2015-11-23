@@ -1,10 +1,33 @@
 #!/bin/bash
-SOURCE="${BASH_SOURCE[0]}"
-while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
-  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-  SOURCE="$(readlink "$SOURCE")"
-  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
-done
-DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
-"$DIR"/../node_modules/phantomjs/bin/phantomjs "$DIR"/../src/index.js $@
+# Find the absolute path of Scout's bin file
+SOURCE="${BASH_SOURCE[0]}"
+
+while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+    DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+    SOURCE="$(readlink "$SOURCE")"
+    [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+
+
+# Scout's index.js is relative to the bin
+SCOUT="$( cd -P "$( dirname "$SOURCE" )" && pwd )/../src/index.js"
+
+
+# Find the first parent dir that contains phantomjs
+NPM_ROOT=$(pwd -P 2>/dev/null || command pwd)
+while [ ! -e "$NPM_ROOT/node_modules/phantomjs/bin/phantomjs" ]; do
+    NPM_ROOT=${NPM_ROOT%/*} # go up a directory
+    if [ "$NPM_ROOT" = "" ]; then break; fi
+done
+
+
+if [ "$NPM_ROOT" = "" ]; then
+    PHANTOMJS="phantomjs"
+else
+    PHANTOMJS="$NPM_ROOT/node_modules/phantomjs/bin/phantomjs"
+fi
+
+# Kick out the jams
+"$PHANTOMJS" "$SCOUT" $@
+
