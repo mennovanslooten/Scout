@@ -3,6 +3,7 @@
 
 var _logger = require('../logger/logger');
 var _cli = require('../utils/cli');
+var _fs = require('fs');
 
 exports.create = function() {
     var _page        = require('webpage').create();
@@ -174,7 +175,12 @@ exports.create = function() {
         });
 
         if (!has_jquery) {
-            _page.injectJs('../node_modules/jquery/dist/jquery.js');
+            if (!_page.injectJs('../node_modules/jquery/dist/jquery.js')) {
+                if (!_page.injectJs('../../../node_modules/jquery/dist/jquery.js')) {
+                    _logger.error('Unable to locate jQuery. Did you run npm install?');
+                    phantom.exit(1);
+                }
+            }
 
             _page.evaluate(function() {
                 jQuery.noConflict();
@@ -195,3 +201,4 @@ exports.create = function() {
 
     return _page;
 };
+
