@@ -3,11 +3,11 @@
 var _fs = require('fs');
 var _cli = require('../utils/cli');
 var _remember = require('../utils/remember');
+//var _logger = require('../logger/logger');
 
 exports.create = function(path) {
     var _page               = require('./page').create();
     var _handlers           = require('./handlers').create(_page, path);
-    var _last_action_status = '';
     var _ignore_list        = ['log', 'htmldump', 'screendump', 'mockRequest', 'unmockRequest'];
 
 
@@ -81,45 +81,51 @@ exports.create = function(path) {
      * return "" within a given time, call failCallback
      */
     function waitFor(action_data, conditionCallback, passCallback, skipCallback, failCallback, remaining_time) {
-        if (remaining_time > 0) {
-            var d1 = new Date();
-            var is_passed = false;
+        if (remaining_time < 0) {
+            failCallback(action_data.message);
+            return;
+        }
 
-            if (!_page.is_loading) {
+        var d1 = new Date();
+        var is_passed = false;
 
-                // Reset page state explicitly for new OPEN actions
-                if (action_data.type === 'open' && _last_action_status === '') {
-                    _page.is_loaded = false;
-                    _page.is_loading = false;
+        action_data.tries++;
+
+        if (!_page.is_loading && _page.is_loaded) {
+            var is_reload_action = ['open', 'back', 'forward'].indexOf(action_data.type) > -1;
+
+            if (is_reload_action) {
+                if (action_data.tries === 1) {
+                    //_logger.comment('waitFor: RELOAD START', action_data.type);
+                    action_data.message = conditionCallback();
+                } else {
+                    //_logger.comment('waitFor: RELOAD DONE', action_data.type);
+                    action_data.message = '';
+                    is_passed = true;
                 }
-
-                // A test or action has passed when it returns an empty string,
-                // which means there were no errors to report
-                _last_action_status = conditionCallback();
-                if (typeof _last_action_status !== 'string') {
-                    _last_action_status = 'Unknown error';
-                }
-
-                is_passed = _last_action_status === '';
-            }
-
-            if (is_passed) {
-                passCallback();
-            } else if (action_data.optional) {
-                // If it didn't pass but is optional skip it
-                skipCallback(_last_action_status);
+            } else if (action_data.message === '') {
+                //_logger.comment('waitFor: ACTION DONE', action_data.type);
+                is_passed = true;
             } else {
-                // otherwise schedule another try
-                setTimeout(function() {
-                    var d2 = new Date();
-                    var elapsed = d2 - d1;
-                    remaining_time -= elapsed;
-
-                    waitFor(action_data, conditionCallback, passCallback, skipCallback, failCallback, remaining_time);
-                }, _cli.step);
+                //_logger.comment('waitFor: ACTION START', action_data.type);
+                action_data.message = conditionCallback();
             }
+        }
+
+        if (is_passed) {
+            passCallback();
+        } else if (action_data.optional) {
+            // If it didn't pass but is optional skip it
+            skipCallback(action_data.message);
         } else {
-            failCallback(_last_action_status || 'Could not execute because page failed to load.');
+            // otherwise schedule another try
+            setTimeout(function() {
+                var d2 = new Date();
+                var elapsed = d2 - d1;
+                remaining_time -= elapsed;
+
+                waitFor(action_data, conditionCallback, passCallback, skipCallback, failCallback, remaining_time);
+            }, _cli.step);
         }
     }
 
@@ -157,6 +163,7 @@ exports.create = function(path) {
         runAction: function(action_data, passCallback, skipCallback, failCallback) {
             var handler = _handlers.getHandler(action_data.type);
             action_data.args = parseArguments(action_data.args);
+            action_data.tries = 0;
             action_data.start_time = new Date();
 
             if (handler) {

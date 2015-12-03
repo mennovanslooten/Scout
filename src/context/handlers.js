@@ -39,19 +39,6 @@ exports.create = function(_page, test_path) {
                 url = base_path + url.substr(1);
             }
 
-            if (_page.is_loaded) {
-                if (_page.getURL() === 'about:blank') {
-                    return 'Error opening <' + url + '>';
-                }
-
-                _mouse.reset();
-                return '';
-            }
-
-            if (_page.is_loading) {
-                return 'Opening <' + url + '> took too long';
-            }
-
             if (dimensions) {
                 local.resize(dimensions);
             } else {
@@ -61,22 +48,19 @@ exports.create = function(_page, test_path) {
                 };
             }
 
-            _page.is_loaded = false;
-            _page.is_loading = true;
-
+            //_mouse.reset();
             _page.open(url);
-
             return 'Opening <' + url + '> took too long';
         },
 
         back: function() {
             _page.goBack();
-            return '';
+            return 'Going <back> took too long';
         },
 
         forward: function() {
             _page.goForward();
-            return '';
+            return 'Going <forward> took too long';
         },
 
         assertTitle: function(sub_title) {
