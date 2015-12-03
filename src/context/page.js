@@ -3,12 +3,11 @@
 
 var _logger = require('../logger/logger');
 var _cli = require('../utils/cli');
-var _fs = require('fs');
 
 exports.create = function() {
     var _page        = require('webpage').create();
 
-    _page.is_loaded  = false;
+    _page.is_loaded  = true;
     _page.is_loading = false;
 
     _page.customHeaders = {
@@ -30,6 +29,13 @@ exports.create = function() {
      * queue
      */
     _page.onLoadFinished = function pageLoadFinished() {
+        _page.is_loaded = true;
+        _page.is_loading = false;
+
+        if (_cli.debug) {
+            _logger.comment('   >> onLoadFinished', _page.url);
+        }
+
         setupPage();
     };
 
@@ -44,6 +50,10 @@ exports.create = function() {
             top: 0,
             left: 0
         };
+
+        if (_cli.debug) {
+            _logger.comment('   >> onLoadStarted', _page.url);
+        }
     };
 
 
@@ -75,7 +85,7 @@ exports.create = function() {
 
     _page.onUrlChanged = function(targetUrl) {
         if (_cli.debug) {
-            _logger.comment('  ↳ ', targetUrl);
+            _logger.comment('    >> onUrlChanged', targetUrl);
         }
     };
 
@@ -163,8 +173,6 @@ exports.create = function() {
      * Then load the Scout jQuery assertions and utilities
      */
     function setupPage() {
-        if (_page.is_loaded) return;
-
         var has_jquery = _page.evaluate(function() {
             try {
                 jQuery.isFunction(jQuery);
@@ -194,9 +202,6 @@ exports.create = function() {
         _page.evaluate(function() {
             document.body.bgColor = 'white';
         });
-
-        _page.is_loaded = true;
-        _page.is_loading = false;
     }
 
     return _page;

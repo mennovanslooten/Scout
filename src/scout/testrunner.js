@@ -2,6 +2,14 @@
 
 var _logger = require('../logger/logger');
 
+
+/*
+function isUserAction(type) {
+    return ['include', 'click', 'moveMouseTo', 'type', 'open', 'uploadFile', 'back', 'forward'].indexOf(type) > -1;
+}
+*/
+
+
 /**
  * Sequentially run all the actions in a test. Run passCallback if all
  * actions are succesfully completed, otherwise run failCallback after the
@@ -30,6 +38,30 @@ exports.run = function(test_data, passCallback, failCallback) {
     }
 
 
+    /*
+    function compare(action_data) {
+        _logger.comment('COMPARING');
+        _logger.dir(action_data);
+        var path = action_data.path.replace(/\//g, '__') + '--' + action_data.line_nr + '--' + action_data.type;
+
+        var resemble_action = {
+            optional: false,
+            type: 'assertResembles',
+            args: [path],
+            path: action_data.path
+        };
+
+        console.log('before:', test_data.actions.length);
+        test_data.actions.splice(action_index + 1, 0, resemble_action);
+        console.log('after:', test_data.actions.length);
+
+        nextAction();
+
+        //testcontainer.runAction(resemble_action, passAction, skipAction, failAction);
+    }
+    */
+
+
     /**
      * Register an action as passed
      */
@@ -37,6 +69,14 @@ exports.run = function(test_data, passCallback, failCallback) {
         _logger.passAction(action_data, test_data);
         testcontainer.passDump(action_data, test_data);
         test_data.passed.push(action_data);
+
+        /*
+        if (isUserAction(action_data.type)) {
+            compare(action_data);
+        } else {
+            nextAction();
+        }
+        */
         nextAction();
     }
 
