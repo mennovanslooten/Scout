@@ -50,17 +50,20 @@ exports.create = function(_page, test_path) {
 
             //_mouse.reset();
             _page.open(url);
-            return 'Opening <' + url + '> took too long';
+            return '';
+            //return 'Opening <' + url + '> took too long';
         },
 
         back: function() {
             _page.goBack();
-            return 'Going <back> took too long';
+            return '';
+            //return 'Going <back> took too long';
         },
 
         forward: function() {
             _page.goForward();
-            return 'Going <forward> took too long';
+            return '';
+            //return 'Going <forward> took too long';
         },
 
         assertTitle: function(sub_title) {

@@ -7,7 +7,6 @@ var _cli = require('../utils/cli');
 exports.create = function() {
     var _page        = require('webpage').create();
 
-    _page.is_loaded  = true;
     _page.is_loading = false;
 
     _page.customHeaders = {
@@ -25,15 +24,13 @@ exports.create = function() {
 
 
     /**
-     * PhantomJS thinks the page is done, start checking the resource request
-     * queue
+     * Page load finished
      */
     _page.onLoadFinished = function pageLoadFinished() {
-        _page.is_loaded = true;
         _page.is_loading = false;
 
         if (_cli.debug) {
-            _logger.comment('   >> onLoadFinished', _page.url);
+            _logger.comment('  ↳ ', _page.url);
         }
 
         setupPage();
@@ -41,22 +38,20 @@ exports.create = function() {
 
 
     /**
-     * Reset page properties
+     * Page load started
      */
     _page.onLoadStarted = function pageLoadStarted() {
-        _page.is_loaded = false;
         _page.is_loading = true;
         _page.scrollPosition = {
             top: 0,
             left: 0
         };
-
-        if (_cli.debug) {
-            _logger.comment('   >> onLoadStarted', _page.url);
-        }
     };
 
 
+    /**
+     * Clear localStorage before pages are loaded
+     */
     _page.onInitialized = function initialized() {
         _page.evaluate(function() {
             window.localStorage.clear();
@@ -64,6 +59,9 @@ exports.create = function() {
     };
 
 
+    /**
+     * Log in-page errors to the command line
+     */
     _page.onError = function pageError(msg, args) {
         if (!_cli.debug || !arguments.length) return;
         _logger.error('Error on page: ' + msg);
@@ -71,23 +69,25 @@ exports.create = function() {
             //_logger.error(' - ', args[i]);
             _logger.dir(args[i]);
         }
-
-
     };
 
 
+    /**
+     * Log in-page console calls to the command line
+     */
     _page.onConsoleMessage = function pageConsoleMessage(message) {
         if (_cli.debug) {
-            _logger.comment('    // ', message);
+            _logger.comment('  // ', message);
         }
     };
 
 
-    _page.onUrlChanged = function(targetUrl) {
-        if (_cli.debug) {
-            _logger.comment('    >> onUrlChanged', targetUrl);
-        }
-    };
+    // _page.onUrlChanged = function(targetUrl) {
+    //     if (_cli.debug) {
+    //         // _logger.comment('    >> onUrlChanged', targetUrl);
+    //         _logger.comment('  ↳ ', targetUrl);
+    //     }
+    // };
 
 
     _page.getURL = function() {
@@ -206,4 +206,3 @@ exports.create = function() {
 
     return _page;
 };
-

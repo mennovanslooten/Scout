@@ -89,25 +89,10 @@ exports.create = function(path) {
         var d1 = new Date();
         var is_passed = false;
 
-        action_data.tries++;
-
-        if (!_page.is_loading && _page.is_loaded) {
-            var is_reload_action = ['open', 'back', 'forward'].indexOf(action_data.type) > -1;
-
-            if (is_reload_action) {
-                if (action_data.tries === 1) {
-                    //_logger.comment('waitFor: RELOAD START', action_data.type);
-                    action_data.message = conditionCallback();
-                } else {
-                    //_logger.comment('waitFor: RELOAD DONE', action_data.type);
-                    action_data.message = '';
-                    is_passed = true;
-                }
-            } else if (action_data.message === '') {
-                //_logger.comment('waitFor: ACTION DONE', action_data.type);
+        if (!_page.is_loading) {
+            if (action_data.message === '') {
                 is_passed = true;
             } else {
-                //_logger.comment('waitFor: ACTION START', action_data.type);
                 action_data.message = conditionCallback();
             }
         }
@@ -163,7 +148,6 @@ exports.create = function(path) {
         runAction: function(action_data, passCallback, skipCallback, failCallback) {
             var handler = _handlers.getHandler(action_data.type);
             action_data.args = parseArguments(action_data.args);
-            action_data.tries = 0;
             action_data.start_time = new Date();
 
             if (handler) {
