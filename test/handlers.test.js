@@ -69,9 +69,9 @@ describe('handlers', function() {
     describe('open', function() {
         var open = handlers.getHandler('open');
 
-        it('should return a non-empty string', function() {
+        it('should return an empty string', function() {
             var result = open('./path/to/index.html');
-            assert.notEqual(result, '');
+            assert.equal(result, '');
         });
 
         it('should open the page', function() {
@@ -85,28 +85,12 @@ describe('handlers', function() {
             });
         });
 
-        it('should set loading status', function() {
-            assert.equal(page_stub.is_loaded, false);
-            assert.equal(page_stub.is_loading, true);
-        });
-
-        it('should return empty string when loaded', function() {
-            page_stub.is_loaded = true;
-            page_stub.is_loading = false;
-            var result = open('./path/to/index.html');
-            assert.equal(result, '');
-        });
-
         it('should set custom viewportSize', function() {
-            page_stub.is_loaded = false;
-            page_stub.is_loading = false;
             open('./path/to/index.html', '800x600');
             assert.deepEqual(page_stub.viewportSize, {
                 width: 800,
                 height: 600
             });
-
-            //console.dir(page_stub.viewportSize);
         });
 
     });
