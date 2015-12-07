@@ -3,12 +3,13 @@
 var _fs = require('fs');
 var _cli = require('../utils/cli');
 var _remember = require('../utils/remember');
+var pad = require('../utils/pad').padLeft;
 //var _logger = require('../logger/logger');
 
 exports.create = function(path) {
     var _page               = require('./page').create();
     var _handlers           = require('./handlers').create(_page, path);
-    var _ignore_list        = ['log', 'htmldump', 'screendump', 'mockRequest', 'unmockRequest'];
+    var _ignore_list        = ['log', 'set', 'htmldump', 'screendump', 'mockRequest', 'unmockRequest'];
 
 
     function parseArguments(args) {
@@ -75,6 +76,21 @@ exports.create = function(path) {
     }
 
 
+
+
+    function createDumpName(action_data, prefix) {
+        var filename = prefix ? prefix + '--' : '';
+        filename += action_data.path.replace(/\.?\//g, '_');
+        filename = filename.replace('.scout', '');
+        filename = filename + '--' + pad(action_data.line_nr, 4);
+        filename = filename + '_' + action_data.type + '.png';
+        if (prefix && typeof _cli[prefix] === 'string') {
+            filename = _cli[prefix] + _fs.separator + filename;
+        }
+        return filename;
+    }
+
+
     /**
      * Execute conditionCallback() repeatedly until it returns an empty string
      * ("" = no error), then call passCallback. If conditionCallback does not
@@ -123,11 +139,8 @@ exports.create = function(path) {
 
         failDump: function(action_data, test_data) {
             if (_cli.faildump) {
-                var title = 'faildump__' + test_data.path.replace(/\.?\//g, '_');
-                if (typeof _cli.faildump === 'string') {
-                    title = _cli.faildump + _fs.separator + title;
-                }
-                _page.dump(title, null, action_data);
+                var filename = createDumpName(action_data, 'faildump');
+                _page.dump(filename, null, action_data);
             }
         },
 
@@ -135,12 +148,8 @@ exports.create = function(path) {
         passDump: function(action_data, test_data) {
             var ignore = _ignore_list.indexOf(action_data.type) > -1;
             if (_cli.passdump && !ignore) {
-                var title = 'passdump__' + test_data.path.replace(/\.?\//g, '_');
-                title += '__' + new Date().valueOf();
-                if (typeof _cli.passdump === 'string') {
-                    title = _cli.passdump + _fs.separator + title;
-                }
-                _page.dump(title, null, action_data);
+                var filename = createDumpName(action_data, 'passdump');
+                _page.dump(filename, null, action_data);
             }
         },
 
@@ -184,6 +193,20 @@ exports.create = function(path) {
                 action_data.message = 'Unknown action: <' + action_data.type + '>';
                 failCallback(action_data);
             }
+        },
+
+
+        compareActionResult: function(action_data, cb) {
+            var filename = createDumpName(action_data, 'compare');
+
+            var resemble_action = {
+                optional: false,
+                type: 'assertResembles',
+                args: [filename],
+                path: action_data.path
+            };
+
+            this.runAction(resemble_action, cb, cb, cb);
         }
 
     };

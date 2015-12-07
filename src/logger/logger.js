@@ -4,6 +4,7 @@ var _style = require('./logstyle');
 var _suite = require('../scout/testsuite');
 var _cli = require('../utils/cli');
 var _xunit = require('./xunit');
+var pad = require('../utils/pad').padRight;
 
 var fg = _style.fg;
 //var bg = _style.bg;
@@ -33,12 +34,8 @@ function columnize(args, columns) {
     var result = '';
 
     columns.forEach(function(col_width, index) {
-        col_width += 5;
         var arg = args[index] || '';
-        result += arg;
-        if (arg.length < col_width) {
-            result += new Array(col_width - arg.length).join(' ');
-        }
+        result += pad(arg, col_width + 4, ' ');
     });
 
     return result;
@@ -90,7 +87,7 @@ exports.log = function() {
 
 
 exports.passAction = function(action_data, test_data) {
-    if (_cli.parallel > 1 || action_data.type === 'set') return;
+    if (_cli.parallel > 1 || action_data.type === 'set' || typeof action_data.line_nr === 'undefined') return;
 
     if (action_data.type === 'log') {
         log(fg.default('\n## ' + action_data.args));

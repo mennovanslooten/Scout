@@ -21,6 +21,7 @@ function getDuration(obj) {
 
 
 function getTestCaseXML(action, test) {
+    if (typeof action.line_nr === 'undefined') return '';
     var type = action.type;
     var last_index = action.path.lastIndexOf(_fs.separator);
     var name = action.path.substr(last_index + 1);
