@@ -77,40 +77,42 @@ exports.create = function(page) {
 
     return {
         compare: function(boundaries, orig_filename, min_perc) {
-            // Paths need to be made absolute, otherwise resemble will try to load them
-            // from the wrong directory
-            orig_filename = _fs.workingDirectory + _fs.separator + page.getDumpName(orig_filename);
-
             var temp_filename = page.getDumpName(orig_filename + '-compare');
 
-            if (curr_filename !== orig_filename) {
+            // Paths need to be made absolute, otherwise resemble will try to load them
+            // from the wrong directory
+            var orig_path = _fs.workingDirectory + _fs.separator + page.getDumpName(orig_filename);
+            var temp_path = _fs.workingDirectory + _fs.separator + page.getDumpName(temp_filename);
+
+
+            if (curr_filename !== orig_path) {
                 // Save original if it doesn't exist already
-                var original_exists = _fs.isReadable(orig_filename) && _fs.isFile(orig_filename);
+                var original_exists = _fs.isReadable(orig_path) && _fs.isFile(orig_path);
 
                 // Force new resemble dumps
                 if (original_exists && _cli.newdumps) {
-                    _fs.remove(orig_filename);
+                    _fs.remove(orig_path);
                     original_exists = false;
                 }
 
                 if (!original_exists) {
-                    page.dump(orig_filename, boundaries);
+                    page.dump(orig_path, boundaries);
                 }
 
                 comparison_message = 'Comparison could not be finished for unknown reasons';
-                curr_filename = orig_filename;
+                curr_filename = orig_path;
             }
 
             if (comparison_message) {
-                page.dump(temp_filename, boundaries);
+                page.dump(temp_path, boundaries);
 
-                resemble(temp_filename, orig_filename, function(match_perc) {
+                resemble(temp_path, orig_path, function(match_perc) {
                     if (match_perc < min_perc) {
                         comparison_message = '<' + temp_filename + '> does not resemble <' + orig_filename + '>';
-                        comparison_message += ' (' + match_perc + '% < ' + min_perc + '%)';
+                        comparison_message += ' (' + match_perc + '% match)';
                     } else {
                         // Comparison matches, remove temporary file
-                        _fs.remove(temp_filename);
+                        _fs.remove(temp_path);
                         comparison_message = '';
                     }
                 });

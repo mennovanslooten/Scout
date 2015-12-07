@@ -1,13 +1,12 @@
 'use strict';
 
 var _logger = require('../logger/logger');
+var _cli = require('../utils/cli');
 
 
-/*
 function isUserAction(type) {
     return ['include', 'click', 'moveMouseTo', 'type', 'open', 'uploadFile', 'back', 'forward'].indexOf(type) > -1;
 }
-*/
 
 
 /**
@@ -38,28 +37,12 @@ exports.run = function(test_data, passCallback, failCallback) {
     }
 
 
-    /*
-    function compare(action_data) {
-        _logger.comment('COMPARING');
-        _logger.dir(action_data);
-        var path = action_data.path.replace(/\//g, '__') + '--' + action_data.line_nr + '--' + action_data.type;
-
-        var resemble_action = {
-            optional: false,
-            type: 'assertResembles',
-            args: [path],
-            path: action_data.path
-        };
-
-        console.log('before:', test_data.actions.length);
-        test_data.actions.splice(action_index + 1, 0, resemble_action);
-        console.log('after:', test_data.actions.length);
-
+    function handleCompareResult(action_data) {
+        if (action_data.message) {
+            _logger.skipAction(action_data, test_data);
+        }
         nextAction();
-
-        //testcontainer.runAction(resemble_action, passAction, skipAction, failAction);
     }
-    */
 
 
     /**
@@ -70,14 +53,11 @@ exports.run = function(test_data, passCallback, failCallback) {
         testcontainer.passDump(action_data, test_data);
         test_data.passed.push(action_data);
 
-        /*
-        if (isUserAction(action_data.type)) {
-            compare(action_data);
+        if (_cli.compare && isUserAction(action_data.type)) {
+            testcontainer.compareActionResult(action_data, handleCompareResult);
         } else {
             nextAction();
         }
-        */
-        nextAction();
     }
 
 
