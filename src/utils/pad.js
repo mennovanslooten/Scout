@@ -1,3 +1,5 @@
+'use strict';
+
 function getPadding(value, width, pad_char) {
     pad_char = pad_char || '0';
     return new Array(width - value.length + 1).join(pad_char);

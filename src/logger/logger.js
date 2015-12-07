@@ -97,7 +97,7 @@ exports.passAction = function(action_data, test_data) {
         var duration = action_data.end_time - action_data.start_time;
         duration = '[' + duration + 'ms]';
 
-        log(fg.green('  ✓ '), fg.cyan(message), fg.blue(duration));
+        log(fg.green(' ✓ '), fg.cyan(message), fg.blue(duration));
     }
 };
 
@@ -108,8 +108,8 @@ exports.skipAction = function(action_data, test_data) {
     var args = [action_data.type].concat(action_data.args);
     var message = columnize(args, test_data.columns);
 
-    log(fg.yellow('  ★ '), fg.cyan(message));
-    log(fg.yellow('     ' + action_data.message));
+    log(fg.yellow(' ★ '), fg.cyan(message));
+    log(fg.yellow('    ' + action_data.message));
 };
 
 
@@ -120,8 +120,8 @@ exports.failAction = function(action_data, test_data) {
     var args = [action_data.type].concat(action_data.args);
     var message = columnize(args, test_data.columns);
 
-    log(fg.red('  ✗ '), fg.cyan(message));
-    log(fg.red('     ' + action_data.message));
+    log(fg.red(' ✗ '), fg.cyan(message));
+    log(fg.red('    ' + action_data.message));
 };
 
 
