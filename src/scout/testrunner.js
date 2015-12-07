@@ -37,24 +37,16 @@ exports.run = function(test_data, passCallback, failCallback) {
     }
 
 
-    function handleCompareResult(action_data) {
-        if (action_data.message) {
-            _logger.skipAction(action_data, test_data);
-        }
-        nextAction();
-    }
-
-
     /**
      * Register an action as passed
      */
     function passAction(action_data) {
         _logger.passAction(action_data, test_data);
-        testcontainer.passDump(action_data, test_data);
+        testcontainer.passDump(action_data);
         test_data.passed.push(action_data);
 
         if (_cli.compare && isUserAction(action_data.type)) {
-            testcontainer.compareActionResult(action_data, handleCompareResult);
+            testcontainer.compareActionResult(action_data, passAction, skipAction);
         } else {
             nextAction();
         }
@@ -75,8 +67,9 @@ exports.run = function(test_data, passCallback, failCallback) {
      * Register an action as failed or skipped
      */
     function failAction(action_data) {
+        console.log('FAILING', action_data.parts.join('  '), action_data.message);
         _logger.failAction(action_data, test_data);
-        testcontainer.failDump(action_data, test_data);
+        testcontainer.failDump(action_data);
         testcontainer.close();
         failCallback(test_data);
     }

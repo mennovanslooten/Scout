@@ -137,7 +137,7 @@ exports.create = function(path) {
         },
 
 
-        failDump: function(action_data, test_data) {
+        failDump: function(action_data) {
             if (_cli.faildump) {
                 var filename = createDumpName(action_data, 'faildump');
                 _page.dump(filename, null, action_data);
@@ -145,7 +145,7 @@ exports.create = function(path) {
         },
 
 
-        passDump: function(action_data, test_data) {
+        passDump: function(action_data) {
             var ignore = _ignore_list.indexOf(action_data.type) > -1;
             if (_cli.passdump && !ignore) {
                 var filename = createDumpName(action_data, 'passdump');
@@ -196,7 +196,7 @@ exports.create = function(path) {
         },
 
 
-        compareActionResult: function(action_data, cb) {
+        compareActionResult: function(action_data, passCallback, skipCallback) {
             var filename = createDumpName(action_data, 'compare');
 
             var resemble_action = {
@@ -206,7 +206,7 @@ exports.create = function(path) {
                 path: action_data.path
             };
 
-            this.runAction(resemble_action, cb, cb, cb);
+            this.runAction(resemble_action, passCallback, skipCallback, skipCallback);
         }
 
     };
