@@ -28,11 +28,6 @@ exports.create = function() {
      */
     _page.onLoadFinished = function pageLoadFinished() {
         _page.is_loading = false;
-
-        if (_cli.debug) {
-            _logger.comment('  ↳ ', _page.url);
-        }
-
         setupPage();
     };
 
@@ -82,12 +77,11 @@ exports.create = function() {
     };
 
 
-    // _page.onUrlChanged = function(targetUrl) {
-    //     if (_cli.debug) {
-    //         // _logger.comment('    >> onUrlChanged', targetUrl);
-    //         _logger.comment('  ↳ ', targetUrl);
-    //     }
-    // };
+     _page.onUrlChanged = function(targetUrl) {
+         if (_cli.debug) {
+             _logger.comment('  ↳ ', targetUrl);
+         }
+     };
 
 
     _page.getURL = function() {
