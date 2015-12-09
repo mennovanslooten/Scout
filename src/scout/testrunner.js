@@ -4,11 +4,6 @@ var _logger = require('../logger/logger');
 var _cli = require('../utils/cli');
 
 
-function isUserAction(type) {
-    return ['include', 'click', 'moveMouseTo', 'type', 'open', 'uploadFile', 'back', 'forward'].indexOf(type) > -1;
-}
-
-
 /**
  * Sequentially run all the actions in a test. Run passCallback if all
  * actions are succesfully completed, otherwise run failCallback after the
@@ -45,7 +40,7 @@ exports.run = function(test_data, passCallback, failCallback) {
         testcontainer.passDump(action_data);
         test_data.passed.push(action_data);
 
-        if (_cli.compare && isUserAction(action_data.type)) {
+        if (_cli.compare && action_data.user_action) {
             testcontainer.compareActionResult(action_data, passAction, skipAction);
         } else {
             nextAction();
