@@ -1,0 +1,7 @@
+## This self test tests if (nested) iframe handling works
+open                ./index.html
+
+assertVisible       "I am the top page"
+click               "CLICK ME"
+type                #iframe_input           ABC
+assertVisible       "I am iframe 2"

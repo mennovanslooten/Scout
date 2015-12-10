@@ -15,6 +15,7 @@ exports.create = function(_page, test_path) {
 
 
     function getCoordinates(destination) {
+        _page.switchToMainFrame();
         // destination can be either a string containing "123, 567" or a css
         // selector
         var coordinates_rx = /(\d+), ?(\d+)/;
@@ -22,11 +23,31 @@ exports.create = function(_page, test_path) {
 
         if (coordinates && coordinates.length) {
             return {
-                left: parseInt(coordinates[0], 10),
-                top: parseInt(coordinates[1], 10)
+                left: parseInt(coordinates[1], 10),
+                top: parseInt(coordinates[2], 10)
             };
         } else if (_remote.assertVisible(destination) === '') {
             return _remote.getCoordinate(destination);
+        }
+
+        for (var i = 0; i < _page.framesCount; i++) {
+            _page.switchToFrame(i);
+
+            if (_remote.assertVisible(destination) === '') {
+                // Get the target offset in the context of its frame
+                var result =  _remote.getCoordinate(destination);
+
+                // Then calculate the offset of the frame to the page
+                _page.switchToParentFrame();
+                var offset = _remote.getIframeDocumentOffset('iframe[src]', i);
+
+                // And add the offsets together
+                result.left += (offset.left + 5);
+                result.top += (offset.top + 5);
+
+                return result;
+            }
+            _page.switchToMainFrame();
         }
 
         return null;
@@ -34,6 +55,16 @@ exports.create = function(_page, test_path) {
 
 
     var local = {
+        assertVisible: function(selector) {
+            var result = _remote.assertVisible(selector);
+            if (result !== '') return '';
+
+            var coordinates = getCoordinates(selector);
+            if (coordinates !== null) return '';
+
+            return result;
+        },
+
         open: function(url, dimensions) {
             if (url.indexOf('./') === 0) {
                 url = base_path + url.substr(1);
@@ -130,7 +161,7 @@ exports.create = function(_page, test_path) {
         },
 
         type: function(selector, text, is_replace) {
-            var error = _remote.assertVisible(selector);
+            var error = local.assertVisible(selector);
             if (error) return error;
 
             if (!text.length) {

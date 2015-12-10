@@ -77,7 +77,7 @@ exports.create = function() {
     };
 
 
-     _page.onUrlChanged = function(targetUrl) {
+    _page.onUrlChanged = function(targetUrl) {
          if (_cli.debug) {
              _logger.comment('  ↳ ', targetUrl);
          }
@@ -196,6 +196,12 @@ exports.create = function() {
         _page.evaluate(function() {
             document.body.bgColor = 'white';
         });
+
+        for (var i = 0; i < _page.framesCount; i++) {
+            _page.switchToFrame(i);
+            setupPage();
+            _page.switchToParentFrame();
+        }
     }
 
     return _page;

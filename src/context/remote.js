@@ -26,9 +26,7 @@ exports.create = function(_page) {
             // args = [remoteAssert, 'assertText', '.selector', 'Some text']
             args.unshift(remoteAssert);
 
-            var result = _page.evaluate.apply(_page, args);
-
-            return result;
+            return _page.evaluate.apply(_page, args);
         };
     }
 
@@ -54,6 +52,7 @@ exports.create = function(_page) {
         'assertDisabled',
         'choose',
         'getCoordinate',
+        'getIframeDocumentOffset',
         'getBoundaries',
         'assertInViewport',
         'assertNotInViewport',

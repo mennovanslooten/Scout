@@ -8,7 +8,7 @@ var _cli = require('../utils/cli');
 // This regular expression is used to separate arguments on a line.
 // Current match: at least 2 spaces or at least 1 tab (surrounded by any number
 // of spaces).
-var separator_rx = / {2,}| *\t+ */g;
+var separator_rx = / *\t+ *| {2,}/g;
 
 function parseLine(line, line_nr, path) {
     var user_action_types = ['include', 'click', 'moveMouseTo', 'type', 'open', 'uploadFile', 'back', 'forward'];

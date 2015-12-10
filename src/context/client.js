@@ -485,4 +485,17 @@ var ScoutClient = {};
         return $elt.text();
     };
 
+
+    ScoutClient.getIframeDocumentOffset = function(selector, frame_index) {
+        var $iframe = $(selector).eq(frame_index);
+        var offset = $iframe.offset();
+        var top_border = parseInt($iframe.css('border-top-width'), 10);
+        var left_border = parseInt($iframe.css('border-left-width'), 10);
+
+        return {
+            left: offset.left + left_border,
+            top: offset.top + top_border
+        };
+    };
+
 })(jQuery);
