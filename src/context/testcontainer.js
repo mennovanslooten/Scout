@@ -31,7 +31,7 @@ exports.create = function(path) {
                         } else if (/^\d+$/.test(prop)) {
                             length = parseInt(prop, 10);
                         } else if (/^".+"$/.test(prop)) {
-                            chars = prop;
+                            chars = prop.substring(1, prop.length - 1);
                         }
                     });
 
