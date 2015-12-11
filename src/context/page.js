@@ -77,7 +77,7 @@ exports.create = function() {
     };
 
 
-     _page.onUrlChanged = function(targetUrl) {
+    _page.onUrlChanged = function(targetUrl) {
          if (_cli.debug) {
              _logger.comment('  ↳ ', targetUrl);
          }
