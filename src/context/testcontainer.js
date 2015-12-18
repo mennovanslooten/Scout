@@ -96,7 +96,7 @@ exports.create = function(path) {
      * ("" = no error), then call passCallback. If conditionCallback does not
      * return "" within a given time, call failCallback
      */
-    function waitFor(action_data, conditionCallback, passCallback, skipCallback, failCallback, remaining_time) {
+    function waitFor(action_data, conditionCallback, passCallback, failCallback, remaining_time) {
         if (remaining_time < 0) {
             failCallback(action_data.message);
             return;
@@ -115,9 +115,6 @@ exports.create = function(path) {
 
         if (is_passed) {
             passCallback();
-        } else if (action_data.optional) {
-            // If it didn't pass but is optional skip it
-            skipCallback(action_data.message);
         } else {
             // otherwise schedule another try
             setTimeout(function() {
@@ -125,7 +122,7 @@ exports.create = function(path) {
                 var elapsed = d2 - d1;
                 remaining_time -= elapsed;
 
-                waitFor(action_data, conditionCallback, passCallback, skipCallback, failCallback, remaining_time);
+                waitFor(action_data, conditionCallback, passCallback, failCallback, remaining_time);
             }, _cli.step);
         }
     }
@@ -171,20 +168,14 @@ exports.create = function(path) {
                     // Run when "" is returned
                     function() {
                         action_data.message = '';
-                        action_data.end_time = new Date();
                         passCallback(action_data);
-                    },
-
-                    // Or run this when the action is skipped
-                    function(result) {
-                        action_data.message = result;
-                        skipCallback(action_data);
                     },
 
                     // Or run this after timeout is reached...
                     function(result) {
                         action_data.message = result;
-                        failCallback(action_data);
+                        if (action_data.optional) skipCallback(action_data);
+                        else failCallback(action_data);
                     },
 
                     // ...which is this long:
@@ -200,7 +191,7 @@ exports.create = function(path) {
             var filename = createDumpName(action_data, 'compare');
 
             var resemble_action = {
-                optional: false,
+                optional: true,
                 type: 'assertResembles',
                 args: [filename],
                 path: action_data.path

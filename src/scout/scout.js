@@ -4,6 +4,7 @@ var _cli        = require('../utils/cli');
 var _testrunner = require('./testrunner');
 var _logger     = require('../logger/logger');
 var _suite      = require('./testsuite');
+var _db         = require('./db');
 
 exports.start = function() {
     var _test_index = -1;
@@ -50,7 +51,7 @@ exports.start = function() {
     function failTest(test_data) {
         _running--;
         test_data.end_time = new Date();
-        _suite.failed.push(test_data);
+        // _suite.failed.push(test_data);
 
         checkDone();
     }
@@ -61,9 +62,7 @@ exports.start = function() {
      * next test
      */
     function checkDone() {
-        if (_suite.passed.length + _suite.failed.length === _suite.tests.length) {
-            return done();
-        }
+        if (_db.isCompletedSuite(_suite)) return done();
 
         nextTest();
     }
@@ -75,7 +74,7 @@ exports.start = function() {
     function done() {
         _suite.end_time = new Date();
         _logger.done(_suite);
-        var is_passed = _suite.failed.length === 0;
+        var is_passed = _db.isPassedSuite(_suite);
         var exit_code = is_passed ? 0 : 1;
 
         // Temporary fix for https://github.com/ariya/phantomjs/issues/12697
