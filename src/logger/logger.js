@@ -2,6 +2,7 @@
 
 var _style = require('./logstyle');
 var _suite = require('../scout/testsuite');
+var _db = require('../scout/db');
 var _cli = require('../utils/cli');
 var _xunit = require('./xunit');
 var pad = require('../utils/pad').padRight;
@@ -41,6 +42,10 @@ function columnize(args, columns) {
     return result;
 }
 
+
+function logRuler() {
+    log(fg.white('\n----------------------------------------------------------------'));
+}
 
 exports.reformat = function() {
     _suite.tests.forEach(function(test) {
@@ -86,44 +91,45 @@ exports.log = function() {
 };
 
 
-exports.passAction = function(action_data, test_data) {
-    if (_cli.parallel > 1 || action_data.type === 'set' || typeof action_data.line_nr === 'undefined') return;
+function logAction(action_data, test_data) {
+    var args = [action_data.type].concat(action_data.args);
+    var message = columnize(args, test_data.columns);
 
     if (action_data.type === 'log') {
         log(fg.default('\n## ' + action_data.args));
+    } else if (action_data.message) {
+        if (action_data.optional) {
+            log(fg.yellow(' ★ '), fg.cyan(message));
+            log(fg.yellow('    ' + action_data.message));
+        } else {
+            log(fg.red(' ✗ '), fg.cyan(message));
+            log(fg.red('    ' + action_data.message));
+        }
     } else {
-        var args = [action_data.type].concat(action_data.args);
-        var message = columnize(args, test_data.columns);
         var duration = action_data.end_time - action_data.start_time;
         duration = '[' + duration + 'ms]';
 
         log(fg.green(' ✓ '), fg.cyan(message), fg.blue(duration));
     }
+}
+
+
+exports.passAction = function(action_data, test_data) {
+    if (_cli.parallel > 1 || action_data.type === 'set' || typeof action_data.line_nr === 'undefined') return;
+    logAction(action_data, test_data);
 };
 
 
 exports.skipAction = function(action_data, test_data) {
     if (_cli.parallel > 1) return;
-
-    var args = [action_data.type].concat(action_data.args);
-    var message = columnize(args, test_data.columns);
-
-    log(fg.yellow(' ★ '), fg.cyan(message));
-    log(fg.yellow('    ' + action_data.message));
+    logAction(action_data, test_data);
 };
-
 
 
 exports.failAction = function(action_data, test_data) {
     if (_cli.parallel > 1) return;
-
-    var args = [action_data.type].concat(action_data.args);
-    var message = columnize(args, test_data.columns);
-
-    log(fg.red(' ✗ '), fg.cyan(message));
-    log(fg.red('    ' + action_data.message));
+    logAction(action_data, test_data);
 };
-
 
 
 exports.startTest = function(test_data) {
@@ -147,31 +153,46 @@ exports.startTest = function(test_data) {
 exports.done = function(suite) {
     var duration = suite.end_time - suite.start_time;
     var exit_message = 'Executed ' + suite.tests.length + ' Scout tests in ' + duration + 'ms';
-    var is_passed = suite.failed.length === 0;
 
-    if (is_passed) {
+    // var skipped_actions = _db.getTestsWithSkippedActions(suite);
+    // console.log('result', skipped_actions.length)
+    // if (skipped_actions.length) {
+    //     log(fg.white('\n----------------------------------------------------------------'));
+    //     log(bold(fg.yellow('\n# Skipped', skipped_actions.length, 'actions')));
+    // }
+
+    /*
+    var total_skipped = 0;
+    var tests_with_skipped_actions = [];
+    for (var i = 0; i < suite.tests.length; i++) {
+        var test_data = suite.tests[i];
+        if (test_data.skipped.length) {
+            tests_with_skipped_actions.push(test_data);
+            total_skipped += test_data.skipped.length;
+        }
+    }
+
+    if (total_skipped) {
+        log(fg.white('\n----------------------------------------------------------------'));
+        log(bold(fg.yellow('\n# Skipped', total_skipped, 'actions')));
+
+        for (var i = 0; i < tests_with_skipped_actions.length; i++) {
+            var test_data = tests_with_skipped_actions[i];
+            // log(bold(fg.yellow('\n# Skipped', test_data.skipped.length, 'of', test_data.path)));
+            for (var ii = 0; ii < test_data.skipped.length; ii++) {
+                logAction(test_data.skipped[ii], test_data);
+            }
+        }
+    }
+    //*/
+
+    if (_db.isPassedSuite(suite)) {
+        logRuler();
         log(bold(fg.green('\nPASS: ' + exit_message)));
     } else {
-        log(fg.blue('----------------------------------------------------------------'));
-        log(fg.blue('# Failed ' + suite.failed.length + ' of ' + suite.tests.length + ' tests:'));
-
-        for (var i = 0; i < suite.failed.length; i++) {
-            var fail = suite.failed[i];
-            var action_index = fail.passed.length + fail.skipped.length;
-            var action_data = fail.actions[action_index];
-            var args = [action_data.type].concat(action_data.args);
-            var message = columnize(args, fail.columns);
-
-            // If the failed action comes from an included file, print that
-            // path as well
-            var action_path = (fail.path === action_data.path) ? '' : ' of ' + action_data.path;
-            var action_line = ' (line ' + action_data.line_nr + action_path + ')';
-
-            log(fg.red('\n  ✗'), fg.blue(fail.path + action_line));
-            log(fg.cyan('    ' + message));
-            log(fg.red('    ' + action_data.message));
-        }
-
+        logRuler();
+        log(fg.blue('# Failed ' + _db.getFailedTests(suite).length + ' of ' + suite.tests.length + ' tests:'));
+        _db.getFailedTests(suite).forEach(logFailedTest);
         log(bold(fg.red('\nFAIL: ' + exit_message)));
     }
 
@@ -181,7 +202,20 @@ exports.done = function(suite) {
 };
 
 
-exports.dir = function(obj) {
+function logFailedTest(test_data) {
+    var action_data = _db.getFailedAction(test_data);
+
+    // If the failed action comes from an included file, print that
+    // path as well
+    var action_path = (test_data.path === action_data.path) ? '' : ' of ' + action_data.path;
+    var action_line = ' (line ' + action_data.line_nr + action_path + ')';
+
+    log('\n' + bold(fg.blue(action_data.path + action_line)));
+    logAction(action_data, test_data);
+}
+
+
+function dir(obj) {
     log('\n---------');
     for (var p in obj) {
         if (obj.hasOwnProperty(p)) {
@@ -191,3 +225,5 @@ exports.dir = function(obj) {
     log('---------\n');
 
 };
+
+exports.dir = dir;

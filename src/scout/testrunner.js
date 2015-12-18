@@ -36,6 +36,7 @@ exports.run = function(test_data, passCallback, failCallback) {
      * Register an action as passed
      */
     function passAction(action_data) {
+        action_data.end_time = new Date();
         _logger.passAction(action_data, test_data);
         testcontainer.passDump(action_data);
         test_data.passed.push(action_data);
@@ -52,8 +53,9 @@ exports.run = function(test_data, passCallback, failCallback) {
      * Register an action as skipped
      */
     function skipAction(action_data) {
+        action_data.end_time = new Date();
         _logger.skipAction(action_data, test_data);
-        test_data.skipped.push(action_data);
+        // test_data.skipped.push(action_data);
         nextAction();
     }
 
@@ -62,9 +64,10 @@ exports.run = function(test_data, passCallback, failCallback) {
      * Register an action as failed or skipped
      */
     function failAction(action_data) {
-        console.log('FAILING', action_data.parts.join('  '), action_data.message);
+        action_data.end_time = new Date();
         _logger.failAction(action_data, test_data);
         testcontainer.failDump(action_data);
+        // test_data.failed.push(action_data);
         testcontainer.close();
         failCallback(test_data);
     }
