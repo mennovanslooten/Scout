@@ -26,7 +26,7 @@ exports.start = function() {
         var test_data = _suite.tests[_test_index];
 
         _running++;
-        _testrunner.run(test_data, passTest, failTest);
+        _testrunner.run(test_data, completeTest);
 
         // Add more tests until max running tests
         nextTest();
@@ -34,25 +34,11 @@ exports.start = function() {
 
 
     /**
-     * Register a test as passed
+     * Register a test as completed
      */
-    function passTest(test_data) {
+    function completeTest(test_data) {
         _running--;
         test_data.end_time = new Date();
-        _suite.passed.push(test_data);
-
-        checkDone();
-    }
-
-
-    /**
-     * Register a test as failed
-     */
-    function failTest(test_data) {
-        _running--;
-        test_data.end_time = new Date();
-        // _suite.failed.push(test_data);
-
         checkDone();
     }
 

@@ -114,6 +114,9 @@ function logAction(action_data, test_data) {
 }
 
 
+exports.logAction = logAction;
+
+
 exports.passAction = function(action_data, test_data) {
     if (_cli.parallel > 1 || action_data.type === 'set' || typeof action_data.line_nr === 'undefined') return;
     logAction(action_data, test_data);

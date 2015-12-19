@@ -96,7 +96,7 @@ exports.create = function(path) {
      * ("" = no error), then call passCallback. If conditionCallback does not
      * return "" within a given time, call failCallback
      */
-    function waitFor(action_data, conditionCallback, passCallback, failCallback, remaining_time) {
+    function XwaitFor(action_data, conditionCallback, passCallback, failCallback, remaining_time) {
         if (remaining_time < 0) {
             failCallback(action_data.message);
             return;
@@ -128,6 +128,38 @@ exports.create = function(path) {
     }
 
 
+    function waitFor(action_data, conditionCallback, completeCallback, remaining_time) {
+        if (remaining_time < 0) {
+            completeCallback(action_data);
+            return;
+        }
+
+        var d1 = new Date();
+        var is_passed = false;
+
+        if (!_page.is_loading) {
+            if (action_data.message === '') {
+                is_passed = true;
+            } else {
+                action_data.message = conditionCallback();
+            }
+        }
+
+        if (is_passed) {
+            completeCallback(action_data);
+        } else {
+            // otherwise schedule another try
+            setTimeout(function() {
+                var d2 = new Date();
+                var elapsed = d2 - d1;
+                remaining_time -= elapsed;
+
+                waitFor(action_data, conditionCallback, completeCallback, remaining_time);
+            }, _cli.step);
+        }
+    }
+
+
     return {
         close: function() {
             _page.close();
@@ -151,7 +183,7 @@ exports.create = function(path) {
         },
 
 
-        runAction: function(action_data, passCallback, skipCallback, failCallback) {
+        xrunAction: function(action_data, passCallback, skipCallback, failCallback) {
             var handler = _handlers.getHandler(action_data.type);
             action_data.args = parseArguments(action_data.args);
             action_data.start_time = new Date();
@@ -177,6 +209,32 @@ exports.create = function(path) {
                         if (action_data.optional) skipCallback(action_data);
                         else failCallback(action_data);
                     },
+
+                    // ...which is this long:
+                    _cli.timeout);
+            } else {
+                action_data.message = 'Unknown action: <' + action_data.type + '>';
+                failCallback(action_data);
+            }
+        },
+
+
+        runAction: function(action_data, completeCallback) {
+            var handler = _handlers.getHandler(action_data.type);
+            action_data.args = parseArguments(action_data.args);
+            action_data.start_time = new Date();
+
+            if (handler) {
+                waitFor(
+                    action_data,
+
+                    // Keep executing until it returns ""
+                    function() {
+                        return handler.apply(null, action_data.args);
+                    },
+
+                    // Run this after success or timeout is reached...
+                    completeCallback,
 
                     // ...which is this long:
                     _cli.timeout);
