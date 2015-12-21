@@ -4,13 +4,41 @@
 var _logger = require('../logger/logger');
 var _cli = require('../utils/cli');
 
-exports.create = function() {
-    var _page        = require('webpage').create();
+var STATUS_SUCCESS = 'success';
+var STATUS_BUSY = 'busy';
 
-    _page.is_loading = false;
+exports.create = function(test_path) {
+    var _page = require('webpage').create();
+    var _load_status = STATUS_SUCCESS;
+    var _base_path = test_path.substr(0, test_path.lastIndexOf('/'));
 
     _page.customHeaders = {
         'Accept-Language': 'en-US'
+    };
+
+    var _goto_target = '';
+
+
+    _page.isReady = function() {
+        return _load_status === STATUS_SUCCESS;
+    };
+
+    _page.goto = function(url) {
+        if (_goto_target !== url) {
+            _load_status = STATUS_BUSY;
+            _goto_target = url;
+
+            if (url.indexOf('./') === 0) {
+                url = _base_path + url.substr(1);
+            }
+
+            _page.open(url);
+            return 'Error opening <' + url + '>';
+        } else if (_load_status === 'success') {
+            _goto_target = '';
+            return '';
+        }
+        return 'Could not complete opening <' + url + '>';
     };
 
 
@@ -26,9 +54,9 @@ exports.create = function() {
     /**
      * Page load finished
      */
-    _page.onLoadFinished = function pageLoadFinished() {
-        _page.is_loading = false;
-        setupPage();
+    _page.onLoadFinished = function pageLoadFinished(status) {
+        _load_status = status;
+        if (status === STATUS_SUCCESS) setupPage();
     };
 
 
@@ -36,7 +64,7 @@ exports.create = function() {
      * Page load started
      */
     _page.onLoadStarted = function pageLoadStarted() {
-        _page.is_loading = true;
+        _load_status = STATUS_BUSY;
         _page.scrollPosition = {
             top: 0,
             left: 0
@@ -48,6 +76,9 @@ exports.create = function() {
      * Clear localStorage before pages are loaded
      */
     _page.onInitialized = function initialized() {
+        if (!_page.isReady() || _page.url === 'about:blank') return;
+
+        console.log('onInitialized', _page.url, 'XXX', _load_status, _goto_target);
         _page.evaluate(function() {
             window.localStorage.clear();
         });

@@ -1,95 +1,13 @@
 'use strict';
 
-var _fs = require('fs');
 var _cli = require('../utils/cli');
-var _remember = require('../utils/remember');
-var pad = require('../utils/pad').padLeft;
-//var _logger = require('../logger/logger');
+var _screendumps = require('../utils/screendumps');
+var parseArguments = require('../utils/parser').parseArguments;
 
 exports.create = function(path) {
-    var _page               = require('./page').create();
+    var _page               = require('./page').create(path);
     var _handlers           = require('./handlers').create(_page, path);
     var _ignore_list        = ['log', 'set', 'htmldump', 'screendump', 'mockRequest', 'unmockRequest'];
-
-
-    function parseArguments(args) {
-        return args.map(function(arg) {
-            var result;
-            var variable = /{([a-z_]+)}/g;
-            var generator = /{{([^}]+)}}/g;
-
-            if (generator.test(arg)) {
-                result = arg.replace(generator, function(whatever, match) {
-                    var props = match.split(':');
-                    var variable_name = '';
-                    var length = 0;
-                    var chars = '';
-
-                    props.forEach(function(prop) {
-                        if (/^[a-z_]+$/.test(prop)) {
-                            variable_name = prop;
-                        } else if (/^\d+$/.test(prop)) {
-                            length = parseInt(prop, 10);
-                        } else if (/^".+"$/.test(prop)) {
-                            chars = prop.substring(1, prop.length - 1);
-                        }
-                    });
-
-                    if (!length) {
-                        return match;
-                    }
-
-                    var random = generateRandomString(length, chars);
-                    if (variable_name) {
-                        _remember.set(variable_name, random);
-                    }
-                    return random;
-                });
-
-                return result;
-            }
-
-            if (variable.test(arg)) {
-                // Strings of this form:
-                // {variable_name}
-                // will be replaced with the value of _remember.get(variable_name)
-                // if it exists
-                result = arg.replace(variable, function(match, variable_name) {
-                    return _remember.get(variable_name) || _cli[variable_name] || variable_name;
-                });
-                return result;
-            }
-
-            return arg;
-        });
-    }
-
-
-    function generateRandomString(length, chars) {
-        chars = chars || 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-.0123456789'.split('');
-        length = parseInt(length, 10);
-        var generated = '';
-        for (var i = 0; i < length; i++) {
-            generated += chars[Math.floor(Math.random() * chars.length)];
-        }
-        return generated;
-    }
-
-
-
-
-    function createDumpName(action_data, prefix) {
-        var filename = prefix ? prefix + '--' : '';
-        filename += action_data.path.replace(/\.?\//g, '_');
-        filename = filename.replace('.scout', '');
-        filename = filename + '--' + pad(action_data.line_nr, 4);
-        filename = filename + '_' + action_data.type + '.png';
-        if (prefix && typeof _cli[prefix] === 'string') {
-            filename = _cli[prefix] + _fs.separator + filename;
-        }
-        return filename;
-    }
-
 
     /**
      * Execute conditionCallback() repeatedly until it returns an empty string
@@ -104,7 +22,7 @@ exports.create = function(path) {
         var d1 = new Date();
         var is_passed = false;
 
-        if (!_page.is_loading) {
+        if (_page.isReady()) {
             if (action_data.message === '') {
                 is_passed = true;
             } else {
@@ -135,7 +53,7 @@ exports.create = function(path) {
 
         failDump: function(action_data) {
             if (_cli.faildump) {
-                var filename = createDumpName(action_data, 'faildump');
+                var filename = _screendumps.createDumpName(action_data, 'faildump');
                 _page.dump(filename, null, action_data);
             }
         },
@@ -144,7 +62,7 @@ exports.create = function(path) {
         passDump: function(action_data) {
             var ignore = _ignore_list.indexOf(action_data.type) > -1;
             if (_cli.passdump && !ignore) {
-                var filename = createDumpName(action_data, 'passdump');
+                var filename = _screendumps.createDumpName(action_data, 'passdump');
                 _page.dump(filename, null, action_data);
             }
         },
@@ -177,7 +95,7 @@ exports.create = function(path) {
 
 
         compareActionResult: function(action_data, completeCallback) {
-            var filename = createDumpName(action_data, 'compare');
+            var filename = _screendumps.createDumpName(action_data, 'compare');
 
             var resemble_action = {
                 optional: true,

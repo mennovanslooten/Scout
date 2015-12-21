@@ -38,14 +38,15 @@ exports.run = function(test_data, completeCallback) {
      */
     function completeAction(action_data) {
         action_data.end_time = new Date();
-        _logger.logAction(action_data, test_data);
+        if (_cli.parallel === 1) {
+            _logger.logAction(action_data, test_data);
+        }
 
         if (_db.isSkippedAction(action_data)) {
             nextAction();
         } else if (_db.isFailedAction(action_data)) {
             testcontainer.failDump(action_data);
-            testcontainer.close();
-            completeCallback(test_data);
+            done();
         } else if (_cli.compare && action_data.user_action) {
             testcontainer.passDump(action_data);
             testcontainer.compareActionResult(action_data, completeAction);
@@ -57,7 +58,7 @@ exports.run = function(test_data, completeCallback) {
 
 
     /**
-     * All actions completed, the test has passed
+     * All actions completed
      */
     function done() {
         testcontainer.close();

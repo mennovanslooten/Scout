@@ -17,5 +17,5 @@ if (_cli.version) {
     phantom.exit(0);
 } else {
     // otherwise, kick off the tests
-    require('./scout/scout').start();
+    require('./core/suite_controller').start();
 }

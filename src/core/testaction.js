@@ -1,5 +1,6 @@
-var _cli = require('../utils/cli');
+'use strict';
 
+var _cli = require('../utils/cli');
 
 // This regular expression is used to separate arguments on a line.
 // Current match: at least 2 spaces or at least 1 tab (surrounded by any number

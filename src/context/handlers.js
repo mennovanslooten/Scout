@@ -48,9 +48,8 @@ exports.create = function(_page, test_path) {
                 };
             }
 
-            //_mouse.reset();
-            _page.open(url);
-            return '';
+            _mouse.reset();
+            return _page.goto(url);
         },
 
         back: function() {
