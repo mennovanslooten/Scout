@@ -117,24 +117,24 @@ function logAction(action_data, test_data) {
 exports.logAction = logAction;
 
 
-exports.passAction = function(action_data, test_data) {
-    if (_cli.parallel > 1 || action_data.type === 'set' || typeof action_data.line_nr === 'undefined') return;
-    logAction(action_data, test_data);
-};
-
-
-exports.skipAction = function(action_data, test_data) {
-    if (_cli.parallel > 1) return;
-    logAction(action_data, test_data);
-};
-
-
-exports.failAction = function(action_data, test_data) {
-    if (_cli.parallel > 1) return;
-    logAction(action_data, test_data);
-};
-
-
+// exports.passAction = function(action_data, test_data) {
+//     if (_cli.parallel > 1 || action_data.type === 'set' || typeof action_data.line_nr === 'undefined') return;
+//     logAction(action_data, test_data);
+// };
+//
+//
+// exports.skipAction = function(action_data, test_data) {
+//     if (_cli.parallel > 1) return;
+//     logAction(action_data, test_data);
+// };
+//
+//
+// exports.failAction = function(action_data, test_data) {
+//     if (_cli.parallel > 1) return;
+//     logAction(action_data, test_data);
+// };
+//
+//
 exports.startTest = function(test_data) {
     if (_suite.tests.length < 2) return;
 

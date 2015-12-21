@@ -8,13 +8,14 @@ function isCompletedAction(action_data) {
 
 // An action is failed if it has completed and a non-empty message
 function isFailedAction(action_data) {
-    return isCompletedAction(action_data) && action_data.message !== '';
+    return isCompletedAction(action_data) && action_data.message !== '' && !action_data.optional;
 }
 
 
 // An action is skipped if it has failed and is optional
 function isSkippedAction(action_data) {
-    return isFailedAction(action_data) && action_data.optional;
+    return isCompletedAction(action_data) && action_data.message !== '' && action_data.optional;
+    // return isFailedAction(action_data) && action_data.optional;
 }
 
 
