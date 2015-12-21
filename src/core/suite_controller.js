@@ -1,7 +1,7 @@
 'use strict';
 
 var _cli        = require('../utils/cli');
-var _testrunner = require('./testrunner');
+var _test_controller = require('./test_controller');
 var _logger     = require('../logger/logger');
 var _suite      = require('./testsuite');
 var _db         = require('./db');
@@ -26,7 +26,7 @@ exports.start = function() {
         var test_data = _suite.tests[_test_index];
 
         _running++;
-        _testrunner.run(test_data, completeTest);
+        _test_controller.run(test_data, completeTest);
 
         // Add more tests until max running tests
         nextTest();

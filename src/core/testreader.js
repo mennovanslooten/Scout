@@ -12,9 +12,6 @@ function parseTestFile(path, item) {
     var data = {
         path: full_path.replace(/^\.\//, ''),
         actions: [],
-        lines: [],
-        passed: [],
-        skipped: [],
         columns: []
     };
 
@@ -22,7 +19,6 @@ function parseTestFile(path, item) {
     while (!stream.atEnd()) {
         line_nr++;
         var line = stream.readLine();
-        data.lines.push(line);
 
         var actions = _testaction.create(line, line_nr, data.path, item);
 
