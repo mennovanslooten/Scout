@@ -93,41 +93,8 @@ exports.create = function(path) {
 
     /**
      * Execute conditionCallback() repeatedly until it returns an empty string
-     * ("" = no error), then call passCallback. If conditionCallback does not
-     * return "" within a given time, call failCallback
+     * ("" = no error) or the time runs out. Call completeCallback when done.
      */
-    function XwaitFor(action_data, conditionCallback, passCallback, failCallback, remaining_time) {
-        if (remaining_time < 0) {
-            failCallback(action_data.message);
-            return;
-        }
-
-        var d1 = new Date();
-        var is_passed = false;
-
-        if (!_page.is_loading) {
-            if (action_data.message === '') {
-                is_passed = true;
-            } else {
-                action_data.message = conditionCallback();
-            }
-        }
-
-        if (is_passed) {
-            passCallback();
-        } else {
-            // otherwise schedule another try
-            setTimeout(function() {
-                var d2 = new Date();
-                var elapsed = d2 - d1;
-                remaining_time -= elapsed;
-
-                waitFor(action_data, conditionCallback, passCallback, failCallback, remaining_time);
-            }, _cli.step);
-        }
-    }
-
-
     function waitFor(action_data, conditionCallback, completeCallback, remaining_time) {
         if (remaining_time < 0) {
             completeCallback(action_data);
@@ -183,42 +150,6 @@ exports.create = function(path) {
         },
 
 
-        xrunAction: function(action_data, passCallback, skipCallback, failCallback) {
-            var handler = _handlers.getHandler(action_data.type);
-            action_data.args = parseArguments(action_data.args);
-            action_data.start_time = new Date();
-
-            if (handler) {
-                waitFor(
-                    action_data,
-
-                    // Keep executing until it returns ""
-                    function() {
-                        return handler.apply(null, action_data.args);
-                    },
-
-                    // Run when "" is returned
-                    function() {
-                        action_data.message = '';
-                        passCallback(action_data);
-                    },
-
-                    // Or run this after timeout is reached...
-                    function(result) {
-                        action_data.message = result;
-                        if (action_data.optional) skipCallback(action_data);
-                        else failCallback(action_data);
-                    },
-
-                    // ...which is this long:
-                    _cli.timeout);
-            } else {
-                action_data.message = 'Unknown action: <' + action_data.type + '>';
-                failCallback(action_data);
-            }
-        },
-
-
         runAction: function(action_data, completeCallback) {
             var handler = _handlers.getHandler(action_data.type);
             action_data.args = parseArguments(action_data.args);
@@ -240,12 +171,12 @@ exports.create = function(path) {
                     _cli.timeout);
             } else {
                 action_data.message = 'Unknown action: <' + action_data.type + '>';
-                failCallback(action_data);
+                completeCallback(action_data);
             }
         },
 
 
-        compareActionResult: function(action_data, passCallback, skipCallback) {
+        compareActionResult: function(action_data, completeCallback) {
             var filename = createDumpName(action_data, 'compare');
 
             var resemble_action = {
@@ -255,7 +186,7 @@ exports.create = function(path) {
                 path: action_data.path
             };
 
-            this.runAction(resemble_action, passCallback, skipCallback, skipCallback);
+            this.runAction(resemble_action, completeCallback);
         }
 
     };
