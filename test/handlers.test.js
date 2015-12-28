@@ -6,6 +6,7 @@ var proxyquire =  require('proxyquire').noPreserveCache().noCallThru();
 
 var page_stub = {
     open: sinon.stub(),
+    goto: sinon.stub(),
     evaluate: sinon.stub(),
     goBack: sinon.stub(),
     goForward: sinon.stub(),
@@ -37,6 +38,11 @@ var remote_stub = {
     getValueOrText: sinon.stub()
 };
 
+var screendumps_stub = {
+    compare: sinon.stub(),
+    dump: sinon.stub()
+};
+
 var handlers = proxyquire('../src/context/handlers', {
     './mouse': {
         create: function() {
@@ -59,6 +65,11 @@ var handlers = proxyquire('../src/context/handlers', {
             return remote_stub;
         }
     },
+    './screendumps': {
+        create: function() {
+            return screendumps_stub;
+        }
+    },
     '../utils/remember': remember_stub
 }).create(page_stub, '');
 var selector = '.some > .selector';
@@ -68,14 +79,15 @@ describe('handlers', function() {
 
     describe('open', function() {
         var open = handlers.getHandler('open');
+        page_stub.goto.returns('NON-EMPTY STRING');
 
-        it('should return an empty string', function() {
+        it('should return a non-empty string', function() {
             var result = open('./path/to/index.html');
-            assert.equal(result, '');
+            assert.notEqual(result, '');
         });
 
         it('should open the page', function() {
-            assert.equal(page_stub.open.calledWith('/path/to/index.html'), true);
+            assert.equal(page_stub.goto.calledWith('/path/to/index.html'), true);
         });
 
         it('should set default viewportSize', function() {
@@ -171,14 +183,14 @@ describe('handlers', function() {
         };
         var filename = 'original.filename.png';
 
-        resemble_stub.compare.returns('ABCD');
+        screendumps_stub.compare.returns('ABCD');
         remote_stub.getBoundaries.returns(boundaries);
 
         it('should call resemble.compare() and remote.getBoundaries()', function() {
             var result = assertResembles(filename, selector);
             assert.equal(result, 'ABCD');
             assert.equal(remote_stub.getBoundaries.calledWith(selector), true);
-            assert.equal(resemble_stub.compare.calledWith(boundaries, filename), true);
+            assert.equal(screendumps_stub.compare.calledWith(boundaries, filename), true);
         });
     });
 
@@ -288,7 +300,7 @@ describe('handlers', function() {
             var filename = 'original.filename.png';
             remote_stub.getBoundaries.returns(boundaries);
             screendump(filename, selector);
-            assert.equal(page_stub.dump.calledWith(filename, boundaries), true);
+            assert.equal(screendumps_stub.dump.calledWith(filename, boundaries), true);
         });
     });
 
@@ -316,6 +328,3 @@ describe('handlers', function() {
         });
     });
 });
-
-
-

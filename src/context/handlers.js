@@ -8,10 +8,9 @@ exports.create = function(_page, test_path) {
     var _keyboard           = require('./keyboard').create(_page);
     var _remote             = require('./remote').create(_page);
     var _request            = require('./request').create(_page, base_path);
-    var _resemble           = require('../utils/resemble').create(_page);
     var _remember           = require('../utils/remember');
     var _fs                 = require('fs');
-
+    var _dumps              = require('./screendumps').create(_page);
 
 
     function getCoordinates(destination) {
@@ -120,7 +119,7 @@ exports.create = function(_page, test_path) {
             if (selector) {
                 boundaries = _remote.getBoundaries(selector);
             }
-            var result = _resemble.compare(boundaries, orig_filename, min_perc);
+            var result = _dumps.compare(boundaries, orig_filename, min_perc);
             return result;
         },
 
@@ -232,7 +231,7 @@ exports.create = function(_page, test_path) {
                     return 'Could not determine boundaries for <' + selector + '>';
                 }
             }
-            _page.dump(filename, boundaries);
+            _dumps.dump(filename, boundaries);
             return '';
         },
 

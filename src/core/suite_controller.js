@@ -1,10 +1,10 @@
 'use strict';
 
-var _cli        = require('../utils/cli');
+var _cli             = require('../utils/cli');
 var _test_controller = require('./test_controller');
-var _logger     = require('../logger/logger');
-var _suite      = require('./testsuite');
-var _db         = require('./db');
+var _suite           = require('./testsuite');
+var _db              = require('./db');
+var _hub             = require('./hub');
 
 exports.start = function() {
     var _test_index = -1;
@@ -36,9 +36,8 @@ exports.start = function() {
     /**
      * Register a test as completed
      */
-    function completeTest(test_data) {
+    function completeTest() {
         _running--;
-        test_data.end_time = new Date();
         checkDone();
     }
 
@@ -49,7 +48,6 @@ exports.start = function() {
      */
     function checkDone() {
         if (_db.isCompletedSuite(_suite)) return done();
-
         nextTest();
     }
 
@@ -59,7 +57,9 @@ exports.start = function() {
      */
     function done() {
         _suite.end_time = new Date();
-        _logger.done(_suite);
+        _hub.publish('suite.done', _suite);
+
+        // _logger.done(_suite);
         var is_passed = _db.isPassedSuite(_suite);
         var exit_code = is_passed ? 0 : 1;
 
@@ -74,6 +74,7 @@ exports.start = function() {
 
     if (_suite.tests.length) {
         // Get the party started
+        _hub.publish('suite.start', _suite);
         nextTest();
     } else {
         console.log('No .scout files to run');

@@ -3,6 +3,8 @@
 
 var _logger = require('../logger/logger');
 var _cli = require('../utils/cli');
+var pad = require('../utils/pad').padLeft;
+var _fs = require('fs');
 
 var STATUS_SUCCESS = 'success';
 var STATUS_BUSY = 'busy';
@@ -121,76 +123,20 @@ exports.create = function(test_path) {
         });
     };
 
+    _page.createDumpName = function(action_data, prefix) {
+        var filename = prefix ? prefix + '--' : '';
+        filename += action_data.path.replace(/\.?\//g, '_');
+        filename = filename.replace('.scout', '');
+        filename = filename + '--' + pad(action_data.line_nr, 4);
+        filename = filename + '_' + action_data.type + '.png';
 
-    /**
-     * Adds .png to a screendump filename if it's not already there
-     */
-    _page.getDumpName = function(name) {
-        if (!(/\.png$/.test(name))) {
-            return name + '.png';
+        if (prefix && typeof _cli[prefix] === 'string') {
+            filename = _cli[prefix] + _fs.separator + filename;
         }
 
-        return name;
+        return filename;
     };
 
-
-    /**
-     * Dumps the current viewport to .png
-     */
-    _page.dump = function(title, boundaries, action_data) {
-        _page.clipRect = boundaries ? boundaries : {
-            top: _page.scrollPosition.top,
-            left: _page.scrollPosition.left,
-            width: _page.viewportSize.width,
-            height: _page.viewportSize.height
-        };
-
-        title = _page.getDumpName(title);
-
-        if (action_data) {
-            _page.displayActionData(action_data);
-        }
-
-        _page.render(title);
-        _page.hideActionData();
-    };
-
-
-    /**
-     * Creates a <div> with the action data for use in screendumps
-     */
-    _page.displayActionData = function(action_data) {
-        if (!_cli.debug) return;
-
-        _page.evaluate(function(action_data) {
-            var $action_data = jQuery('<div id="scout_action_data"/>');
-            // Needed because https://github.com/ariya/phantomjs/issues/10619
-            var top = jQuery(window).scrollTop() + jQuery(window).height() - 16;
-            $action_data.css({
-                background: 'black',
-                color: 'white',
-                opacity: 0.75,
-                font: '14px/16px monospace',
-                position: 'fixed',
-                right: 0,
-                top: top,
-                zIndex: 1000
-            });
-            // \xa0 is a non-breaking space
-            $action_data.text(action_data.parts.join('\xa0\xa0\xa0\xa0'));
-            $action_data.prependTo('body');
-        }, action_data);
-    };
-
-
-    /**
-     * Creates a <div> with the action data for use in screendumps
-     */
-    _page.hideActionData = function() {
-        _page.evaluate(function() {
-            jQuery('#scout_action_data').remove();
-        });
-    };
 
 
     /**
