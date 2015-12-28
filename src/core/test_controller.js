@@ -1,14 +1,13 @@
 'use strict';
 
-var _logger = require('../logger/logger');
-var _cli = require('../utils/cli');
-var _db         = require('./db');
+var _db = require('./db');
+var _hub = require('./hub');
+// var _cli = require('../utils/cli');
 
 
 /**
- * Sequentially run all the actions in a test. Run passCallback if all
- * actions are succesfully completed, otherwise run failCallback after the
- * first failed action.
+ * Sequentially run all the actions in a test. Run completeCallback after the first failed action or after all have
+ * completed
  */
 exports.run = function(test_data, completeCallback) {
 
@@ -17,9 +16,6 @@ exports.run = function(test_data, completeCallback) {
     var testcontainer = require('../context/testcontainer').create(test_data.path);
     var action_index = -1;
 
-    // Remember when we started this test
-    test_data.start_time = new Date();
-    _logger.startTest(test_data);
 
     /**
      * Run the next action from the queue
@@ -38,20 +34,11 @@ exports.run = function(test_data, completeCallback) {
      */
     function completeAction(action_data) {
         action_data.end_time = new Date();
-        if (_cli.parallel === 1) {
-            _logger.logAction(action_data, test_data);
-        }
+        _hub.publish('action.done', action_data, test_data);
 
-        if (_db.isSkippedAction(action_data)) {
-            nextAction();
-        } else if (_db.isFailedAction(action_data)) {
-            testcontainer.failDump(action_data);
+        if (_db.isFailedAction(action_data)) {
             done();
-        } else if (_cli.compare && action_data.user_action) {
-            testcontainer.passDump(action_data);
-            testcontainer.compareActionResult(action_data, completeAction);
         } else {
-            testcontainer.passDump(action_data);
             nextAction();
         }
     }
@@ -61,10 +48,21 @@ exports.run = function(test_data, completeCallback) {
      * All actions completed
      */
     function done() {
+        test_data.end_time = new Date();
         testcontainer.close();
+        _hub.publish('test.done', test_data);
         completeCallback(test_data);
     }
 
-    // Kick off the first action
-    nextAction();
+
+    /**
+     * Start it up
+     */
+    function start() {
+        test_data.start_time = new Date();
+        _hub.publish('test.start', test_data);
+        nextAction();
+    }
+
+    start();
 };

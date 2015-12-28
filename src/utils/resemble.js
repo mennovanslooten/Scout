@@ -1,9 +1,6 @@
 'use strict';
 
-var _fs  = require('fs');
-var _cli = require('./cli');
-
-function resemble(file1, file2, callback) {
+exports.resemble = function(file1, file2, callback) {
     var images_data = [];
 
     function compare() {
@@ -68,57 +65,4 @@ function resemble(file1, file2, callback) {
 
     loadImageData(file1);
     loadImageData(file2);
-}
-
-
-exports.create = function(page) {
-    var comparison_message = '';
-    var curr_filename = '';
-
-    return {
-        compare: function(boundaries, orig_filename, min_perc) {
-            var temp_filename = page.getDumpName(orig_filename + '-compare');
-
-            // Paths need to be made absolute, otherwise resemble will try to load them
-            // from the wrong directory
-            var orig_path = _fs.workingDirectory + _fs.separator + page.getDumpName(orig_filename);
-            var temp_path = _fs.workingDirectory + _fs.separator + page.getDumpName(temp_filename);
-
-
-            if (curr_filename !== orig_path) {
-                // Save original if it doesn't exist already
-                var original_exists = _fs.isReadable(orig_path) && _fs.isFile(orig_path);
-
-                // Force new resemble dumps
-                if (original_exists && _cli.newdumps) {
-                    _fs.remove(orig_path);
-                    original_exists = false;
-                }
-
-                if (!original_exists) {
-                    page.dump(orig_path, boundaries);
-                }
-
-                comparison_message = 'Comparison could not be finished for unknown reasons';
-                curr_filename = orig_path;
-            }
-
-            if (comparison_message) {
-                page.dump(temp_path, boundaries);
-
-                resemble(temp_path, orig_path, function(match_perc) {
-                    if (match_perc < min_perc) {
-                        comparison_message = '<' + temp_filename + '> does not resemble <' + orig_filename + '>';
-                        comparison_message += ' (' + match_perc + '% match)';
-                    } else {
-                        // Comparison matches, remove temporary file
-                        _fs.remove(temp_path);
-                        comparison_message = '';
-                    }
-                });
-            }
-
-            return comparison_message;
-        }
-    };
 };

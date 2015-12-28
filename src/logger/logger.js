@@ -6,9 +6,9 @@ var _db = require('../core/db');
 var _cli = require('../utils/cli');
 var _xunit = require('./xunit');
 var pad = require('../utils/pad').padRight;
+var _hub = require('../core/hub');
 
 var fg = _style.fg;
-//var bg = _style.bg;
 var bold = _style.bold;
 var inverted = _style.inverted;
 
@@ -117,7 +117,7 @@ function logAction(action_data, test_data) {
 exports.logAction = logAction;
 
 
-exports.startTest = function(test_data) {
+function logTestStart(test_data) {
     if (_suite.tests.length < 2) return;
 
     if (_cli.parallel > 1) {
@@ -132,10 +132,35 @@ exports.startTest = function(test_data) {
     log(inverted(new Array(title_width).join(filler)));
     log(inverted(bold(filler, test_data.path, new Array(title_width - test_data.path.length - 5).join(' '), filler)));
     log(inverted(new Array(title_width).join(filler)));
-};
+}
 
 
-exports.done = function(suite) {
+function logFailedTest(test_data) {
+    var action_data = _db.getFailedAction(test_data);
+
+    // If the failed action comes from an included file, print that
+    // path as well
+    var action_path = (test_data.path === action_data.path) ? '' : ' of ' + action_data.path;
+    var action_line = ' (line ' + action_data.line_nr + action_path + ')';
+
+    log('\n' + bold(fg.blue(action_data.path + action_line)));
+    logAction(action_data, test_data);
+}
+
+
+function dir(obj) {
+    log('\n---------');
+    for (var p in obj) {
+        if (obj.hasOwnProperty(p)) {
+            log(' - ', p, ':', obj[p]);
+        }
+    }
+    log('---------\n');
+
+}
+
+
+function done(suite) {
     var duration = suite.end_time - suite.start_time;
     var exit_message = 'Executed ' + suite.tests.length + ' Scout tests in ' + duration + 'ms';
 
@@ -184,31 +209,15 @@ exports.done = function(suite) {
     if (_cli.xunit) {
         _xunit.write(_cli.xunit, suite);
     }
-};
-
-
-function logFailedTest(test_data) {
-    var action_data = _db.getFailedAction(test_data);
-
-    // If the failed action comes from an included file, print that
-    // path as well
-    var action_path = (test_data.path === action_data.path) ? '' : ' of ' + action_data.path;
-    var action_line = ' (line ' + action_data.line_nr + action_path + ')';
-
-    log('\n' + bold(fg.blue(action_data.path + action_line)));
-    logAction(action_data, test_data);
 }
 
 
-function dir(obj) {
-    log('\n---------');
-    for (var p in obj) {
-        if (obj.hasOwnProperty(p)) {
-            log(' - ', p, ':', obj[p]);
-        }
-    }
-    log('---------\n');
-
-};
-
 exports.dir = dir;
+
+
+_hub.subscribe('suite.done', done);
+_hub.subscribe('test.start', logTestStart);
+
+if (_cli.parallel === 1) {
+    _hub.subscribe('action.done', logAction);
+}
