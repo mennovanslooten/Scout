@@ -1,6 +1,6 @@
 'use strict';
 
-var _db = require('./db');
+var _db = require('../data/db');
 var _hub = require('./hub');
 
 /**
@@ -19,7 +19,7 @@ exports.run = function(test_data, completeCallback) {
         if (action_index >= test_data.actions.length) return done();
 
         var action_data = test_data.actions[action_index];
-        action_controller.runAction(action_data, completeAction);
+        action_controller.run(action_data, completeAction);
     }
 
 

@@ -6,7 +6,7 @@
  * tests to passed, failed are moved to failed.
  */
 module.exports = {
-    tests: require('./testreader').readTestFiles(),
+    tests: require('./filereader').readTestFiles(),
     start_time: new Date(),
     passed: [],
     failed: []

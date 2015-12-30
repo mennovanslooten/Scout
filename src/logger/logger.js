@@ -1,8 +1,8 @@
 'use strict';
 
 var _style = require('./logstyle');
-var _suite = require('../core/testsuite');
-var _db = require('../core/db');
+// var _suite = require('../data/testsuite');
+var _db = require('../data/db');
 var _cli = require('../utils/cli');
 var _xunit = require('./xunit');
 var pad = require('../utils/strings').padRight;
@@ -118,7 +118,7 @@ exports.logAction = logAction;
 
 
 function logTestStart(test_data) {
-    if (_suite.tests.length < 2) return;
+    // if (_suite.tests.length < 2) return;
 
     if (_cli.parallel > 1) {
         comment('# Starting: ' + test_data.path);

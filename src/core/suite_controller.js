@@ -2,8 +2,8 @@
 
 var _cli             = require('../utils/cli');
 var _test_controller = require('./test_controller');
-var _suite           = require('./testsuite');
-var _db              = require('./db');
+var _suite           = require('../data/testsuite');
+var _db              = require('../data/db');
 var _hub             = require('./hub');
 
 exports.start = function() {

@@ -20,7 +20,7 @@ exports.create = function(test_data) {
             path: action_data.path
         };
 
-        runAction(resemble_action, function() {
+        run(resemble_action, function() {
             if (resemble_action.message) {
                 action_data.optional = true;
                 action_data.message = resemble_action.message;
@@ -61,7 +61,7 @@ exports.create = function(test_data) {
     }
 
 
-    function runAction(action_data, completeCallback) {
+    function run(action_data, completeCallback) {
         action_data.start_time = new Date();
         _hub.publish('action.start', action_data, test_data);
 
@@ -82,6 +82,6 @@ exports.create = function(test_data) {
 
 
     return {
-        runAction: runAction
+        run: run
     };
 };

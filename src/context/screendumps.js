@@ -3,7 +3,7 @@
 
 var _cli = require('../utils/cli');
 var _hub = require('../core/hub');
-var _db = require('../core/db');
+var _db = require('../data/db');
 var _fs = require('fs');
 var resemble = require('../utils/resemble').resemble;
 
