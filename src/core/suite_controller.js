@@ -66,7 +66,7 @@ exports.start = function() {
         // Temporary fix for https://github.com/ariya/phantomjs/issues/12697
         setTimeout(function() {
             phantom.exit(exit_code);
-        }, 0);
+        }, 100);
 
         phantom.onError = function() {};
         throw new Error('');
