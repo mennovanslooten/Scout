@@ -3,22 +3,6 @@
 var _cli = require('./utils/cli');
 var _fs = require('fs');
 
-phantom.onError = function(msg, trace) {
-    var msgStack = ['PHANTOM ERROR: ' + msg];
-    if (trace && trace.length) {
-        msgStack.push('TRACE:');
-        trace.forEach(function(t) {
-            msgStack.push(' -> '
-                + (t.file || t.sourceURL)
-                + ': '
-                + t.line
-                + (t.function ? ' (in function ' + t.function + ')' : ''));
-        });
-    }
-    console.error(msgStack.join('\n'));
-    phantom.exit(1);
-};
-
 if (_cli.version) {
     // if --version is passed, print version and exit
     var json = require('../package.json');
