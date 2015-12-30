@@ -5,7 +5,7 @@ var _suite = require('../core/testsuite');
 var _db = require('../core/db');
 var _cli = require('../utils/cli');
 var _xunit = require('./xunit');
-var pad = require('../utils/pad').padRight;
+var pad = require('../utils/strings').padRight;
 var _hub = require('../core/hub');
 
 var fg = _style.fg;

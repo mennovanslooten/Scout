@@ -3,7 +3,7 @@
 
 var _logger = require('../logger/logger');
 var _cli = require('../utils/cli');
-var pad = require('../utils/pad').padLeft;
+var pad = require('../utils/strings').padLeft;
 var _fs = require('fs');
 
 var STATUS_SUCCESS = 'success';
@@ -118,7 +118,7 @@ exports.create = function(test_path) {
 
 
     _page.getURL = function() {
-        return _page.evaluate(function() {
+        return _goto_target || _page.evaluate(function() {
             return location.href;
         });
     };
