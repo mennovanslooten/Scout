@@ -1,18 +1,21 @@
 'use strict';
 
 var topics = {};
-var subUid = -1;
+var subscriber_id = -1;
 
 exports.subscribe = function(topic, func) {
+    subscriber_id++;
+
     if (!topics[topic]) {
         topics[topic] = [];
     }
-    var token = (++subUid).toString();
+
     topics[topic].push({
-        token: token,
+        token: subscriber_id,
         func: func
     });
-    return token;
+
+    return subscriber_id;
 };
 
 
@@ -23,29 +26,36 @@ exports.publish = function(topic /*, args*/) {
 
     var args = [].slice.call(arguments, 1);
 
-    // setTimeout(function() {
-        var subscribers = topics[topic];
-        var len = subscribers ? subscribers.length : 0;
+    var subscribers = topics[topic];
+    if (!subscribers) {
+        return;
+    }
 
-        while (len--) {
-            subscribers[len].func.apply(null, args);
-        }
-    // }, 0);
+    subscribers.forEach(function(subscriber) {
+        try {
+            subscriber.func.apply(null, args);
+        } catch (ex) { }
+    });
 
     return true;
 };
 
 
 exports.unsubscribe = function(token) {
-    for (var m in topics) {
-        if (topics[m]) {
-            for (var i = 0, j = topics[m].length; i < j; i++) {
-                if (topics[m][i].token === token) {
-                    topics[m].splice(i, 1);
-                    return token;
-                }
+    for (var topic in topics) {
+        if (!topics.hasOwnProperty(topic)) {
+            continue;
+        }
+
+        var subscribers = topics[topic];
+        for (var i = 0; i < subscribers.length; i++) {
+            var subscriber = subscribers[i];
+            if (subscriber.token === token) {
+                topics[topic].splice(i, 1);
+                return true;
             }
         }
     }
+
     return false;
 };

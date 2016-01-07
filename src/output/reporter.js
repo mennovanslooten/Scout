@@ -112,7 +112,10 @@ function done(suite_data) {
         log(bold(fg.green('\nPASS: ' + exit_message)));
     } else {
         logRuler();
-        log(fg.blue('# Failed ' + _db.getFailedTests(suite_data).length + ' of ' + suite_data.tests.length + ' tests:'));
+        var fail_message = '# Failed ';
+        fail_message += _db.getFailedTests(suite_data).length;
+        fail_message += ' of ' + suite_data.tests.length + ' tests:';
+        log(fg.blue(fail_message));
         _db.getFailedTests(suite_data).forEach(logFailedTest);
         log(bold(fg.red('\nFAIL: ' + exit_message)));
     }

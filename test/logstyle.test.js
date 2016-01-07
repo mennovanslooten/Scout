@@ -9,7 +9,7 @@ describe('logstyle', function() {
 
 
     describe('--color=false', function() {
-        var logstyle = proxyquire('../src/logger/logstyle', {
+        var logstyle = proxyquire('../src/utils/logstyle', {
             '../utils/cli': {
                 color: false
             }
@@ -27,7 +27,7 @@ describe('logstyle', function() {
 
     describe('--color=true', function() {
 
-        var logstyle = proxyquire('../src/logger/logstyle', {
+        var logstyle = proxyquire('../src/utils/logstyle', {
             '../utils/cli': {
                 color: true
             }
