@@ -23,14 +23,14 @@ exports.publish = function(topic /*, args*/) {
 
     var args = [].slice.call(arguments, 1);
 
-    setTimeout(function() {
+    // setTimeout(function() {
         var subscribers = topics[topic];
         var len = subscribers ? subscribers.length : 0;
 
         while (len--) {
             subscribers[len].func.apply(null, args);
         }
-    }, 0);
+    // }, 0);
 
     return true;
 };

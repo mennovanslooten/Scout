@@ -1,6 +1,6 @@
 'use strict';
 
-var _logger = require('../logger/logger');
+var _console = require('../output/console');
 var _cli = require('../utils/cli');
 var _fs = require('fs');
 
@@ -15,7 +15,7 @@ exports.create = function(_page, test_data) {
                 var path = base_path + _fs.separator + mock.path;
                 networkRequest.changeUrl(path);
                 if (_cli.debug) {
-                    _logger.comment('Network request to <' + url + '> mocked with <' + path + '>');
+                    _console.comment('Network request to <' + url + '> mocked with <' + path + '>');
                 }
                 return false;
             }

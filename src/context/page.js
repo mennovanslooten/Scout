@@ -1,7 +1,7 @@
 /* global jQuery */
 'use strict';
 
-var _logger = require('../logger/logger');
+var _console = require('../output/console');
 var _cli = require('../utils/cli');
 var pad = require('../utils/strings').padLeft;
 var _fs = require('fs');
@@ -92,10 +92,10 @@ exports.create = function(test_data) {
      */
     _page.onError = function pageError(msg, args) {
         if (!_cli.debug || !arguments.length) return;
-        _logger.error('Error on page: ' + msg);
+        _console.error('Error on page: ' + msg);
         for (var i = 0; args && i < args.length; i++) {
-            //_logger.error(' - ', args[i]);
-            _logger.dir(args[i]);
+            //_console.error(' - ', args[i]);
+            _console.dir(args[i]);
         }
     };
 
@@ -105,14 +105,14 @@ exports.create = function(test_data) {
      */
     _page.onConsoleMessage = function pageConsoleMessage(message) {
         if (_cli.debug) {
-            _logger.comment('  // ', message);
+            _console.comment('  // ', message);
         }
     };
 
 
     _page.onUrlChanged = function(targetUrl) {
          if (_cli.debug) {
-             _logger.comment('  ↳ ', targetUrl);
+             _console.comment('  ↳ ', targetUrl);
          }
      };
 
@@ -156,7 +156,7 @@ exports.create = function(test_data) {
         if (!has_jquery) {
             if (!_page.injectJs('../node_modules/jquery/dist/jquery.js')) {
                 if (!_page.injectJs('../../../node_modules/jquery/dist/jquery.js')) {
-                    _logger.error('Unable to locate jQuery. Did you run npm install?');
+                    _console.error('Unable to locate jQuery. Did you run npm install?');
                     phantom.exit(1);
                 }
             }

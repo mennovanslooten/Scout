@@ -86,6 +86,16 @@ function getFailedAction(test_data) {
 }
 
 
+function getPassedActions(test_data) {
+    return test_data.actions.filter(isPassedAction);
+}
+
+
+function getSkippedActions(test_data) {
+    return test_data.actions.filter(isSkippedAction);
+}
+
+
 function getPassedTests(suite) {
     return suite.tests.filter(isPassedTest);
 }
@@ -101,6 +111,8 @@ exports.isPassedTest = isPassedTest;
 exports.isCompletedSuite = isCompletedSuite;
 exports.isPassedSuite = isPassedSuite;
 exports.getFailedTests = getFailedTests;
+exports.getPassedActions = getPassedActions;
+exports.getSkippedActions = getSkippedActions;
 exports.getFailedAction = getFailedAction;
 exports.getPassedTests = getPassedTests;
 exports.getTestsWithSkippedActions = getTestsWithSkippedActions;
