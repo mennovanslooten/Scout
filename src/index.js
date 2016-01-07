@@ -13,7 +13,8 @@ if (_cli.version) {
     phantom.exit(0);
 } else if (_cli.reformat) {
     // if --reformat is passed, reformat and exit
-    require('./logger/logger').reformat();
+    var suite_data = require('./data/testsuite');
+    require('./logger/logger').reformat(suite_data);
     phantom.exit(0);
 } else {
     // otherwise, kick off the tests

@@ -4,12 +4,17 @@ var assert = require('assert');
 var proxyquire = require('proxyquire').noPreserveCache().noCallThru();
 var sinon = require('sinon');
 var mock_path = 'mock/me.html';
-var base_path = '/path/to/mocked';
 var page = {};
 
 var networkRequest = {
     changeUrl: sinon.spy()
 };
+
+var test_data = {
+    path: '/path/to/mocked/test.scout'
+};
+
+var base_path = test_data.path.substr(0, test_data.path.lastIndexOf('/'));
 
 var request = proxyquire('../src/context/request', {
     '../logger/logger': {
@@ -21,7 +26,7 @@ var request = proxyquire('../src/context/request', {
     fs: {
         separator: '/'
     }
-}).create(page, base_path);
+}).create(page, test_data);
 
 
 describe('request', function() {

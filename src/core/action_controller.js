@@ -45,7 +45,7 @@ exports.create = function(test_data) {
      * Execute conditionCallback() repeatedly until it returns an empty string
      * ("" = no error) or the time runs out. Call completeAction when done.
      */
-    function waitFor(action_data, conditionCallback, completeCallback, remaining_time) {
+    function retryUntilComplete(action_data, conditionCallback, completeCallback, remaining_time) {
         action_data.message = conditionCallback();
 
         if (!action_data.message || remaining_time < 0) {
@@ -56,7 +56,7 @@ exports.create = function(test_data) {
         var d1 = new Date();
         setTimeout(function() {
             var elapsed = new Date() - d1;
-            waitFor(action_data, conditionCallback, completeCallback, remaining_time - elapsed);
+            retryUntilComplete(action_data, conditionCallback, completeCallback, remaining_time - elapsed);
         }, _cli.step);
     }
 
@@ -65,7 +65,7 @@ exports.create = function(test_data) {
         action_data.start_time = new Date();
         _hub.publish('action.start', action_data, test_data);
 
-        waitFor(
+        retryUntilComplete(
             action_data,
 
             // Keep executing until it returns ""

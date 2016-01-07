@@ -47,14 +47,14 @@ function logRuler() {
     log(fg.white('\n----------------------------------------------------------------'));
 }
 
-exports.reformat = function() {
-    _suite.tests.forEach(function(test) {
+exports.reformat = function(suite_data) {
+    suite_data.tests.forEach(function(test_data) {
 
         //log('\n# ---- ' + test.path + ' ----\n');
 
         var last_line_nr = 0;
 
-        test.actions.forEach(function(action) {
+        test_data.actions.forEach(function(action) {
             var out = '';
 
             // Add empty lines
@@ -68,7 +68,7 @@ exports.reformat = function() {
                 out += '## ' + action.args.join(' ');
             } else {
                 var args = [action.type].concat(action.args);
-                out += columnize(args, test.columns);
+                out += columnize(args, test_data.columns);
             }
 
             // Remove trailing whitespace

@@ -9,10 +9,10 @@ var _fs = require('fs');
 var STATUS_SUCCESS = 'success';
 var STATUS_BUSY = 'busy';
 
-exports.create = function(test_path) {
+exports.create = function(test_data) {
     var _page = require('webpage').create();
     var _load_status = STATUS_SUCCESS;
-    var _base_path = test_path.substr(0, test_path.lastIndexOf('/'));
+    var _base_path = test_data.path.substr(0, test_data.path.lastIndexOf('/'));
 
     _page.customHeaders = {
         'Accept-Language': 'en-US'

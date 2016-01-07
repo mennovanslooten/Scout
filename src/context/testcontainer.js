@@ -1,32 +1,39 @@
 'use strict';
 
 var _hub = require('../core/hub');
-var parseArguments = require('../utils/parser').parseArguments;
 
 exports.create = function(test_data) {
-    var page = require('./page').create(test_data.path);
-    var getHandler = require('./handlers').create(page, test_data.path).getHandler;
+    var page = require('./page').create(test_data);
+    var mouse = require('./mouse').create(page);
+    var keyboard = require('./keyboard').create(page);
+    var remote = require('./remote').create(page);
+    var request = require('./request').create(page, test_data);
+    var dumps = require('./screendumps').create(page);
+
+    var env = {
+        page: page,
+        mouse: mouse,
+        keyboard: keyboard,
+        remote: remote,
+        request: request,
+        dumps: dumps
+    };
+
+    var action_runner = require('./handlers').create(env, test_data);
 
 
     function runAction(action_data) {
-        var handler = getHandler(action_data.type);
-        action_data.args = parseArguments(action_data.args);
-
-        if (!handler) {
-            return 'Unknown action: <' + action_data.type + '>';
-        }
-
         if (!page.isReady()) {
             return 'Could not finish loading <' + page.getURL() + '>';
         }
 
-        return handler.apply(null, action_data.args);
+        return action_runner.run(action_data);
     }
 
 
     var sub_id = _hub.subscribe('test.done', function(done_test_data) {
         if (done_test_data === test_data) {
-            page.close();
+            env.page.close();
             _hub.unsubscribe(sub_id);
         }
     });
