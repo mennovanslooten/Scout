@@ -4,7 +4,8 @@ var _logger = require('../logger/logger');
 var _cli = require('../utils/cli');
 var _fs = require('fs');
 
-exports.create = function(_page, base_path) {
+exports.create = function(_page, test_data) {
+    var base_path = test_data.path.substr(0, test_data.path.lastIndexOf('/'));
     var mocks = [];
 
     _page.onResourceRequested = function(requestData, networkRequest) {
@@ -28,7 +29,6 @@ exports.create = function(_page, base_path) {
         },
 
         addMock: function(pattern, path) {
-
             try {
                 var parsed = new RegExp(pattern);
                 mocks.push({
