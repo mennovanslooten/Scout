@@ -17,7 +17,7 @@ var test_data = {
 var base_path = test_data.path.substr(0, test_data.path.lastIndexOf('/'));
 
 var request = proxyquire('../src/context/request', {
-    '../logger/logger': {
+    '../output/console': {
         comment: sinon.spy()
     },
     '../utils/cli': {
