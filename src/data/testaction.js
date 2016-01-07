@@ -6,7 +6,7 @@ var _cli = require('../utils/cli');
 // Current match: at least 2 spaces or at least 1 tab (surrounded by any number
 // of spaces).
 var separator_rx = / *\t+ *| {2,}/g;
-var user_action_types = ['include', 'click', 'moveMouseTo', 'type', 'open', 'uploadFile', 'back', 'forward'];
+var user_action_types = ['click', 'moveMouseTo', 'type', 'open', 'uploadFile', 'back', 'forward'];
 
 
 function replaceCLIArguments(line) {
