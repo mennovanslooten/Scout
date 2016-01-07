@@ -52,20 +52,19 @@ exports.start = function(suite_data) {
 
 
     /**
-     * Done testing. Log and exit.
+     * Done testing.
      */
     function done() {
         suite_data.end_time = new Date();
         _hub.publish('suite.done', suite_data);
 
-        // _logger.done(suite_data);
         var is_passed = _db.isPassedSuite(suite_data);
         var exit_code = is_passed ? 0 : 1;
 
         // Temporary fix for https://github.com/ariya/phantomjs/issues/12697
         setTimeout(function() {
             phantom.exit(exit_code);
-        }, 100);
+        }, 1000);
 
         phantom.onError = function() {};
         throw new Error('');

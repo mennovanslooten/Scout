@@ -44,3 +44,15 @@ exports.createDumpName = function(action_data, prefix) {
 
     return filename;
 };
+
+
+exports.columnize = function(args, columns) {
+    var result = '';
+
+    columns.forEach(function(col_width, index) {
+        var arg = args[index] || '';
+        result += padRight(arg, col_width + 4, ' ');
+    });
+
+    return result;
+};
