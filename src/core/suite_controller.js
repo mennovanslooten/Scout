@@ -2,16 +2,15 @@
 
 var _cli             = require('../utils/cli');
 var _test_controller = require('./test_controller');
-var _suite           = require('../data/testsuite');
 var _db              = require('../data/db');
 var _hub             = require('./hub');
 
-exports.start = function() {
+exports.start = function(suite_data) {
     var _test_index = -1;
     var _running    = 0;
 
     /**
-     * Run the next test from _suite.tests
+     * Run the next test from suite_data.tests
      */
     function nextTest() {
         // Maximum parallel tests running
@@ -20,10 +19,10 @@ exports.start = function() {
         _test_index++;
 
         // No more tests left to run
-        if (_test_index >= _suite.tests.length) return;
+        if (_test_index >= suite_data.tests.length) return;
 
         // Start the next test in the queue
-        var test_data = _suite.tests[_test_index];
+        var test_data = suite_data.tests[_test_index];
 
         _running++;
         _test_controller.run(test_data, completeTest);
@@ -47,7 +46,7 @@ exports.start = function() {
      * next test
      */
     function checkDone() {
-        if (_db.isCompletedSuite(_suite)) return done();
+        if (_db.isCompletedSuite(suite_data)) return done();
         nextTest();
     }
 
@@ -56,11 +55,11 @@ exports.start = function() {
      * Done testing. Log and exit.
      */
     function done() {
-        _suite.end_time = new Date();
-        _hub.publish('suite.done', _suite);
+        suite_data.end_time = new Date();
+        _hub.publish('suite.done', suite_data);
 
-        // _logger.done(_suite);
-        var is_passed = _db.isPassedSuite(_suite);
+        // _logger.done(suite_data);
+        var is_passed = _db.isPassedSuite(suite_data);
         var exit_code = is_passed ? 0 : 1;
 
         // Temporary fix for https://github.com/ariya/phantomjs/issues/12697
@@ -72,9 +71,9 @@ exports.start = function() {
         throw new Error('');
     }
 
-    if (_suite.tests.length) {
+    if (suite_data.tests.length) {
         // Get the party started
-        _hub.publish('suite.start', _suite);
+        _hub.publish('suite.start', suite_data);
         nextTest();
     } else {
         console.log('No .scout files to run');
