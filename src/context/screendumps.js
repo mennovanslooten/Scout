@@ -6,6 +6,7 @@ var _hub = require('../core/hub');
 var _db = require('../data/db');
 var _fs = require('fs');
 var resemble = require('../utils/resemble').resemble;
+var createDumpName = require('../utils/strings').createDumpName;
 
 var _ignore_list = ['log', 'set', 'htmldump', 'screendump', 'mockRequest', 'unmockRequest'];
 var _comparison_message = '';
@@ -16,7 +17,7 @@ exports.create = function(page) {
 
     function failDump(action_data) {
         if (_cli.faildump) {
-            var filename = page.createDumpName(action_data, 'faildump');
+            var filename = createDumpName(action_data, 'faildump');
             dump(filename, null, action_data);
         }
     }
@@ -25,7 +26,7 @@ exports.create = function(page) {
     function passDump(action_data) {
         var ignore = _ignore_list.indexOf(action_data.type) > -1;
         if (_cli.passdump && !ignore) {
-            var filename = page.createDumpName(action_data, 'passdump');
+            var filename = createDumpName(action_data, 'passdump');
             dump(filename, null, action_data);
         }
     }
