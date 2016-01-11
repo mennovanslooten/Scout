@@ -23,20 +23,19 @@ function logAction(action_data, test_data) {
     var message = columnize(args, test_data.columns);
 
     if (action_data.type === 'log') {
-        log(fg.default('\n## ' + action_data.args));
+        log(fg.cyan('\n## ' + action_data.args));
     } else if (action_data.message) {
         if (action_data.optional) {
-            log(fg.yellow(' ★ '), fg.cyan(message));
-            log(fg.yellow('    ' + action_data.message));
+            log(fg.yellow(' ★ ', message));
+            log(fg.yellow('   ', action_data.message));
         } else {
-            log(fg.red(' ✗ '), fg.cyan(message));
-            log(fg.red('    ' + action_data.message));
+            log(fg.red(' ✗ ', message));
+            log(fg.red('   ', action_data.message));
         }
     } else {
         var duration = action_data.end_time - action_data.start_time;
         duration = '[' + duration + 'ms]';
-
-        log(fg.green(' ✓ '), fg.cyan(message), fg.blue(duration));
+        log(fg.green(' ✓ ', message), fg.blue(duration));
     }
 }
 
