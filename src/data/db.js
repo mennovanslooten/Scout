@@ -69,12 +69,8 @@ function getFailedTests(suite) {
 
 // Returns all tests with skipped actions
 function getTestsWithSkippedActions(suite) {
-    console.log('getTestsWithSkippedActions', suite.tests.length);
     return suite.tests.filter(function(test_data) {
-        console.log(test_data.actions.length, 'actions');
-        var result = test_data.actions.some(isSkippedAction);
-        console.log(test_data.path, result, 'skipped');
-        return result;
+        return test_data.actions.some(isSkippedAction);
     });
 }
 

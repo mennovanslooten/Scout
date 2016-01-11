@@ -41,15 +41,16 @@ function logAction(action_data, test_data) {
 }
 
 
-function logFailedTest(test_data) {
-    var action_data = _db.getFailedAction(test_data);
-
-    // If the failed action comes from an included file, print that
-    // path as well
+function logActionSource(action_data, test_data) {
     var action_path = (test_data.path === action_data.path) ? '' : ' of ' + action_data.path;
     var action_line = ' (line ' + action_data.line_nr + action_path + ')';
-
     log('\n' + bold(fg.blue(action_data.path + action_line)));
+}
+
+
+function logFailedTest(test_data) {
+    var action_data = _db.getFailedAction(test_data);
+    logActionSource(action_data, test_data);
     logAction(action_data, test_data);
 }
 
@@ -75,37 +76,18 @@ function done(suite_data) {
     var duration = suite_data.end_time - suite_data.start_time;
     var exit_message = 'Executed ' + suite_data.tests.length + ' Scout tests in ' + duration + 'ms';
 
-    // var skipped_actions = _db.getTestsWithSkippedActions(suite_data);
-    // console.log('result', skipped_actions.length)
-    // if (skipped_actions.length) {
-    //     log(fg.white('\n----------------------------------------------------------------'));
-    //     log(bold(fg.yellow('\n# Skipped', skipped_actions.length, 'actions')));
-    // }
-
-    /*
-    var total_skipped = 0;
-    var tests_with_skipped_actions = [];
-    for (var i = 0; i < suite_data.tests.length; i++) {
-        var test_data = suite_data.tests[i];
-        if (test_data.skipped.length) {
-            tests_with_skipped_actions.push(test_data);
-            total_skipped += test_data.skipped.length;
-        }
+    var tests_with_skipped_actions = _db.getTestsWithSkippedActions(suite_data);
+    if (tests_with_skipped_actions.length) {
+        logRuler();
+        log(bold(fg.yellow('\nSome actions failed but were optional:')));
+        tests_with_skipped_actions.forEach(function(test_data) {
+            var skipped_actions = _db.getSkippedActions(test_data);
+            skipped_actions.forEach(function(action_data) {
+                logActionSource(action_data, test_data);
+                logAction(action_data, test_data);
+            });
+        });
     }
-
-    if (total_skipped) {
-        log(fg.white('\n----------------------------------------------------------------'));
-        log(bold(fg.yellow('\n# Skipped', total_skipped, 'actions')));
-
-        for (var i = 0; i < tests_with_skipped_actions.length; i++) {
-            var test_data = tests_with_skipped_actions[i];
-            // log(bold(fg.yellow('\n# Skipped', test_data.skipped.length, 'of', test_data.path)));
-            for (var ii = 0; ii < test_data.skipped.length; ii++) {
-                logAction(test_data.skipped[ii], test_data);
-            }
-        }
-    }
-    //*/
 
     if (_db.isPassedSuite(suite_data)) {
         logRuler();
