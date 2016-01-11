@@ -3,8 +3,6 @@
 
 var _console = require('../output/console');
 var _cli = require('../utils/cli');
-var pad = require('../utils/strings').padLeft;
-var _fs = require('fs');
 
 var STATUS_SUCCESS = 'success';
 var STATUS_BUSY = 'busy';

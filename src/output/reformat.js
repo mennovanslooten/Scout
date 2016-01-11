@@ -5,9 +5,6 @@ var columnize = require('../utils/strings').columnize;
 
 exports.reformat = function(suite_data) {
     suite_data.tests.forEach(function(test_data) {
-
-        //log('\n# ---- ' + test.path + ' ----\n');
-
         var last_line_nr = 0;
 
         test_data.actions.forEach(function(action) {
