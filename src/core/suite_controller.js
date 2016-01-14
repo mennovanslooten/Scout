@@ -64,7 +64,7 @@ exports.start = function(suite_data) {
         // Temporary fix for https://github.com/ariya/phantomjs/issues/12697
         setTimeout(function() {
             phantom.exit(exit_code);
-        }, 1000);
+        }, 500);
 
         phantom.onError = function() {};
         throw new Error('');
@@ -75,7 +75,6 @@ exports.start = function(suite_data) {
         _hub.publish('suite.start', suite_data);
         nextTest();
     } else {
-        console.log('No .scout files to run');
-        phantom.exit(0);
+        done();
     }
 };
