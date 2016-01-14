@@ -3,14 +3,19 @@
 var topics = {};
 var subscriber_id = -1;
 
-exports.subscribe = function(topic, func) {
-    subscriber_id++;
 
+function getSubscribers(topic) {
     if (!topics[topic]) {
         topics[topic] = [];
     }
+    return topics[topic];
+}
 
-    topics[topic].push({
+
+exports.subscribe = function(topic, func) {
+    subscriber_id++;
+
+    getSubscribers(topic).push({
         token: subscriber_id,
         func: func
     });
@@ -20,16 +25,12 @@ exports.subscribe = function(topic, func) {
 
 
 exports.publish = function(topic /*, args*/) {
-    if (!topics[topic]) {
+    var subscribers = getSubscribers(topic);
+    if (!subscribers.length) {
         return false;
     }
 
     var args = [].slice.call(arguments, 1);
-
-    var subscribers = topics[topic];
-    if (!subscribers) {
-        return;
-    }
 
     subscribers.forEach(function(subscriber) {
         try {
