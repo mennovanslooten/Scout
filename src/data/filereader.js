@@ -96,8 +96,6 @@ function readFileOrDirectory(path, item) {
  * Read and parse test files specified on the command line
  */
 exports.readTestFiles = function() {
-    if (_cli.version) return;
-
     var files = _cli.files.length ? _cli.files : [''];
 
     files.forEach(function(file_or_directory) {
