@@ -1,5 +1,5 @@
 'use strict';
-var parseArguments = require('../utils/parser').parseArguments;
+var parseArgument = require('../utils/parser').parseArgument;
 
 exports.create = function(env, test_data) {
     var base_path = test_data.path.substr(0, test_data.path.lastIndexOf('/'));
@@ -262,7 +262,7 @@ exports.create = function(env, test_data) {
                 return 'Unknown action: <' + action_data.type + '>';
             }
 
-            action_data.args = parseArguments(action_data.args);
+            action_data.args = action_data.args.map(parseArgument);
             return handler.apply(null, action_data.args);
         }
     };
