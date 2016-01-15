@@ -41,8 +41,27 @@ exports.createDumpName = function(action_data, prefix) {
 };
 
 
-exports.columnize = function(args, columns) {
+function getColumnWidths(test_data) {
+    var columns = [];
+
+    test_data.actions.forEach(function(action_data) {
+        var parts = action_data.parts;
+        if (parts.length < 2) return;
+
+        parts.forEach(function(part, column_index) {
+            if (!columns[column_index]) columns[column_index] = 0;
+            var max = Math.max(columns[column_index], part.length);
+            columns[column_index] = max;
+        });
+    });
+
+    return columns;
+}
+
+
+exports.columnize = function(args, test_data) {
     var result = '';
+    var columns = getColumnWidths(test_data);
 
     columns.forEach(function(col_width, index) {
         var arg = args[index] || '';

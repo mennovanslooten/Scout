@@ -20,7 +20,8 @@ function logRuler() {
 
 function logAction(action_data, test_data) {
     var args = [action_data.type].concat(action_data.args);
-    var message = columnize(args, test_data.columns);
+    // var column_widths = getColumnWidths(test_data);
+    var message = columnize(args, test_data);
 
     if (action_data.type === 'log') {
         log(fg.cyan('\n## ' + action_data.args));

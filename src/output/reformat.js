@@ -2,7 +2,6 @@
 
 var columnize = require('../utils/strings').columnize;
 
-
 exports.reformat = function(suite_data) {
     suite_data.tests.forEach(function(test_data) {
         var last_line_nr = 0;
@@ -21,7 +20,7 @@ exports.reformat = function(suite_data) {
                 out += '## ' + action.args.join(' ');
             } else {
                 var args = [action.type].concat(action.args);
-                out += columnize(args, test_data.columns);
+                out += columnize(args, test_data);
             }
 
             // Remove trailing whitespace

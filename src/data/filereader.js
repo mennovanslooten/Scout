@@ -11,8 +11,7 @@ function parseTestFile(path, item) {
     var stream = _fs.open(full_path, 'r');
     var data = {
         path: full_path.replace(/^\.\//, ''),
-        actions: [],
-        columns: []
+        actions: []
     };
 
     var line_nr = -1;
@@ -39,28 +38,6 @@ function parseTestFile(path, item) {
 
 
 /*
- * Store the max width of each column for later formatting use
- */
-function calculateColumns(test_file) {
-    var columns = [];
-
-    for (var i = 0; i < test_file.actions.length; i++) {
-        var parts = test_file.actions[i].parts;
-        if (parts.length < 2) continue;
-
-        for (var ii = 0; ii < parts.length; ii++) {
-            if (!columns[ii]) columns[ii] = 0;
-            var part = parts[ii];
-            var max = Math.max(columns[ii], part.length);
-            columns[ii] = max;
-        }
-    }
-
-    test_file.columns = columns;
-}
-
-
-/*
  * Read file/directory item in path
  */
 function readFileOrDirectory(path, item) {
@@ -81,7 +58,6 @@ function readFileOrDirectory(path, item) {
     if (is_test) {
         // If it's a test read and parse it
         var data = parseTestFile(path, item);
-        calculateColumns(data);
         _test_files.push(data);
     } else if (_fs.isDirectory(full_path)) {
         // If it's a directory read its contents
