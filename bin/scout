@@ -15,7 +15,8 @@ SCOUT="$( cd -P "$( dirname "$SOURCE" )" && pwd )/../src/index.js"
 
 
 # Find the first parent dir that contains phantomjs
-NPM_ROOT=$(pwd -P 2>/dev/null || command pwd)
+# NPM_ROOT=$(pwd -P 2>/dev/null || command pwd)
+NPM_ROOT="$( cd -P "$( dirname "$SOURCE" )" && pwd )/.."
 while [ ! -e "$NPM_ROOT/node_modules/phantomjs/bin/phantomjs" ]; do
     NPM_ROOT=${NPM_ROOT%/*} # go up a directory
     if [ "$NPM_ROOT" = "" ]; then break; fi
