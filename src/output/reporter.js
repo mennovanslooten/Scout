@@ -14,7 +14,7 @@ var log = require('./console').log;
 var comment = require('./console').comment;
 
 function logRuler() {
-    log(fg.white('\n----------------------------------------------------------------'));
+    log(fg.magenta('\n----------------------------------------------------------------'));
 }
 
 
