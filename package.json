@@ -1,6 +1,6 @@
 {
   "name": "scoutjs",
-  "version": "1.12.4",
+  "version": "1.12.5",
   "description": "Scout is a Functional Testing extension for PhantomJS",
   "scripts": {
     "test": "gulp test"
