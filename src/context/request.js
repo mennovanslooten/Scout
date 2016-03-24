@@ -11,8 +11,8 @@ exports.create = function(_page, base_path) {
         var url = requestData.url;
         mocks.forEach(function(mock) {
             if (mock.matches(url)) {
-                var path = base_path + _fs.separator + mock.path;
-                networkRequest.changeUrl(path);
+                var path = _fs.absolute(base_path + _fs.separator + mock.path);
+                networkRequest.changeUrl('file://' + path);
                 if (_cli.debug) {
                     _logger.comment('Network request to <' + url + '> mocked with <' + path + '>');
                 }
@@ -20,6 +20,7 @@ exports.create = function(_page, base_path) {
             }
         });
     };
+
 
     return {
         getMocks: function() {
