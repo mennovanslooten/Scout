@@ -3,7 +3,6 @@
 
 var _logger = require('../logger/logger');
 var _cli = require('../utils/cli');
-var _fs = require('fs');
 
 exports.create = function() {
     var _page        = require('webpage').create();

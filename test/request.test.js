@@ -19,7 +19,10 @@ var request = proxyquire('../src/context/request', {
         debug: false
     },
     fs: {
-        separator: '/'
+        separator: '/',
+        absolute: function(s) {
+            return s;
+        }
     }
 }).create(page, base_path);
 
@@ -38,7 +41,7 @@ describe('request', function() {
 
         page.onResourceRequested(requestData, networkRequest);
         assert.equal(networkRequest.changeUrl.calledOnce, true);
-        assert.equal(networkRequest.changeUrl.calledWith(base_path + '/' + mock_path), true);
+        assert.equal(networkRequest.changeUrl.calledWith('file://' + base_path + '/' + mock_path), true);
     });
 
     it('should not mock not matching requests', function() {
