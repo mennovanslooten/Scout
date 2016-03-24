@@ -24,7 +24,7 @@ function logAction(action_data, test_data) {
     var message = columnize(args, test_data);
 
     if (action_data.type === 'log') {
-        log(fg.cyan('\n## ' + action_data.args));
+        log(fg.cyan('\n' + action_data.args));
     } else if (action_data.message) {
         if (action_data.optional) {
             log(fg.yellow(' ★ ', message));
@@ -94,10 +94,10 @@ function done(suite_data) {
         log(bold(fg.green('\nPASS: ' + exit_message)));
     } else {
         logRuler();
-        var fail_message = '# Failed ';
+        var fail_message = '\nFailed ';
         fail_message += _db.getFailedTests(suite_data).length;
         fail_message += ' of ' + suite_data.tests.length + ' tests:';
-        log(fg.blue(fail_message));
+        log(fg.red(fail_message));
         _db.getFailedTests(suite_data).forEach(logFailedTest);
         log(bold(fg.red('\nFAIL: ' + exit_message)));
     }
