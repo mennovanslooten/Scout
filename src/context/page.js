@@ -52,6 +52,24 @@ exports.create = function(test_data) {
 
 
     /**
+     * Set load status to busy before going back
+     */
+    _page.back = function() {
+        _load_status = STATUS_BUSY;
+        _page.goBack();
+    };
+
+
+    /**
+     * Set load status to busy before going forward
+     */
+    _page.forward = function() {
+        _load_status = STATUS_BUSY;
+        _page.goForward();
+    };
+
+
+    /**
      * Page load finished
      */
     _page.onLoadFinished = function pageLoadFinished(status) {
@@ -78,7 +96,6 @@ exports.create = function(test_data) {
     _page.onInitialized = function initialized() {
         if (!_page.isReady() || _page.url === 'about:blank') return;
 
-        console.log('onInitialized', _page.url, 'XXX', _load_status, _goto_target);
         _page.evaluate(function() {
             window.localStorage.clear();
         });

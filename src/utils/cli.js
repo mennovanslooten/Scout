@@ -5,6 +5,7 @@ var _system = require('system');
 // Default options
 var options = {
     version: false,
+    compare: false,
     color: false,
     reformat: false,
     debug: false,

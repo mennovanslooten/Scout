@@ -47,12 +47,12 @@ exports.create = function(env, test_data) {
         },
 
         back: function() {
-            env.page.goBack();
+            env.page.back();
             return '';
         },
 
         forward: function() {
-            env.page.goForward();
+            env.page.forward();
             return '';
         },
 
