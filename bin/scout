@@ -30,5 +30,5 @@ else
 fi
 
 # Kick out the jams
-"$PHANTOMJS" "$SCOUT" $@
+"$PHANTOMJS" "$SCOUT" $@ --phantompath="$PHANTOMJS"
 
