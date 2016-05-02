@@ -20,10 +20,10 @@ gulp.task('default', ['test']);
 
 
 gulp.task('watch', ['default'], function() {
-	gulp.watch('./.jscsrc', ['jscs']);
-	gulp.watch(scout_files, ['self_test']);
-	gulp.watch(all_js_files, ['test']);
-	gulp.watch(test_js_files, ['mocha']);
+    gulp.watch('./.jscsrc', ['jscs']);
+    gulp.watch(scout_files, ['self_test']);
+    gulp.watch(all_js_files, ['test']);
+    gulp.watch(test_js_files, ['mocha']);
 });
 
 
@@ -31,15 +31,15 @@ gulp.task('test', ['jshint', 'jscs', 'mocha', 'self_test']);
 
 
 gulp.task('mocha', function() {
-	return gulp.src(test_js_files, {read: false})
-		.pipe(mocha({reporter: 'mocha-silent-reporter'}));
+    return gulp.src(test_js_files, {read: false})
+        .pipe(mocha({reporter: 'mocha-silent-reporter'}));
 });
 
 
 gulp.task('jshint', function() {
-	return gulp.src(all_js_files)
-		.pipe(jshint('.jshintrc'))
-		.pipe(jshint.reporter('default'))
+    return gulp.src(all_js_files)
+        .pipe(jshint('.jshintrc'))
+        .pipe(jshint.reporter('default'))
         .pipe(jshint.reporter('fail'));
 });
 

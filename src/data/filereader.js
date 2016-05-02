@@ -3,64 +3,7 @@
 var _test_files = [];
 var _fs = require('fs');
 var _cli = require('../utils/cli');
-
-
-// This regular expression is used to separate arguments on a line.
-// Current match: at least 2 spaces or at least 1 tab (surrounded by any number
-// of spaces).
-var separator_rx = / {2,}| *\t+ */g;
-
-function parseLine(line, line_nr, path) {
-    var result = {
-        type: '',
-        args: [],
-        parts: [],
-        // We store the line_nr and path for each action for logging purposes
-        line_nr: line_nr,
-        path: path,
-        optional: false
-    };
-
-    for (var name in _cli) {
-        if (_cli.hasOwnProperty(name)) {
-            var value = _cli[name];
-            line = line.replace('{' + name + '}', value);
-        }
-    }
-
-    // Empty lines and lines starting with # are ignored
-    var ignore = /^\s*$|^#[^#]/;
-
-    // A line starting with "##" is logged
-    var log = /^##\s*(.+)/;
-
-    if (ignore.test(line)) {
-        return null;
-    } else if (log.test(line)) {
-        result.type = 'log';
-        result.args.push(line.match(log)[1]);
-    } else {
-        var parts = line.split(separator_rx);
-        result.parts = parts.concat();
-        result.type = parts.shift();
-
-        // An action starting with "?" is optional
-        var optional = /^\?\s*(.+)/;
-
-        if (result.type.indexOf('@') === 0) {
-            var setting = result.type.substr(1);
-            parts.unshift(setting);
-            result.type = 'set';
-        } else if (optional.test(result.type)) {
-            result.type = result.type.match(optional)[1];
-            result.optional = true;
-        }
-
-        result.args = parts;
-    }
-
-    return result;
-}
+var _testaction = require('./testaction');
 
 
 function parseTestFile(path, item) {
@@ -69,9 +12,6 @@ function parseTestFile(path, item) {
     var data = {
         path: full_path.replace(/^\.\//, ''),
         actions: [],
-        lines: [],
-        passed: [],
-        skipped: [],
         columns: []
     };
 
@@ -79,9 +19,8 @@ function parseTestFile(path, item) {
     while (!stream.atEnd()) {
         line_nr++;
         var line = stream.readLine();
-        data.lines.push(line);
 
-        var actions = parseLine(line, line_nr, data.path, item);
+        var actions = _testaction.create(line, line_nr, data.path, item);
 
         if (!actions) {
             continue;
@@ -157,8 +96,6 @@ function readFileOrDirectory(path, item) {
  * Read and parse test files specified on the command line
  */
 exports.readTestFiles = function() {
-    if (_cli.version) return;
-
     var files = _cli.files.length ? _cli.files : [''];
 
     files.forEach(function(file_or_directory) {

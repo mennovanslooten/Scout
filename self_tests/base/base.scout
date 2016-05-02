@@ -32,6 +32,10 @@ assertResembles        base_screendump
 ## Special selector: "XXX" selects nodes whose text exactly matches "XXX"
 assertExists           "Lorem ipsum dolor sit amet"
 
+## "XXX" should also match buttons with value="XXX"
+assertExists           "I am a submit button"
+assertExists           "I am a regular button"
+
 ## assertText should match substrings as well
 assertText             .assertText                     Lorem ipsum dolor sit amet
 assertText             .assertText                     Lorem ipsum

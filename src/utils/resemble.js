@@ -1,9 +1,6 @@
 'use strict';
 
-var _fs  = require('fs');
-var _cli = require('./cli');
-
-function resemble(file1, file2, callback) {
+exports.resemble = function(file1, file2, callback) {
     var images_data = [];
 
     function compare() {
@@ -68,55 +65,4 @@ function resemble(file1, file2, callback) {
 
     loadImageData(file1);
     loadImageData(file2);
-}
-
-
-exports.create = function(page) {
-    var comparison_message = '';
-    var curr_filename = '';
-
-    return {
-        compare: function(boundaries, orig_filename, min_perc) {
-            // Paths need to be made absolute, otherwise resemble will try to load them
-            // from the wrong directory
-            orig_filename = _fs.workingDirectory + _fs.separator + page.getDumpName(orig_filename);
-
-            var temp_filename = page.getDumpName(orig_filename + '-compare');
-
-            if (curr_filename !== orig_filename) {
-                // Save original if it doesn't exist already
-                var original_exists = _fs.isReadable(orig_filename) && _fs.isFile(orig_filename);
-
-                // Force new resemble dumps
-                if (original_exists && _cli.newdumps) {
-                    _fs.remove(orig_filename);
-                    original_exists = false;
-                }
-
-                if (!original_exists) {
-                    page.dump(orig_filename, boundaries);
-                }
-
-                comparison_message = 'Comparison could not be finished for unknown reasons';
-                curr_filename = orig_filename;
-            }
-
-            if (comparison_message) {
-                page.dump(temp_filename, boundaries);
-
-                resemble(temp_filename, orig_filename, function(match_perc) {
-                    if (match_perc < min_perc) {
-                        comparison_message = '<' + temp_filename + '> does not resemble <' + orig_filename + '>';
-                        comparison_message += ' (' + match_perc + '% < ' + min_perc + '%)';
-                    } else {
-                        // Comparison matches, remove temporary file
-                        _fs.remove(temp_filename);
-                        comparison_message = '';
-                    }
-                });
-            }
-
-            return comparison_message;
-        }
-    };
 };

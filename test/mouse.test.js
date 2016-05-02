@@ -5,6 +5,7 @@ var sinon = require('sinon');
 var proxyquire =  require('proxyquire').noPreserveCache().noCallThru();
 
 var page_stub = {
+    url: 'http://some.url/',
     evaluate: sinon.stub(),
     scrollPosition: {
         top: 100,

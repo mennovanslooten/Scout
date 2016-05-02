@@ -1,10 +1,11 @@
 'use strict';
 
-var _logger = require('../logger/logger');
+var _console = require('../output/console');
 var _cli = require('../utils/cli');
 var _fs = require('fs');
 
-exports.create = function(_page, base_path) {
+exports.create = function(_page, test_data) {
+    var base_path = test_data.path.substr(0, test_data.path.lastIndexOf('/'));
     var mocks = [];
 
     _page.onResourceRequested = function(requestData, networkRequest) {
@@ -14,7 +15,7 @@ exports.create = function(_page, base_path) {
                 var path = _fs.absolute(base_path + _fs.separator + mock.path);
                 networkRequest.changeUrl('file://' + path);
                 if (_cli.debug) {
-                    _logger.comment('Network request to <' + url + '> mocked with <' + path + '>');
+                    _console.comment('Network request to <' + url + '> mocked with <' + path + '>');
                 }
                 return false;
             }
@@ -28,7 +29,6 @@ exports.create = function(_page, base_path) {
         },
 
         addMock: function(pattern, path) {
-
             try {
                 var parsed = new RegExp(pattern);
                 mocks.push({

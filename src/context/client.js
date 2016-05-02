@@ -19,12 +19,14 @@ var ScoutClient = {};
 
     function find(selector) {
         // Don't use jQuery for our special selector syntax: "text in quotes"
+        // This selector should match <element>...</element> or <input type="button|submit" value="..."
         var inside_quotes = /^"([^"]+)"$/;
 
         if (inside_quotes.test(selector)) {
             var text = selector.substr(1, selector.length - 2);
             var nodes = findNodesWithText(text);
-            var result = $(nodes);
+            var result = $('input[type="submit"][value="' + text + '"], input[type="button"][value="' + text + '"]');
+            result = result.add(nodes);
             result.selector = selector;
             return result;
         }

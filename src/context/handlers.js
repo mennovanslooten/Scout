@@ -1,18 +1,12 @@
 'use strict';
+var parseArgument = require('../utils/parser').parseArgument;
 
-exports.create = function(_page, test_path) {
-    var base_path = test_path.substr(0, test_path.lastIndexOf('/'));
+exports.create = function(env, test_data) {
+    var base_path = test_data.path.substr(0, test_data.path.lastIndexOf('/'));
 
     var _focused            = '';
-    var _mouse              = require('./mouse').create(_page);
-    var _keyboard           = require('./keyboard').create(_page);
-    var _remote             = require('./remote').create(_page);
-    var _request            = require('./request').create(_page, base_path);
-    var _resemble           = require('../utils/resemble').create(_page);
     var _remember           = require('../utils/remember');
     var _fs                 = require('fs');
-
-
 
     function getCoordinates(destination) {
         // destination can be either a string containing "123, 567" or a css
@@ -25,8 +19,8 @@ exports.create = function(_page, test_path) {
                 left: parseInt(coordinates[0], 10),
                 top: parseInt(coordinates[1], 10)
             };
-        } else if (_remote.assertVisible(destination) === '') {
-            return _remote.getCoordinate(destination);
+        } else if (env.remote.assertVisible(destination) === '') {
+            return env.remote.getCoordinate(destination);
         }
 
         return null;
@@ -39,48 +33,31 @@ exports.create = function(_page, test_path) {
                 url = base_path + url.substr(1);
             }
 
-            if (_page.is_loaded) {
-                if (_page.getURL() === 'about:blank') {
-                    return 'Error opening <' + url + '>';
-                }
-
-                _mouse.reset();
-                return '';
-            }
-
-            if (_page.is_loading) {
-                return 'Opening <' + url + '> took too long';
-            }
-
             if (dimensions) {
                 local.resize(dimensions);
             } else {
-                _page.viewportSize = {
+                env.page.viewportSize = {
                     width: 1280,
                     height: 1280
                 };
             }
 
-            _page.is_loaded = false;
-            _page.is_loading = true;
-
-            _page.open(url);
-
-            return 'Opening <' + url + '> took too long';
+            env.mouse.reset();
+            return env.page.goto(url);
         },
 
         back: function() {
-            _page.goBack();
+            env.page.back();
             return '';
         },
 
         forward: function() {
-            _page.goForward();
+            env.page.forward();
             return '';
         },
 
         assertTitle: function(sub_title) {
-            var title = _page.evaluate(function() {
+            var title = env.page.evaluate(function() {
                 return document.title;
             });
 
@@ -92,7 +69,7 @@ exports.create = function(_page, test_path) {
         },
 
         assertPage: function(sub_url) {
-            var url = _page.getURL();
+            var url = env.page.getURL();
             if (url.indexOf(sub_url) !== -1) {
                 return '';
             }
@@ -135,9 +112,9 @@ exports.create = function(_page, test_path) {
 
             var boundaries;
             if (selector) {
-                boundaries = _remote.getBoundaries(selector);
+                boundaries = env.remote.getBoundaries(selector);
             }
-            var result = _resemble.compare(boundaries, orig_filename, min_perc);
+            var result = env.dumps.compare(boundaries, orig_filename, min_perc);
             return result;
         },
 
@@ -146,7 +123,7 @@ exports.create = function(_page, test_path) {
         },
 
         type: function(selector, text, is_replace) {
-            var error = _remote.assertVisible(selector);
+            var error = env.remote.assertVisible(selector);
             if (error) return error;
 
             if (!text.length) {
@@ -159,11 +136,11 @@ exports.create = function(_page, test_path) {
                 }
 
                 if (is_replace === 'true') {
-                    _remote.clearFocused();
+                    env.remote.clearFocused();
                 }
             }
 
-            var result = _keyboard.type(text);
+            var result = env.keyboard.type(text);
 
             // Reset focused element, as keyevent may have triggered a blur()
             if (!result) _focused = '';
@@ -172,7 +149,7 @@ exports.create = function(_page, test_path) {
         },
 
         uploadFile: function(selector, filename) {
-            var error = _remote.assertVisible(selector) || _remote.assertIsA(selector, ':file');
+            var error = env.remote.assertVisible(selector) || env.remote.assertIsA(selector, ':file');
             if (error) return error;
 
             if (!filename.length) {
@@ -186,7 +163,7 @@ exports.create = function(_page, test_path) {
                 return 'Cannot upload unreadable file <' + filepath + '>';
             }
 
-            _page.uploadFile(selector, filepath);
+            env.page.uploadFile(selector, filepath);
             return '';
         },
 
@@ -194,7 +171,7 @@ exports.create = function(_page, test_path) {
             var center = getCoordinates(destination);
             if (!center) return 'No coordinates for element';
 
-            if (_mouse.sendEvent('click', center.left, center.top)) {
+            if (env.mouse.sendEvent('click', center.left, center.top)) {
                 _focused = destination;
                 return '';
             }
@@ -205,7 +182,7 @@ exports.create = function(_page, test_path) {
             var center = getCoordinates(destination);
             if (!center) return 'No coordinates for element';
 
-            if (_mouse.sendEvent('mousemove', center.left, center.top)) {
+            if (env.mouse.sendEvent('mousemove', center.left, center.top)) {
                 return '';
             }
             return 'Mouse not over element';
@@ -215,7 +192,7 @@ exports.create = function(_page, test_path) {
             var center = getCoordinates(destination);
             if (!center) return 'No coordinates for element';
 
-            if (_mouse.sendEvent('doubleclick', center.left, center.top)) {
+            if (env.mouse.sendEvent('doubleclick', center.left, center.top)) {
                 _focused = destination;
                 return '';
             }
@@ -230,7 +207,7 @@ exports.create = function(_page, test_path) {
             } catch (ex) { }
 
             if (matches && matches.length === 3) {
-                _page.viewportSize = {
+                env.page.viewportSize = {
                     width: parseInt(matches[1], 10),
                     height: parseInt(matches[2], 10)
                 };
@@ -244,42 +221,49 @@ exports.create = function(_page, test_path) {
         screendump: function(filename, selector) {
             var boundaries;
             if (selector) {
-                boundaries = _remote.getBoundaries(selector);
+                boundaries = env.remote.getBoundaries(selector);
                 if (!boundaries) {
                     return 'Could not determine boundaries for <' + selector + '>';
                 }
             }
-            _page.dump(filename, boundaries);
+            env.dumps.dump(filename, boundaries);
             return '';
         },
 
         set: function(name, value) {
-            _page.set(name, value);
+            env.page.set(name, value);
             return '';
         },
 
         remember: function(selector, variable_name) {
-            var error = _remote.assertVisible(selector);
+            var error = env.remote.assertVisible(selector);
             if (error) return error;
 
-            var value_or_text = _remote.getValueOrText(selector);
+            var value_or_text = env.remote.getValueOrText(selector);
             _remember.set(variable_name, value_or_text);
 
             return '';
         },
 
         mockRequest: function(pattern, mock_path) {
-            return _request.addMock(pattern, mock_path);
+            return env.request.addMock(pattern, mock_path);
         },
 
         unmockRequest: function(/* pattern, mock_path */) {
-            return _request.removeMock.apply(_request, arguments);
+            return env.request.removeMock.apply(env.request, arguments);
         }
     };
 
     return {
-        getHandler: function(type) {
-            return local[type] || _remote[type];
+        run: function(action_data) {
+            var handler = local[action_data.type] || env.remote[action_data.type];
+
+            if (!handler) {
+                return 'Unknown action: <' + action_data.type + '>';
+            }
+
+            action_data.args = action_data.args.map(parseArgument);
+            return handler.apply(null, action_data.args);
         }
     };
 
