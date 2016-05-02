@@ -135,6 +135,8 @@ exports.create = function(_page) {
      * Update the scroll coordinates and move the mouse to the top left corner
      */
     _mouse.reset = function() {
+        if (!_page.url) return;
+
         var scroll = _page.evaluate(function() {
             return {
                 top: window.scrollY,
